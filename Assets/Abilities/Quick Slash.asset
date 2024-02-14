@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: Fireball
+  m_Name: Quick Slash
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Fireball
+  <Name>k__BackingField: Quick Slash
   <Star>k__BackingField: 1
-  <IconSprite>k__BackingField: {fileID: 21300000, guid: d897f54b835d221408c309cff6f67b65,
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: 3745fc536e2fd5b4191c5ae9a1d84952,
     type: 3}
   <MaxUseCount>k__BackingField: 10
-  UseCount: 5
-  <Cooldown>k__BackingField: 2
-  Timer: -0.0025917105
+  UseCount: 0
+  <Cooldown>k__BackingField: 1
+  Timer: 0
   OnCooldown: 0
-  <AbilityPrefab>k__BackingField: {fileID: 2216140401218759904, guid: a35eb99f1f729d4429324242b8c2f9bb,
-    type: 3}
+  <AbilityPrefab>k__BackingField: {fileID: 0}

@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [HideInInspector] public PlayerController Instance { get; private set; }
+    [HideInInspector] public static PlayerController Instance { get; private set; }
 
-    [HideInInspector] public Vector3 ForwardDirection { get; private set; }
+    [HideInInspector] public Vector3 ForwardDirection { get; private set; } = Vector3.right;
 
     [SerializeField] private Transform _arrowPivot;
     [SerializeField] private Transform _playerAimMarker;
     private Vector3 _playerAimMarketOffset;
-    [SerializeField] private float _playerSpeed;
     [SerializeField] private float _aimSpeed;
 
     private SpriteRenderer _spriteRenderer;
@@ -31,21 +30,6 @@ public class PlayerController : MonoBehaviour
         HandlePlayerFacingDirection();
     }
 
-    private void FixedUpdate()
-    {
-        HandleWASDMovement();
-    }
-
-    private void HandleWASDMovement()
-    {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-
-        Vector3 movementDirection = new Vector3(x, 0, z).normalized;
-
-        transform.Translate(_playerSpeed * Time.deltaTime * movementDirection);
-    }
-
     private void HandlePlayerFacingDirection()
     {
         float x = Input.GetAxisRaw("RightHorizontal");
@@ -53,8 +37,14 @@ public class PlayerController : MonoBehaviour
 
         Vector3 facingDirection = new Vector3(x, 0, z).normalized;
 
+        Vector3 botLeft = Camera.main.ScreenToWorldPoint(Vector2.zero);
+        Vector3 topRight = Camera.main.ScreenToWorldPoint(new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight));
+
+        Debug.Log("Bot Left: " + botLeft.ToString() + ", Top Right: " + topRight.ToString() + ", Aim: " + _playerAimMarker.position.ToString());
+
         _playerAimMarketOffset += _aimSpeed * Time.deltaTime * facingDirection;
         _playerAimMarker.position = transform.position + _playerAimMarketOffset;
+        //_playerAimMarker.position = new Vector3(Mathf.Clamp(_playerAimMarker.position.x, botLeft.x, topRight.x - botLeft.x), 0, Mathf.Clamp(_playerAimMarker.position.z, botLeft.z, topRight.z - botLeft.z));
 
         if (Mathf.Abs(x) > 0) _spriteRenderer.flipX = x < 0;
 

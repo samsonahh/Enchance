@@ -1249,7 +1249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: -175, y: 100}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1391083552
@@ -1521,6 +1521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1999210796}
+  - component: {fileID: 1999210801}
   - component: {fileID: 1999210797}
   - component: {fileID: 1999210798}
   - component: {fileID: 1999210799}
@@ -1563,7 +1564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _arrowPivot: {fileID: 1428094223}
   _playerAimMarker: {fileID: 744252217}
-  _playerSpeed: 5
   _aimSpeed: 10
 --- !u!114 &1999210798
 MonoBehaviour:
@@ -1577,6 +1577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168d91a1e82ceec4aa7346e0779fc7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UsingController: 0
   _abilities: {fileID: 11400000, guid: 837726ac40926d746ad19f46d086aa8e, type: 2}
   _selectedBorder: {fileID: 1391083551}
   _abilityImages:
@@ -1625,14 +1626,27 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &1999210801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999210795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12355393128c19f4c8476d95587be994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerSpeed: 5
 --- !u!1 &2038840250
 GameObject:
   m_ObjectHideFlags: 0

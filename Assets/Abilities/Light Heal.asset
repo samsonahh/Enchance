@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: Iceblast
+  m_Name: Light Heal
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Iceblast
+  <Name>k__BackingField: Light Heal
   <Star>k__BackingField: 1
-  <IconSprite>k__BackingField: {fileID: 21300000, guid: cc897a55510ec5548a48bf1f79007b97,
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: 331cdffa4408f7349af86cde0c3a830e,
     type: 3}
-  <MaxUseCount>k__BackingField: 10
+  <MaxUseCount>k__BackingField: 5
   UseCount: 0
-  <Cooldown>k__BackingField: 1
-  Timer: -0.0040083025
-  OnCooldown: 1
+  <Cooldown>k__BackingField: 2
+  Timer: 0
+  OnCooldown: 0
   <AbilityPrefab>k__BackingField: {fileID: 0}

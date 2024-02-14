@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityInstance: MonoBehaviour
+public class AbilityInstance : MonoBehaviour
 {
-    private AbilityCaster _abilityCaster;
+    protected AbilityCaster _abilityCaster;
 
-    public void Init(AbilityCaster ac)
+    public virtual void Init(AbilityCaster ac)
     {
         _abilityCaster = ac;
     }
-
-
 }

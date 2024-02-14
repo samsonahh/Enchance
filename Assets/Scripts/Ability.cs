@@ -17,16 +17,20 @@ public class Ability : ScriptableObject
     [HideInInspector] public bool OnCooldown;
     [field: SerializeField] public AbilityInstance AbilityPrefab { get; private set; }
 
-    public Ability(Ability ability)
+    public static Ability CopyAbility(Ability ability)
     {
-        this.Name = ability.Name;
-        this.Star = ability.Star;
-        this.IconSprite = ability.IconSprite;
-        this.MaxUseCount = ability.MaxUseCount;
-        this.UseCount = ability.MaxUseCount;
-        this.Cooldown = ability.Cooldown;
-        this.Timer = 0;
-        this.OnCooldown = false;
+        Ability a = CreateInstance<Ability>();
+        a.Name = ability.Name;
+        a.Star = ability.Star;
+        a.IconSprite = ability.IconSprite;
+        a.MaxUseCount = ability.MaxUseCount;
+        a.UseCount = ability.MaxUseCount;
+        a.Cooldown = ability.Cooldown;
+        a.Timer = 0;
+        a.OnCooldown = false;
+        a.AbilityPrefab = ability.AbilityPrefab;
+
+        return a;
     }
 
     private void OnValidate()

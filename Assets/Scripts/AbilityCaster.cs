@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class AbilityCaster : MonoBehaviour
 {
+    [SerializeField] private bool UsingController = true;
     [SerializeField] private Abilities _abilities;
 
     [SerializeField] private RectTransform _selectedBorder;
@@ -24,11 +25,20 @@ public class AbilityCaster : MonoBehaviour
     {
         HandleBumperSelectAbilities();
 
-        if (Input.GetKeyDown(KeyCode.Space)) UseAbility(_selectedAbility);
+        if (UsingController)
+        {
+            if (Input.GetButtonDown("RightTrigger")) UseAbility(_selectedAbility);
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) UseAbility(_selectedAbility);
+        }
     }
     private void UseAbility(int index)
     {
         if (_currentAbilities[index].OnCooldown) return;
+
+        InstantiateAbility(_currentAbilities[index]);
 
         StartCoroutine(AbilityCooldown(index));
     }
@@ -51,12 +61,39 @@ public class AbilityCaster : MonoBehaviour
 
     private void RandomizeAbility(int index)
     {
-        int randomIndex = Random.Range(0, _abilities.GameAbilities.Length);
-        Ability randomAbility = _abilities.GameAbilities[randomIndex];
+        List<Ability> availableAbilities = new List<Ability>();
+        foreach (Ability ability in _abilities.GameAbilities)
+        {
+            availableAbilities.Add(ability);
+            if (_currentAbilities[0] != null)
+            {
+                if (_currentAbilities[0].Name.Equals(ability.Name))
+                {
+                    availableAbilities.Remove(ability);
+                }
+            }
+            if (_currentAbilities[1] != null)
+            {
+                if (_currentAbilities[1].Name.Equals(ability.Name))
+                {
+                    availableAbilities.Remove(ability);
+                }
+            }
+            if (_currentAbilities[2] != null)
+            {
+                if (_currentAbilities[2].Name.Equals(ability.Name))
+                {
+                    availableAbilities.Remove(ability);
+                }
+            }
+        }
+
+        int randomIndex = Random.Range(0, availableAbilities.Count);
+        Ability randomAbility = availableAbilities[randomIndex];
 
         _abilityImages[index].sprite = randomAbility.IconSprite;
 
-        _currentAbilities[index] = new Ability(randomAbility);
+        _currentAbilities[index] = Ability.CopyAbility(randomAbility);
     }
 
     private void RandomizeAllAbilities()
@@ -91,39 +128,70 @@ public class AbilityCaster : MonoBehaviour
 
     private void HandleBumperSelectAbilities()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (UsingController)
         {
-            if (_selectedAbility == 0)
+            if (Input.GetButtonDown("LeftBumper"))
             {
-                _selectedAbility = 2;
+                if (_selectedAbility == 0)
+                {
+                    _selectedAbility = 2;
+                }
+                else
+                {
+                    _selectedAbility--;
+                }
             }
-            else
+
+            if (Input.GetButtonDown("RightBumper"))
             {
-                _selectedAbility--;
+                if (_selectedAbility == 2)
+                {
+                    _selectedAbility = 0;
+                }
+                else
+                {
+                    _selectedAbility++;
+                }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
+        else
         {
-            if (_selectedAbility == 2)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                _selectedAbility = 0;
+                if (_selectedAbility == 0)
+                {
+                    _selectedAbility = 2;
+                }
+                else
+                {
+                    _selectedAbility--;
+                }
             }
-            else
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                _selectedAbility++;
+                if (_selectedAbility == 2)
+                {
+                    _selectedAbility = 0;
+                }
+                else
+                {
+                    _selectedAbility++;
+                }
             }
         }
 
         _selectedBorder.position = _abilityImages[_selectedAbility].rectTransform.position;
     }
 
-    private void InstantiateAbility(string abilityName)
+    private void InstantiateAbility(Ability ability)
     {
-        switch (abilityName)
+        switch (ability.Name)
         {
             case "Fireball":
-
+                Fireball fireball = (Fireball)Instantiate(ability.AbilityPrefab, transform.position, Quaternion.identity);
+                fireball.Init(this);
+                fireball.SetDirection(PlayerController.Instance.ForwardDirection);
                 break;
             default:
                 break;
