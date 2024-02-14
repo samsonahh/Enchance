@@ -13,6 +13,7 @@ public class AbilityCaster : MonoBehaviour
 
     private int _selectedAbility = 0;
     private int[] _abilityUseCounts = new int[3];
+    private string[] _abilityNames = new string[3];
     private float[] _abilityCooldowns = new float[3];
     private bool[] _abilitiesCanBeUsed = new bool[3];
 
@@ -59,6 +60,7 @@ public class AbilityCaster : MonoBehaviour
 
         _abilityImages[index].sprite = randomAbility.Sprite;
         _abilityUseCounts[index] = randomAbility.MaxUseCount;
+        _abilityNames[index] = randomAbility.Name;
         _abilityCooldowns[index] = randomAbility.Cooldown;
         _abilitiesCanBeUsed[index] = true;
     }

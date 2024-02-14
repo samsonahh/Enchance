@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 ForwardDirection { get; private set; }
 
     [SerializeField] private Transform _arrowPivot;
+    [SerializeField] private Transform _playerAimMarker;
+    private Vector3 _playerAimMarketOffset;
     [SerializeField] private float _playerSpeed;
+    [SerializeField] private float _aimSpeed;
 
     private SpriteRenderer _spriteRenderer;
 
@@ -49,6 +52,9 @@ public class PlayerController : MonoBehaviour
         float z = Input.GetAxisRaw("RightVertical");
 
         Vector3 facingDirection = new Vector3(x, 0, z).normalized;
+
+        _playerAimMarketOffset += _aimSpeed * Time.deltaTime * facingDirection;
+        _playerAimMarker.position = transform.position + _playerAimMarketOffset;
 
         if (Mathf.Abs(x) > 0) _spriteRenderer.flipX = x < 0;
 

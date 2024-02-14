@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : Ability
+public class Fireball : AbilityInstance
 {
-    public override void Activate()
-    {
-        
-    }
+
 }
