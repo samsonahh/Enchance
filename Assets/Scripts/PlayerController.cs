@@ -4,20 +4,60 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerSpeed;
+    [HideInInspector] public PlayerController Instance { get; private set; }
+
+    [HideInInspector] public Vector3 ForwardDirection { get; private set; }
+
+    [SerializeField] private Transform _arrowPivot;
+    [SerializeField] private float _playerSpeed;
+
+    private SpriteRenderer _spriteRenderer;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Update()
     {
-        HandleMovement();
+        HandlePlayerFacingDirection();
     }
 
-    private void HandleMovement()
+    private void FixedUpdate()
+    {
+        HandleWASDMovement();
+    }
+
+    private void HandleWASDMovement()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        Vector3 movementDirection = new Vector3(x, 0, z);
+        Vector3 movementDirection = new Vector3(x, 0, z).normalized;
 
-        transform.Translate(playerSpeed * Time.deltaTime * movementDirection);
+        transform.Translate(_playerSpeed * Time.deltaTime * movementDirection);
+    }
+
+    private void HandlePlayerFacingDirection()
+    {
+        float x = Input.GetAxisRaw("RightHorizontal");
+        float z = Input.GetAxisRaw("RightVertical");
+
+        Vector3 facingDirection = new Vector3(x, 0, z).normalized;
+
+        if (Mathf.Abs(x) > 0) _spriteRenderer.flipX = x < 0;
+
+        if (facingDirection.magnitude > 0)
+        {
+            ForwardDirection = facingDirection;
+        }
+
+        float targetAngle = -(Mathf.Atan2(ForwardDirection.z, ForwardDirection.x) * Mathf.Rad2Deg - 90f);
+        _arrowPivot.rotation = Quaternion.Lerp(_arrowPivot.rotation, Quaternion.AngleAxis(targetAngle, Vector3.up), 50f * Time.deltaTime);
     }
 }
