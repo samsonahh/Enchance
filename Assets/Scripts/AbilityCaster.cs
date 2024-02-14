@@ -12,10 +12,7 @@ public class AbilityCaster : MonoBehaviour
     private RectTransform[] _coolDownOverlays = new RectTransform[3];
 
     private int _selectedAbility = 0;
-    private int[] _abilityUseCounts = new int[3];
-    private string[] _abilityNames = new string[3];
-    private float[] _abilityCooldowns = new float[3];
-    private bool[] _abilitiesCanBeUsed = new bool[3];
+    private Ability[] _currentAbilities = new Ability[3];
 
     private void Start()
     {
@@ -27,7 +24,13 @@ public class AbilityCaster : MonoBehaviour
     {
         HandleBumperSelectAbilities();
 
-        if (Input.GetButtonDown("RightTrigger")) UseAbility(_selectedAbility);
+        if (Input.GetKeyDown(KeyCode.Space)) UseAbility(_selectedAbility);
+    }
+    private void UseAbility(int index)
+    {
+        if (_currentAbilities[index].OnCooldown) return;
+
+        StartCoroutine(AbilityCooldown(index));
     }
 
     private void InitializeOverlays()
@@ -46,23 +49,14 @@ public class AbilityCaster : MonoBehaviour
         rt.sizeDelta = new Vector2(rt.sizeDelta.x, height);
     }
 
-    private void UseAbility(int index)
-    {
-        if (!_abilitiesCanBeUsed[index]) return;
-
-        StartCoroutine(AbilityCooldown(index));
-    }
-
     private void RandomizeAbility(int index)
     {
         int randomIndex = Random.Range(0, _abilities.GameAbilities.Length);
         Ability randomAbility = _abilities.GameAbilities[randomIndex];
 
-        _abilityImages[index].sprite = randomAbility.Sprite;
-        _abilityUseCounts[index] = randomAbility.MaxUseCount;
-        _abilityNames[index] = randomAbility.Name;
-        _abilityCooldowns[index] = randomAbility.Cooldown;
-        _abilitiesCanBeUsed[index] = true;
+        _abilityImages[index].sprite = randomAbility.IconSprite;
+
+        _currentAbilities[index] = new Ability(randomAbility);
     }
 
     private void RandomizeAllAbilities()
@@ -74,30 +68,30 @@ public class AbilityCaster : MonoBehaviour
 
     private IEnumerator AbilityCooldown(int index)
     {
-        _abilitiesCanBeUsed[index] = false;
+        _currentAbilities[index].OnCooldown = true;
 
-        float timer = _abilityCooldowns[index];
+        _currentAbilities[index].Timer = _currentAbilities[index].Cooldown;
 
-        while(timer > 0)
+        while(_currentAbilities[index].Timer > 0)
         {
-            timer -= Time.deltaTime;
+            _currentAbilities[index].Timer -= Time.deltaTime;
 
-            SetRectHeight(_coolDownOverlays[index], (timer / _abilityCooldowns[index]) * 150);
+            SetRectHeight(_coolDownOverlays[index], (_currentAbilities[index].Timer / _currentAbilities[index].Cooldown) * 150);
 
             yield return null;
         }
 
         SetRectHeight(_coolDownOverlays[index], 0);
-        _abilityUseCounts[index]--;
+        _currentAbilities[index].UseCount--;
 
-        if (_abilityUseCounts[index] == 0) RandomizeAbility(index);
+        if (_currentAbilities[index].UseCount == 0) RandomizeAbility(index);
 
-        _abilitiesCanBeUsed[index] = true;
+        _currentAbilities[index].OnCooldown = false;
     }
 
     private void HandleBumperSelectAbilities()
     {
-        if (Input.GetButtonDown("LeftBumper"))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             if (_selectedAbility == 0)
             {
@@ -109,7 +103,7 @@ public class AbilityCaster : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("RightBumper"))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (_selectedAbility == 2)
             {
@@ -122,6 +116,18 @@ public class AbilityCaster : MonoBehaviour
         }
 
         _selectedBorder.position = _abilityImages[_selectedAbility].rectTransform.position;
+    }
+
+    private void InstantiateAbility(string abilityName)
+    {
+        switch (abilityName)
+        {
+            case "Fireball":
+
+                break;
+            default:
+                break;
+        }
     }
 
     private void DebugInputs()

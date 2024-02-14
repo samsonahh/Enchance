@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Meteor
   <Star>k__BackingField: 2
-  <Sprite>k__BackingField: {fileID: 10901, guid: 0000000000000000f000000000000000,
+  <IconSprite>k__BackingField: {fileID: 10913, guid: 0000000000000000f000000000000000,
     type: 0}
   <MaxUseCount>k__BackingField: 5
+  UseCount: 5
   <Cooldown>k__BackingField: 5
+  Timer: 0
+  OnCooldown: 0
+  <AbilityPrefab>k__BackingField: {fileID: 0}

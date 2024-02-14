@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Fireball
   <Star>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 64749cf8468d39142a2ac983e5b63f93,
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: b5c80736b05afc4438c1a5c5a126abbe,
     type: 3}
   <MaxUseCount>k__BackingField: 10
+  UseCount: 5
   <Cooldown>k__BackingField: 2
+  Timer: -0.0025917105
+  OnCooldown: 0
+  <AbilityPrefab>k__BackingField: {fileID: 0}

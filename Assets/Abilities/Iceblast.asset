@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Iceblast
   <Star>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 10913, guid: 0000000000000000f000000000000000,
-    type: 0}
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: cc897a55510ec5548a48bf1f79007b97,
+    type: 3}
   <MaxUseCount>k__BackingField: 10
+  UseCount: 0
   <Cooldown>k__BackingField: 1
+  Timer: -0.0040083025
+  OnCooldown: 1
+  <AbilityPrefab>k__BackingField: {fileID: 0}
