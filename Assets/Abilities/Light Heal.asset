@@ -16,9 +16,12 @@ MonoBehaviour:
   <Star>k__BackingField: 1
   <IconSprite>k__BackingField: {fileID: 21300000, guid: 331cdffa4408f7349af86cde0c3a830e,
     type: 3}
-  <MaxUseCount>k__BackingField: 5
+  <MaxUseCount>k__BackingField: 1
   UseCount: 0
-  <Cooldown>k__BackingField: 2
+  <Cooldown>k__BackingField: 1
   Timer: 0
   OnCooldown: 0
+  <CastRadius>k__BackingField: 0.5
+  <CircleCastRadius>k__BackingField: 0
   <AbilityPrefab>k__BackingField: {fileID: 0}
+  <AbilityType>k__BackingField: 2

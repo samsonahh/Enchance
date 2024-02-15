@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class AbilityCaster : MonoBehaviour
 {
-    [SerializeField] private bool UsingController = true;
     [SerializeField] private Abilities _abilities;
-
     [SerializeField] private RectTransform _selectedBorder;
     [SerializeField] private Image[] _abilityImages;
     private RectTransform[] _coolDownOverlays = new RectTransform[3];
@@ -15,17 +13,31 @@ public class AbilityCaster : MonoBehaviour
     private int _selectedAbility = 0;
     private Ability[] _currentAbilities = new Ability[3];
 
+    [HideInInspector] public float CastRadius;
+    private AbilityType _abilityType;
+
+    [SerializeField] private Transform _projectileArrowPivotTransform;
+    [SerializeField] private Transform _castRadiusTransform;
+    [SerializeField] private Transform _circleCastTransform;
+    [SerializeField] private float _aimSpeed;
+
     private void Start()
     {
         InitializeOverlays();
         RandomizeAllAbilities();
+
+        SetBasedOnNewAbility();
     }
 
     private void Update()
     {
         HandleBumperSelectAbilities();
 
-        if (UsingController)
+        HandleCircleCast();
+        HandleCastRadius();
+        HandleProjectileArrowPivot();
+
+        if (PlayerController.Instance.UsingController)
         {
             if (Input.GetButtonDown("RightTrigger")) UseAbility(_selectedAbility);
         }
@@ -128,7 +140,7 @@ public class AbilityCaster : MonoBehaviour
 
     private void HandleBumperSelectAbilities()
     {
-        if (UsingController)
+        if (PlayerController.Instance.UsingController)
         {
             if (Input.GetButtonDown("LeftBumper"))
             {
@@ -182,6 +194,16 @@ public class AbilityCaster : MonoBehaviour
         }
 
         _selectedBorder.position = _abilityImages[_selectedAbility].rectTransform.position;
+        SetBasedOnNewAbility();
+    }
+
+    private void SetBasedOnNewAbility()
+    {
+        _abilityType = _currentAbilities[_selectedAbility].AbilityType;
+        CastRadius = _currentAbilities[_selectedAbility].CastRadius;
+        _projectileArrowPivotTransform.localScale = new Vector3(_projectileArrowPivotTransform.localScale.x, _projectileArrowPivotTransform.localScale.y, CastRadius);
+        _castRadiusTransform.localScale = new Vector3(CastRadius, _castRadiusTransform.localScale.y, CastRadius);
+        _circleCastTransform.localScale = new Vector3(_currentAbilities[_selectedAbility].CircleCastRadius, _circleCastTransform.localScale.y, _currentAbilities[_selectedAbility].CircleCastRadius);
     }
 
     private void InstantiateAbility(Ability ability)
@@ -192,6 +214,10 @@ public class AbilityCaster : MonoBehaviour
                 Fireball fireball = (Fireball)Instantiate(ability.AbilityPrefab, transform.position, Quaternion.identity);
                 fireball.Init(this);
                 fireball.SetDirection(PlayerController.Instance.ForwardDirection);
+                break;
+            case "Magic Bomb":
+                MagicBomb bomb = (MagicBomb)Instantiate(ability.AbilityPrefab, transform.position, Quaternion.identity);
+                bomb.Init(this);
                 break;
             default:
                 break;
@@ -208,4 +234,51 @@ public class AbilityCaster : MonoBehaviour
             }
         }
     }
+
+    private void HandleCircleCast()
+    {
+        _circleCastTransform.gameObject.SetActive((_abilityType == AbilityType.Circle) && !_currentAbilities[_selectedAbility].OnCooldown);
+
+        float x = Input.GetAxisRaw("RightHorizontal");
+        float z = Input.GetAxisRaw("RightVertical");
+
+        Vector3 dir = new Vector3(x, 0, z).normalized;
+
+        _circleCastTransform.localPosition += _aimSpeed * Time.deltaTime * dir;
+
+        _circleCastTransform.localPosition = Vector3.ClampMagnitude(_circleCastTransform.localPosition, CastRadius);
+
+        /*
+       Vector2 screenPos = Camera.main.WorldToViewportPoint(_playerAimMarker.position);
+       screenPos = new Vector2(Mathf.Clamp(screenPos.x, 0, 1), Mathf.Clamp(screenPos.y, 0, 1));
+
+       Plane plane = new Plane(Vector3.up, Vector3.zero);
+       Ray ray = Camera.main.ViewportPointToRay(screenPos);
+       float distance;
+       if (plane.Raycast(ray, out distance))
+       {
+           Vector3 worldPos = ray.GetPoint(distance);
+           //worldPos = Vector3.ClampMagnitude(worldPos, AbilityCaster.Instance.CastRadius);
+           _playerAimMarker.position = worldPos;
+       }*/
+    }
+
+    private void HandleCastRadius()
+    {
+        _castRadiusTransform.gameObject.SetActive((_abilityType == AbilityType.Circle || _abilityType == AbilityType.Self) && !_currentAbilities[_selectedAbility].OnCooldown);
+    }
+
+    private void HandleProjectileArrowPivot()
+    {
+        _projectileArrowPivotTransform.gameObject.SetActive((_abilityType == AbilityType.Projectile) && !_currentAbilities[_selectedAbility].OnCooldown);
+    }
+}
+
+public enum AbilityType
+{
+    Projectile,
+    Circle,
+    Self,
+    Closest,
+    Beam,
 }

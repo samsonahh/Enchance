@@ -5,8 +5,6 @@ using UnityEngine;
 public class Fireball : AbilityInstance
 {
     [SerializeField] private float _speed;
-    [SerializeField] private float _duration;
-    private float _timer;
     private Vector3 _direction;
 
     public void SetDirection(Vector3 dir)
@@ -14,13 +12,16 @@ public class Fireball : AbilityInstance
         _direction = dir;
     }
 
-    public void Update()
+    private void FixedUpdate()
     {
-        _timer += Time.deltaTime;
+        transform.Translate(_speed * Time.deltaTime * _direction);
+    }
 
-        transform.Translate(_speed * Time.deltaTime * _direction, Space.World);
-
-        if (_timer > _duration)
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position, _abilityCaster.transform.position) > _abilityCaster.CastRadius)
+        {
             Destroy(gameObject);
+        }
     }
 }
