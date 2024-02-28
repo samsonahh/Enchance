@@ -26,3 +26,4 @@ MonoBehaviour:
   <AbilityPrefab>k__BackingField: {fileID: 2216140401218759904, guid: a35eb99f1f729d4429324242b8c2f9bb,
     type: 3}
   <AbilityType>k__BackingField: 0
+  <CastTime>k__BackingField: 0.5

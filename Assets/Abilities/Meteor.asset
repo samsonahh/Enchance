@@ -25,3 +25,4 @@ MonoBehaviour:
   <CircleCastRadius>k__BackingField: 2
   <AbilityPrefab>k__BackingField: {fileID: 0}
   <AbilityType>k__BackingField: 1
+  <CastTime>k__BackingField: 0.5

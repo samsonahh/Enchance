@@ -8,6 +8,7 @@ public class CameraMovement : MonoBehaviour
 
     private Vector3 _offsetPosition;
     private PlayerController _playerController;
+    private float _zoom = 10f;
 
     private void Start()
     {
@@ -15,13 +16,22 @@ public class CameraMovement : MonoBehaviour
         _playerController = FindObjectOfType<PlayerController>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         FollowPlayer();
+        HandleZoom();
     }
 
     private void FollowPlayer()
     {
         transform.position = Vector3.Lerp(transform.position, _playerController.transform.position + _offsetPosition, _cameraSmoothTime * Time.deltaTime);
+    }
+
+    private void HandleZoom()
+    {
+        _zoom -= Input.mouseScrollDelta.y;
+        _zoom = Mathf.Clamp(_zoom, 3f, 10f);
+
+        _offsetPosition = Vector3.Lerp(_offsetPosition, new Vector3(0, _zoom, -_zoom), 2f * _cameraSmoothTime * Time.deltaTime);
     }
 }

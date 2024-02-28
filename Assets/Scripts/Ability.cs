@@ -19,6 +19,7 @@ public class Ability : ScriptableObject
     [field: SerializeField] public float CircleCastRadius { get; private set; }
     [field: SerializeField] public AbilityInstance AbilityPrefab { get; private set; }
     [field: SerializeField] public AbilityType AbilityType { get; private set; }
+    [field: SerializeField] public float CastTime { get; private set; }
 
     public static Ability CopyAbility(Ability ability)
     {
@@ -35,6 +36,7 @@ public class Ability : ScriptableObject
         a.CircleCastRadius = ability.CircleCastRadius;
         a.AbilityPrefab = ability.AbilityPrefab;
         a.AbilityType = ability.AbilityType;
+        a.CastTime = ability.CastTime;
 
         return a;
     }

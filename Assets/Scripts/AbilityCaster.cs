@@ -6,15 +6,13 @@ using UnityEngine.UI;
 public class AbilityCaster : MonoBehaviour
 {
     [SerializeField] private Abilities _abilities;
-    [SerializeField] private RectTransform _selectedBorder;
     [SerializeField] private Image[] _abilityImages;
+    [SerializeField] private RectTransform _selectedOverlay;
     private RectTransform[] _coolDownOverlays = new RectTransform[3];
 
+    private bool _isSelectingAbility = false;
     private int _selectedAbility = 0;
     private Ability[] _currentAbilities = new Ability[3];
-
-    [HideInInspector] public float CastRadius;
-    private AbilityType _abilityType;
 
     [SerializeField] private Transform _projectileArrowPivotTransform;
     [SerializeField] private Transform _castRadiusTransform;
@@ -25,34 +23,22 @@ public class AbilityCaster : MonoBehaviour
     {
         InitializeOverlays();
         RandomizeAllAbilities();
-
-        SetBasedOnNewAbility();
     }
 
     private void Update()
     {
-        HandleBumperSelectAbilities();
-
         HandleCircleCast();
         HandleCastRadius();
         HandleProjectileArrowPivot();
 
-        if (PlayerController.Instance.UsingController)
-        {
-            if (Input.GetButtonDown("RightTrigger")) UseAbility(_selectedAbility);
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) UseAbility(_selectedAbility);
-        }
+        SelectAbility();
     }
     private void UseAbility(int index)
     {
         if (_currentAbilities[index].OnCooldown) return;
+        if (PlayerController.Instance.IsCasting) return;
 
-        InstantiateAbility(_currentAbilities[index]);
-
-        StartCoroutine(AbilityCooldown(index));
+        StartCoroutine(UseAbilityCoroutine(index));
     }
 
     private void InitializeOverlays()
@@ -62,8 +48,6 @@ public class AbilityCaster : MonoBehaviour
             _coolDownOverlays[i] = _abilityImages[i].transform.GetChild(0).GetComponent<RectTransform>();
             SetRectHeight(_coolDownOverlays[i], 0);
         }
-
-        _selectedBorder.position = _abilityImages[_selectedAbility].rectTransform.position;
     }
 
     private void SetRectHeight(RectTransform rt, float height)
@@ -138,72 +122,85 @@ public class AbilityCaster : MonoBehaviour
         _currentAbilities[index].OnCooldown = false;
     }
 
-    private void HandleBumperSelectAbilities()
+    private IEnumerator UseAbilityCoroutine(int index)
     {
-        if (PlayerController.Instance.UsingController)
-        {
-            if (Input.GetButtonDown("LeftBumper"))
-            {
-                if (_selectedAbility == 0)
-                {
-                    _selectedAbility = 2;
-                }
-                else
-                {
-                    _selectedAbility--;
-                }
-            }
+        PlayerController.Instance.IsCasting = true;
 
-            if (Input.GetButtonDown("RightBumper"))
-            {
-                if (_selectedAbility == 2)
-                {
-                    _selectedAbility = 0;
-                }
-                else
-                {
-                    _selectedAbility++;
-                }
-            }
-        }
-        else
+        yield return new WaitForSeconds(_currentAbilities[index].CastTime);
+
+        PlayerController.Instance.IsCasting = false;
+
+        InstantiateAbility(_currentAbilities[index]);
+
+        StartCoroutine(AbilityCooldown(index));
+    }
+
+    private void SelectAbility()
+    {
+        _selectedOverlay.gameObject.SetActive(_isSelectingAbility);
+
+        if (!_isSelectingAbility)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (_selectedAbility == 0)
-                {
-                    _selectedAbility = 2;
-                }
-                else
-                {
-                    _selectedAbility--;
-                }
+                _isSelectingAbility = true;
+                _selectedAbility = 0;
             }
-
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                _isSelectingAbility = true;
+                _selectedAbility = 1;
+            }
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (_selectedAbility == 2)
-                {
-                    _selectedAbility = 0;
-                }
-                else
-                {
-                    _selectedAbility++;
-                }
+                _isSelectingAbility = true;
+                _selectedAbility = 2;
             }
+
+            return;
         }
 
-        _selectedBorder.position = _abilityImages[_selectedAbility].rectTransform.position;
-        SetBasedOnNewAbility();
-    }
-
-    private void SetBasedOnNewAbility()
-    {
-        _abilityType = _currentAbilities[_selectedAbility].AbilityType;
-        CastRadius = _currentAbilities[_selectedAbility].CastRadius;
-        _projectileArrowPivotTransform.localScale = new Vector3(_projectileArrowPivotTransform.localScale.x, _projectileArrowPivotTransform.localScale.y, CastRadius);
-        _castRadiusTransform.localScale = new Vector3(CastRadius, _castRadiusTransform.localScale.y, CastRadius);
+        _projectileArrowPivotTransform.localScale = new Vector3(_projectileArrowPivotTransform.localScale.x, _projectileArrowPivotTransform.localScale.y, _currentAbilities[_selectedAbility].CastRadius);
+        _castRadiusTransform.localScale = new Vector3(_currentAbilities[_selectedAbility].CastRadius, _castRadiusTransform.localScale.y, _currentAbilities[_selectedAbility].CastRadius);
         _circleCastTransform.localScale = new Vector3(_currentAbilities[_selectedAbility].CircleCastRadius, _circleCastTransform.localScale.y, _currentAbilities[_selectedAbility].CircleCastRadius);
+        _selectedOverlay.position = _coolDownOverlays[_selectedAbility].transform.parent.position;
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if(_selectedAbility == 0)
+            {
+                _isSelectingAbility = false;
+                UseAbility(_selectedAbility);
+            }
+            else
+            {
+                _isSelectingAbility = false;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (_selectedAbility == 1)
+            {
+                _isSelectingAbility = false;
+                UseAbility(_selectedAbility);
+            }
+            else
+            {
+                _isSelectingAbility = false;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (_selectedAbility == 2)
+            {
+                _isSelectingAbility = false;
+                UseAbility(_selectedAbility);
+            }
+            else
+            {
+                _isSelectingAbility = false;
+            }
+        }
     }
 
     private void InstantiateAbility(Ability ability)
@@ -237,40 +234,19 @@ public class AbilityCaster : MonoBehaviour
 
     private void HandleCircleCast()
     {
-        _circleCastTransform.gameObject.SetActive((_abilityType == AbilityType.Circle) && !_currentAbilities[_selectedAbility].OnCooldown);
+        _circleCastTransform.gameObject.SetActive((_currentAbilities[_selectedAbility].AbilityType == AbilityType.Circle) && _isSelectingAbility);
 
-        float x = Input.GetAxisRaw("RightHorizontal");
-        float z = Input.GetAxisRaw("RightVertical");
-
-        Vector3 dir = new Vector3(x, 0, z).normalized;
-
-        _circleCastTransform.localPosition += _aimSpeed * Time.deltaTime * dir;
-
-        _circleCastTransform.localPosition = Vector3.ClampMagnitude(_circleCastTransform.localPosition, CastRadius);
-
-        /*
-       Vector2 screenPos = Camera.main.WorldToViewportPoint(_playerAimMarker.position);
-       screenPos = new Vector2(Mathf.Clamp(screenPos.x, 0, 1), Mathf.Clamp(screenPos.y, 0, 1));
-
-       Plane plane = new Plane(Vector3.up, Vector3.zero);
-       Ray ray = Camera.main.ViewportPointToRay(screenPos);
-       float distance;
-       if (plane.Raycast(ray, out distance))
-       {
-           Vector3 worldPos = ray.GetPoint(distance);
-           //worldPos = Vector3.ClampMagnitude(worldPos, AbilityCaster.Instance.CastRadius);
-           _playerAimMarker.position = worldPos;
-       }*/
+        _circleCastTransform.position = PlayerController.Instance.MouseWorldPosition;
     }
 
     private void HandleCastRadius()
     {
-        _castRadiusTransform.gameObject.SetActive((_abilityType == AbilityType.Circle || _abilityType == AbilityType.Self) && !_currentAbilities[_selectedAbility].OnCooldown);
+        _castRadiusTransform.gameObject.SetActive((_currentAbilities[_selectedAbility].AbilityType == AbilityType.Circle || _currentAbilities[_selectedAbility].AbilityType == AbilityType.Self) && _isSelectingAbility);
     }
 
     private void HandleProjectileArrowPivot()
     {
-        _projectileArrowPivotTransform.gameObject.SetActive((_abilityType == AbilityType.Projectile) && !_currentAbilities[_selectedAbility].OnCooldown);
+        _projectileArrowPivotTransform.gameObject.SetActive((_currentAbilities[_selectedAbility].AbilityType == AbilityType.Projectile) && _isSelectingAbility);
     }
 }
 

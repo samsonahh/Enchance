@@ -19,7 +19,7 @@ public class Fireball : AbilityInstance
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, _abilityCaster.transform.position) > _abilityCaster.CastRadius)
+        if (Vector3.Distance(transform.position, _abilityCaster.transform.position) > 10)
         {
             Destroy(gameObject);
         }
