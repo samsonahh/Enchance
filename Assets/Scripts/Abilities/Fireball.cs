@@ -6,10 +6,12 @@ public class Fireball : AbilityInstance
 {
     [SerializeField] private float _speed;
     private Vector3 _direction;
+    private float _distance;
 
-    public void SetDirection(Vector3 dir)
+    public void SetupFireball(Vector3 dir, float dist)
     {
         _direction = dir;
+        _distance = dist;
     }
 
     private void FixedUpdate()
@@ -19,7 +21,7 @@ public class Fireball : AbilityInstance
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, _abilityCaster.transform.position) > 10)
+        if (Vector3.Distance(transform.position, _abilityCaster.transform.position) > _distance)
         {
             Destroy(gameObject);
         }

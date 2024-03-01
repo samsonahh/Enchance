@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _arrowPivot;
-    [SerializeField] private GameObject _playerDestinationIndicatorPrefab;
+    [SerializeField] private DestinationIndicator _playerDestinationObject;
     private NavMeshAgent _navMeshAgent;
 
     [HideInInspector] public static PlayerController Instance { get; private set; }
@@ -25,8 +25,6 @@ public class PlayerController : MonoBehaviour
     private float _lastDamagedTimer;
     [SerializeField] private float _startRegenTreshold = 5f;
     [SerializeField] private float _regenRate = 3f;
-
-    private GameObject _tempDestIndicator;
 
     private void Awake()
     {
@@ -78,15 +76,11 @@ public class PlayerController : MonoBehaviour
             PlayerDestinationPositon = MouseWorldPosition;
             _navMeshAgent.SetDestination(PlayerDestinationPositon);
 
-            if(_tempDestIndicator != null)
-                Destroy(_tempDestIndicator);
-            _tempDestIndicator = Instantiate(_playerDestinationIndicatorPrefab, PlayerDestinationPositon, Quaternion.identity);
+            _playerDestinationObject.SetIndicatorPostion(PlayerDestinationPositon);
         }
 
-        if(_navMeshAgent.isStopped)
-        {
-            IsMoving = false;
-        }
+        IsMoving = _navMeshAgent.velocity.magnitude != 0;
+        _playerDestinationObject.MakeSpriteVisible(IsMoving);
     }
 
     private void HandlePlayerFacingDirection()
@@ -122,7 +116,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            if (_lastDamagedTimer <= _startRegenTreshold || CurrentHealth >= MaxHealth)
+            if (_lastDamagedTimer <= _startRegenTreshold || CurrentHealth >= MaxHealth || CurrentHealth <= 0)
             {
                 yield return null;
             }

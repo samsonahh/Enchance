@@ -223,7 +223,7 @@ public class AbilityCaster : MonoBehaviour
             case "Fireball":
                 Fireball fireball = (Fireball)Instantiate(ability.AbilityPrefab, transform.position, Quaternion.identity);
                 fireball.Init(this);
-                fireball.SetDirection(PlayerController.Instance.ForwardDirection);
+                fireball.SetupFireball(PlayerController.Instance.ForwardDirection, _currentAbilities[_selectedAbility].CastRadius);
                 break;
             case "Magic Bomb":
                 MagicBomb bomb = (MagicBomb)Instantiate(ability.AbilityPrefab, transform.position, Quaternion.identity);

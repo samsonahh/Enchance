@@ -4,8 +4,23 @@ using UnityEngine;
 
 public class DestinationIndicator : MonoBehaviour
 {
+    private GameObject _sprite;
+
     void Start()
     {
-        Destroy(gameObject, 2f);
+        _sprite = transform.GetChild(0).gameObject;
+
+        MakeSpriteVisible(false);
+    }
+
+    public void SetIndicatorPostion(Vector3 pos)
+    {
+        MakeSpriteVisible(true);
+        transform.position = pos;
+    }
+
+    public void MakeSpriteVisible(bool b)
+    {
+        _sprite.SetActive(b);
     }
 }

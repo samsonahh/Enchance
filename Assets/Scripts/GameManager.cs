@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        UpdateGameState(GameState.Playing);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -31,8 +36,10 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.Playing:
+                Time.timeScale = 1f;
                 break;
             case GameState.Paused:
+                Time.timeScale = 0f;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
