@@ -16,14 +16,26 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UpdateGameState(State == GameState.Paused ? GameState.Playing : GameState.Paused);
+        }
+    }
+
     public void UpdateGameState(GameState newState)
     {
         State = newState;
 
         switch (newState)
         {
-            default:
+            case GameState.Playing:
                 break;
+            case GameState.Paused:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
 
         OnGameStateChanged?.Invoke(newState);
@@ -32,5 +44,6 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
+    Playing,
     Paused
 }

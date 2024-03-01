@@ -139,22 +139,35 @@ public class AbilityCaster : MonoBehaviour
     {
         _selectedOverlay.gameObject.SetActive(_isSelectingAbility);
 
+        if (PlayerController.Instance.IsCasting) return;
+
+        
+
         if (!_isSelectingAbility)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                _isSelectingAbility = true;
-                _selectedAbility = 0;
+                if (!_currentAbilities[0].OnCooldown)
+                {
+                    _selectedAbility = 0;
+                    _isSelectingAbility = true;
+                }
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
-                _isSelectingAbility = true;
-                _selectedAbility = 1;
+                if (!_currentAbilities[1].OnCooldown)
+                {
+                    _selectedAbility = 1;
+                    _isSelectingAbility = true;
+                }
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
-                _isSelectingAbility = true;
-                _selectedAbility = 2;
+                if (!_currentAbilities[2].OnCooldown)
+                {
+                    _selectedAbility = 2;
+                    _isSelectingAbility = true;
+                }
             }
 
             return;
