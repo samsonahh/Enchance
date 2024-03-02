@@ -17,7 +17,7 @@ public class Ability : ScriptableObject
     [HideInInspector] public bool OnCooldown;
     [field: SerializeField] public float CastRadius { get; private set; }
     [field: SerializeField] public float CircleCastRadius { get; private set; }
-    [field: SerializeField] public AbilityInstance AbilityPrefab { get; private set; }
+    [field: SerializeField] public GameObject AbilityPrefab { get; private set; }
     [field: SerializeField] public AbilityType AbilityType { get; private set; }
     [field: SerializeField] public float CastTime { get; private set; }
 

@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public static PlayerController Instance { get; private set; }
 
     [HideInInspector] public Vector3 ForwardDirection { get; private set; } = Vector3.right;
+    [HideInInspector] public Vector3 LastForwardDirection { get; private set; }
     [HideInInspector] public Vector3 MouseWorldPosition { get; private set; }
+    [HideInInspector] public Vector3 LastMouseWorldPosition { get; private set; }
     [HideInInspector] public Vector3 PlayerDestinationPositon { get; private set; }
 
     [HideInInspector] public bool IsMoving { get; private set; }
@@ -29,6 +31,9 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        AbilityCaster.OnAbilityCast += AssignLastVariables;
+        AbilityCaster.OnAbilityCast += StopPlayer;
     }
 
     private void Start()
@@ -64,8 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsCasting)
         {
-            IsMoving = false;
-            _navMeshAgent.SetDestination(transform.position);
+            StopPlayer(0);
             return;
         }
 
@@ -79,12 +83,19 @@ public class PlayerController : MonoBehaviour
             _playerDestinationObject.SetIndicatorPostion(PlayerDestinationPositon);
         }
 
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            StopPlayer(0);
+        }
+
         IsMoving = _navMeshAgent.velocity.magnitude != 0;
         _playerDestinationObject.MakeSpriteVisible(IsMoving);
     }
 
     private void HandlePlayerFacingDirection()
     {
+        if (IsCasting) return;
+
         Vector3 facingDirection = (MouseWorldPosition - transform.position).normalized;
 
         if (Mathf.Abs(facingDirection.x) > 0) _spriteRenderer.flipX = facingDirection.x < 0;
@@ -96,6 +107,26 @@ public class PlayerController : MonoBehaviour
 
         float targetAngle = -(Mathf.Atan2(ForwardDirection.z, ForwardDirection.x) * Mathf.Rad2Deg - 90f);
         _arrowPivot.localRotation = Quaternion.Lerp(_arrowPivot.localRotation, Quaternion.AngleAxis(targetAngle, Vector3.up), 50f * Time.deltaTime);
+    }
+
+    private void AssignLastVariables(int i)
+    {
+        if (i == 1) return;
+
+        LastForwardDirection = ForwardDirection;
+        LastMouseWorldPosition = MouseWorldPosition;
+    }
+
+    private void StopPlayer(int i)
+    {
+        if (i == 1) return;
+
+        IsMoving = false;
+
+        PlayerDestinationPositon = transform.position;
+        _navMeshAgent.SetDestination(PlayerDestinationPositon);
+
+        _playerDestinationObject.MakeSpriteVisible(false);
     }
 
     private void ManagePlayerHealth()
@@ -132,5 +163,10 @@ public class PlayerController : MonoBehaviour
     {
         CurrentHealth -= damage;
         _lastDamagedTimer = 0f;
+    }
+
+    public void Heal(int hp)
+    {
+        CurrentHealth += hp;
     }
 }

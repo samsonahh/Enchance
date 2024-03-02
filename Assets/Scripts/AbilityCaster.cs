@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,30 @@ using UnityEngine.UI;
 
 public class AbilityCaster : MonoBehaviour
 {
+    [HideInInspector] public static AbilityCaster Instance;
+
     [SerializeField] private Abilities _abilities;
     [SerializeField] private Image[] _abilityImages;
     [SerializeField] private RectTransform _selectedOverlay;
     private RectTransform[] _coolDownOverlays = new RectTransform[3];
 
     private bool _isSelectingAbility = false;
-    private int _selectedAbility = 0;
-    private Ability[] _currentAbilities = new Ability[3];
+    [HideInInspector] public int SelectedAbility = 0;
+    [HideInInspector] public Ability[] CurrentAbilities = new Ability[3];
 
     [SerializeField] private Transform _projectileArrowPivotTransform;
     [SerializeField] private Transform _castRadiusTransform;
     [SerializeField] private Transform _circleCastTransform;
     [SerializeField] private float _aimSpeed;
+
+    public static event Action<int> OnAbilityCast; // 0 - casting, 1 - finished cast
+
+    private void Awake()
+    {
+        Instance = this;
+
+        OnAbilityCast += HandleOnAbilityCast;
+    }
 
     private void Start()
     {
@@ -35,7 +47,7 @@ public class AbilityCaster : MonoBehaviour
     }
     private void UseAbility(int index)
     {
-        if (_currentAbilities[index].OnCooldown) return;
+        if (CurrentAbilities[index].OnCooldown) return;
         if (PlayerController.Instance.IsCasting) return;
 
         StartCoroutine(UseAbilityCoroutine(index));
@@ -61,35 +73,35 @@ public class AbilityCaster : MonoBehaviour
         foreach (Ability ability in _abilities.GameAbilities)
         {
             availableAbilities.Add(ability);
-            if (_currentAbilities[0] != null)
+            if (CurrentAbilities[0] != null)
             {
-                if (_currentAbilities[0].Name.Equals(ability.Name))
+                if (CurrentAbilities[0].Name.Equals(ability.Name))
                 {
                     availableAbilities.Remove(ability);
                 }
             }
-            if (_currentAbilities[1] != null)
+            if (CurrentAbilities[1] != null)
             {
-                if (_currentAbilities[1].Name.Equals(ability.Name))
+                if (CurrentAbilities[1].Name.Equals(ability.Name))
                 {
                     availableAbilities.Remove(ability);
                 }
             }
-            if (_currentAbilities[2] != null)
+            if (CurrentAbilities[2] != null)
             {
-                if (_currentAbilities[2].Name.Equals(ability.Name))
+                if (CurrentAbilities[2].Name.Equals(ability.Name))
                 {
                     availableAbilities.Remove(ability);
                 }
             }
         }
 
-        int randomIndex = Random.Range(0, availableAbilities.Count);
+        int randomIndex = UnityEngine.Random.Range(0, availableAbilities.Count);
         Ability randomAbility = availableAbilities[randomIndex];
 
         _abilityImages[index].sprite = randomAbility.IconSprite;
 
-        _currentAbilities[index] = Ability.CopyAbility(randomAbility);
+        CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
     }
 
     private void RandomizeAllAbilities()
@@ -101,36 +113,37 @@ public class AbilityCaster : MonoBehaviour
 
     private IEnumerator AbilityCooldown(int index)
     {
-        _currentAbilities[index].OnCooldown = true;
+        CurrentAbilities[index].OnCooldown = true;
 
-        _currentAbilities[index].Timer = _currentAbilities[index].Cooldown;
+        CurrentAbilities[index].Timer = CurrentAbilities[index].Cooldown;
 
-        while(_currentAbilities[index].Timer > 0)
+        while(CurrentAbilities[index].Timer > 0)
         {
-            _currentAbilities[index].Timer -= Time.deltaTime;
+            CurrentAbilities[index].Timer -= Time.deltaTime;
 
-            SetRectHeight(_coolDownOverlays[index], (_currentAbilities[index].Timer / _currentAbilities[index].Cooldown) * 150);
+            SetRectHeight(_coolDownOverlays[index], (CurrentAbilities[index].Timer / CurrentAbilities[index].Cooldown) * 150);
 
             yield return null;
         }
 
         SetRectHeight(_coolDownOverlays[index], 0);
-        _currentAbilities[index].UseCount--;
+        CurrentAbilities[index].UseCount--;
 
-        if (_currentAbilities[index].UseCount == 0) RandomizeAbility(index);
+        if (CurrentAbilities[index].UseCount == 0) RandomizeAbility(index);
 
-        _currentAbilities[index].OnCooldown = false;
+        CurrentAbilities[index].OnCooldown = false;
     }
 
     private IEnumerator UseAbilityCoroutine(int index)
     {
         PlayerController.Instance.IsCasting = true;
+        OnAbilityCast?.Invoke(0);
 
-        yield return new WaitForSeconds(_currentAbilities[index].CastTime);
+        yield return new WaitForSeconds(CurrentAbilities[index].CastTime);
 
         PlayerController.Instance.IsCasting = false;
 
-        InstantiateAbility(_currentAbilities[index]);
+        OnAbilityCast?.Invoke(1);
 
         StartCoroutine(AbilityCooldown(index));
     }
@@ -147,25 +160,25 @@ public class AbilityCaster : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (!_currentAbilities[0].OnCooldown)
+                if (!CurrentAbilities[0].OnCooldown)
                 {
-                    _selectedAbility = 0;
+                    SelectedAbility = 0;
                     _isSelectingAbility = true;
                 }
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
-                if (!_currentAbilities[1].OnCooldown)
+                if (!CurrentAbilities[1].OnCooldown)
                 {
-                    _selectedAbility = 1;
+                    SelectedAbility = 1;
                     _isSelectingAbility = true;
                 }
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (!_currentAbilities[2].OnCooldown)
+                if (!CurrentAbilities[2].OnCooldown)
                 {
-                    _selectedAbility = 2;
+                    SelectedAbility = 2;
                     _isSelectingAbility = true;
                 }
             }
@@ -173,17 +186,17 @@ public class AbilityCaster : MonoBehaviour
             return;
         }
 
-        _projectileArrowPivotTransform.localScale = new Vector3(_projectileArrowPivotTransform.localScale.x, _projectileArrowPivotTransform.localScale.y, _currentAbilities[_selectedAbility].CastRadius);
-        _castRadiusTransform.localScale = new Vector3(_currentAbilities[_selectedAbility].CastRadius, _castRadiusTransform.localScale.y, _currentAbilities[_selectedAbility].CastRadius);
-        _circleCastTransform.localScale = new Vector3(_currentAbilities[_selectedAbility].CircleCastRadius, _circleCastTransform.localScale.y, _currentAbilities[_selectedAbility].CircleCastRadius);
-        _selectedOverlay.position = _coolDownOverlays[_selectedAbility].transform.parent.position;
+        _projectileArrowPivotTransform.localScale = new Vector3(_projectileArrowPivotTransform.localScale.x, _projectileArrowPivotTransform.localScale.y, CurrentAbilities[SelectedAbility].CastRadius);
+        _castRadiusTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CastRadius, _castRadiusTransform.localScale.y, CurrentAbilities[SelectedAbility].CastRadius);
+        _circleCastTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CircleCastRadius, _circleCastTransform.localScale.y, CurrentAbilities[SelectedAbility].CircleCastRadius);
+        _selectedOverlay.position = _coolDownOverlays[SelectedAbility].transform.parent.position;
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(_selectedAbility == 0)
+            if(SelectedAbility == 0)
             {
                 _isSelectingAbility = false;
-                UseAbility(_selectedAbility);
+                UseAbility(SelectedAbility);
             }
             else
             {
@@ -192,10 +205,10 @@ public class AbilityCaster : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (_selectedAbility == 1)
+            if (SelectedAbility == 1)
             {
                 _isSelectingAbility = false;
-                UseAbility(_selectedAbility);
+                UseAbility(SelectedAbility);
             }
             else
             {
@@ -204,10 +217,10 @@ public class AbilityCaster : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (_selectedAbility == 2)
+            if (SelectedAbility == 2)
             {
                 _isSelectingAbility = false;
-                UseAbility(_selectedAbility);
+                UseAbility(SelectedAbility);
             }
             else
             {
@@ -216,22 +229,17 @@ public class AbilityCaster : MonoBehaviour
         }
     }
 
-    private void InstantiateAbility(Ability ability)
+    private void HandleOnAbilityCast(int i)
     {
-        switch (ability.Name)
+        if (i == 0) return;
+
+        if(i == 1)
         {
-            case "Fireball":
-                Fireball fireball = (Fireball)Instantiate(ability.AbilityPrefab, transform.position, Quaternion.identity);
-                fireball.Init(this);
-                fireball.SetupFireball(PlayerController.Instance.ForwardDirection, _currentAbilities[_selectedAbility].CastRadius);
-                break;
-            case "Magic Bomb":
-                MagicBomb bomb = (MagicBomb)Instantiate(ability.AbilityPrefab, transform.position, Quaternion.identity);
-                bomb.Init(this);
-                break;
-            default:
-                break;
-        }
+            if(CurrentAbilities[SelectedAbility].AbilityPrefab != null)
+            {
+                Instantiate(CurrentAbilities[SelectedAbility].AbilityPrefab);
+            }
+        }  
     }
 
     private void DebugInputs()
@@ -247,19 +255,20 @@ public class AbilityCaster : MonoBehaviour
 
     private void HandleCircleCast()
     {
-        _circleCastTransform.gameObject.SetActive((_currentAbilities[_selectedAbility].AbilityType == AbilityType.Circle) && _isSelectingAbility);
+        _circleCastTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle) && _isSelectingAbility);
 
         _circleCastTransform.position = PlayerController.Instance.MouseWorldPosition;
+        _circleCastTransform.localPosition = Vector3.ClampMagnitude(_circleCastTransform.localPosition, CurrentAbilities[SelectedAbility].CastRadius);
     }
 
     private void HandleCastRadius()
     {
-        _castRadiusTransform.gameObject.SetActive((_currentAbilities[_selectedAbility].AbilityType == AbilityType.Circle || _currentAbilities[_selectedAbility].AbilityType == AbilityType.Self) && _isSelectingAbility);
+        _castRadiusTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle || CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Self) && _isSelectingAbility);
     }
 
     private void HandleProjectileArrowPivot()
     {
-        _projectileArrowPivotTransform.gameObject.SetActive((_currentAbilities[_selectedAbility].AbilityType == AbilityType.Projectile) && _isSelectingAbility);
+        _projectileArrowPivotTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Projectile) && _isSelectingAbility);
     }
 }
 

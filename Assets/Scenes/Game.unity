@@ -2729,6 +2729,11 @@ MonoBehaviour:
   - {fileID: 202157645}
   - {fileID: 999591447}
   _selectedOverlay: {fileID: 131709693}
+  SelectedAbility: 0
+  CurrentAbilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _projectileArrowPivotTransform: {fileID: 1428094223}
   _castRadiusTransform: {fileID: 320405957}
   _circleCastTransform: {fileID: 744252217}
