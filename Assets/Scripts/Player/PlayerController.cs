@@ -32,8 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         Instance = this;
 
-        AbilityCaster.OnAbilityCast += AssignLastVariables;
-        AbilityCaster.OnAbilityCast += StopPlayer;
+        AbilityCaster.OnAbilityCast += AbilityCaster_OnAbilityCast;
     }
 
     private void Start()
@@ -69,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsCasting)
         {
-            StopPlayer(0);
+            StopPlayer();
             return;
         }
 
@@ -85,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            StopPlayer(0);
+            StopPlayer();
         }
 
         IsMoving = _navMeshAgent.velocity.magnitude != 0;
@@ -109,24 +108,28 @@ public class PlayerController : MonoBehaviour
         _arrowPivot.localRotation = Quaternion.Lerp(_arrowPivot.localRotation, Quaternion.AngleAxis(targetAngle, Vector3.up), 50f * Time.deltaTime);
     }
 
-    private void AssignLastVariables(int i)
+    private void AssignLastVariables()
     {
-        if (i == 1) return;
-
         LastForwardDirection = ForwardDirection;
         LastMouseWorldPosition = MouseWorldPosition;
     }
 
-    private void StopPlayer(int i)
+    private void StopPlayer()
     {
-        if (i == 1) return;
-
         IsMoving = false;
 
         PlayerDestinationPositon = transform.position;
         _navMeshAgent.SetDestination(PlayerDestinationPositon);
 
         _playerDestinationObject.MakeSpriteVisible(false);
+    }
+
+    private void AbilityCaster_OnAbilityCast(int i)
+    {
+        if (i == 1) return;
+
+        AssignLastVariables();
+        StopPlayer();
     }
 
     private void ManagePlayerHealth()
