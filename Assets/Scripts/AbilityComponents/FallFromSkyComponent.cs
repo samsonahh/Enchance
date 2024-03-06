@@ -9,7 +9,7 @@ public class FallFromSkyComponent : MonoBehaviour
 
     private void Start()
     {
-        transform.position = PlayerController.Instance.LastMouseWorldPosition + _height * Vector3.up;
+        //transform.position = PlayerController.Instance.LastMouseWorldPosition + _height * Vector3.up;
     }
 
     private void Update()
