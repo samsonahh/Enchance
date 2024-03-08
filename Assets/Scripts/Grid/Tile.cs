@@ -8,16 +8,16 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private GameObject _highlight;
-    [SerializeField] private GameObject _pathed;
+    [SerializeField] private Collider _collider;
 
     [HideInInspector] public int X {get; private set;}
     [HideInInspector] public int Y {get; private set;}
     [HideInInspector] public float G;
     [HideInInspector] public float H;
-    [HideInInspector] public float F => G + H;
-    [HideInInspector] public Tile Connection;
-    public bool Walkable;
+    [HideInInspector] public float F;
+    [HideInInspector] public bool Walkable { get; private set; } = true;
     [HideInInspector] public bool Pathed;
+    private Color _ogColor;
     public void Init(int x, int y)
     {
         _gridManager = GridManager.Instance;
@@ -25,17 +25,25 @@ public class Tile : MonoBehaviour
         X = x;
         Y = y;
         
-        //bool isOffset = (x + y) % 2 == 1;
-        _renderer.color = false ? _offsetColor : _baseColor;
-
-        Walkable = Random.Range(0, 6) != 1 || (X == 0 && Y == 0);
+        bool isOffset = (x + y) % 2 == 1;
+        _renderer.color = isOffset ? _offsetColor : _baseColor;
+        _ogColor = _renderer.color;
+        Walkable = true;
         Pathed = false;
     }
 
     private void Update()
     {
-        _pathed.SetActive(Pathed);
-        if (!Walkable) _renderer.color = Color.black;
+        _highlight.SetActive(_collider.bounds.Contains(_gridManager.MousePosition));
+
+        if (Pathed)
+        {
+            _renderer.color = Color.black;
+        }
+        else
+        {
+            _renderer.color = _ogColor;
+        }
     }
 
     public float GetDistance(Tile t)

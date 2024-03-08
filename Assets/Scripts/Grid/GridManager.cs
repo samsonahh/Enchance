@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
 
     [HideInInspector] public Vector3 MousePosition { get; private set; }
 
-    public Dictionary<Vector2, Tile> _tiles;
+    private Dictionary<Vector2, Tile> _tiles;
 
     private void Awake()
     {
@@ -27,6 +27,27 @@ public class GridManager : MonoBehaviour
     private void Update()
     {
         CalculateMousePosition();
+
+        foreach (Tile t in _tiles.Values)
+        {
+            t.Pathed = false;
+        }
+        if (GetTileAtPosition(MousePosition) != null)
+        {
+            Tile playerTile = GetTileAtPosition(PlayerController.Instance.transform.position);
+            Tile targetTile = GetTileAtPosition(MousePosition);
+            List<Tile> nTiles = FindWalkableNeighbors(targetTile, new List<Tile>());
+            Debug.Log($"Tile: {targetTile.X}, {targetTile.Y} | Neighbors:");
+            foreach(var t in nTiles)
+            {
+                t.PrintTile();
+                t.Pathed = true;
+            }
+
+            List<Tile> path = AStarPathFind(playerTile, targetTile);
+
+ 
+        }
     }
 
     void GenerateGrid()
@@ -36,15 +57,12 @@ public class GridManager : MonoBehaviour
         {
             for(int y = 0; y < _height; y++)
             {
-                int newX = x - _width / 2;
-                int newY = y - _height / 2;
+                Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0, y), Quaternion.Euler(90, 0, 0), transform);
+                spawnedTile.name = $"Tile {x},{y}";
 
-                Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(newX, 0, newY), Quaternion.Euler(90, 0, 0), transform);
-                spawnedTile.name = $"Tile {newX},{newY}";
+                spawnedTile.Init(x, y);
 
-                spawnedTile.Init(newX, newY);
-
-                _tiles[new Vector2(newX, newY)] = spawnedTile;
+                _tiles[new Vector2(x, y)] = spawnedTile;
             }
         }
     }
@@ -84,6 +102,8 @@ public class GridManager : MonoBehaviour
         List<Tile> toSearch = new List<Tile>() { startTile };
         List<Tile> processed = new List<Tile>();
 
+        List<Tile> path = new List<Tile>() { };
+
         while (toSearch.Any())
         {
             Tile current = toSearch[0];
@@ -92,24 +112,12 @@ public class GridManager : MonoBehaviour
                 if(t.F < current.F || t.F == current.F && t.H < current.H)
                 {
                     current = t;
+                    path.Add(current);
                 }
             }
 
             processed.Add(current);
             toSearch.Remove(current);
-
-            if(current == targetTile)
-            {
-                Tile currentPathTile = targetTile;
-                List<Tile> path = new List<Tile>();
-                while(currentPathTile != startTile)
-                {
-                    path.Add(currentPathTile);
-                    currentPathTile = currentPathTile.Connection;
-                }
-
-                return path;
-            }
 
             foreach(Tile neighbor in FindWalkableNeighbors(current, processed))
             {
@@ -120,17 +128,18 @@ public class GridManager : MonoBehaviour
                 if(!inSearch || costToNeighbor < neighbor.G)
                 {
                     neighbor.G = costToNeighbor;
-                    neighbor.Connection = current;
 
                     if (!inSearch)
                     {
                         neighbor.H = neighbor.GetDistance(targetTile);
+                        neighbor.F = neighbor.G + neighbor.H;
                         toSearch.Add(neighbor);
                     }
                 }
             }
         }
-        return null;
+
+        return path;
     }
 
     private List<Tile> FindWalkableNeighbors(Tile tile, List<Tile> processed)
