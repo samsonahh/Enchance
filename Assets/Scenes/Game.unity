@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 209969800}
   - component: {fileID: 209969799}
   - component: {fileID: 209969803}
+  - component: {fileID: 209969802}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -359,6 +360,28 @@ Transform:
   - {fileID: 1573650919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &209969802
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209969798}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2.5
+  m_Acceleration: 1e+25
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &209969803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +394,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ad2dbbf05e0a34182f1b9fcbdf8557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentState: 0
+  _startCreepRange: 10
+  _breakCreepRange: 50
+  _startChargeTime: 5
+  _readyingChargeTime: 1
 --- !u!1 &305405514
 GameObject:
   m_ObjectHideFlags: 0
@@ -2816,10 +2844,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c066bbe4f986643af833884aa19483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 32
-  _height: 18
+  _width: 20
+  _height: 20
   _tilePrefab: {fileID: 8541481797362607971, guid: 95eb71eb96b8bf14f9f05a1ee83ce628,
     type: 3}
+  MousePosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1976261495
 Transform:
   m_ObjectHideFlags: 0
@@ -2893,6 +2922,7 @@ GameObject:
   - component: {fileID: 1999210798}
   - component: {fileID: 1999210799}
   - component: {fileID: 1999210800}
+  - component: {fileID: 1999210801}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2909,7 +2939,7 @@ Transform:
   m_GameObject: {fileID: 1999210795}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 10, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2932,9 +2962,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 2038840252}
+  _arrowPivot: {fileID: 1428094223}
+  _playerDestinationObject: {fileID: 5137704269139808920}
   IsCasting: 0
   CurrentHealth: 20
   MaxHealth: 20
+  _startRegenTreshold: 5
+  _regenRate: 3
 --- !u!114 &1999210798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3012,6 +3046,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!195 &1999210801
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999210795}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 1e+25
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2038840250
 GameObject:
   m_ObjectHideFlags: 0

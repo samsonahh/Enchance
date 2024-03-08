@@ -27,27 +27,6 @@ public class GridManager : MonoBehaviour
     private void Update()
     {
         CalculateMousePosition();
-
-        foreach (Tile t in _tiles.Values)
-        {
-            t.Pathed = false;
-        }
-        if (GetTileAtPosition(MousePosition) != null)
-        {
-            Tile playerTile = GetTileAtPosition(PlayerController.Instance.transform.position);
-            Tile targetTile = GetTileAtPosition(MousePosition);
-            List<Tile> nTiles = FindWalkableNeighbors(targetTile, new List<Tile>());
-            Debug.Log($"Tile: {targetTile.X}, {targetTile.Y} | Neighbors:");
-            foreach(var t in nTiles)
-            {
-                t.PrintTile();
-                t.Pathed = true;
-            }
-
-            List<Tile> path = AStarPathFind(playerTile, targetTile);
-
- 
-        }
     }
 
     void GenerateGrid()
@@ -60,6 +39,7 @@ public class GridManager : MonoBehaviour
                 Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(x, 0, y), Quaternion.Euler(90, 0, 0), transform);
                 spawnedTile.name = $"Tile {x},{y}";
 
+                bool isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 spawnedTile.Init(x, y);
 
                 _tiles[new Vector2(x, y)] = spawnedTile;
@@ -78,9 +58,9 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Tile GetTileAtPosition(Vector3 pos)
+    public Tile GetTileAtPosition(Vector2 pos)
     {
-        if(_tiles.TryGetValue(new Vector2(Mathf.Round(pos.x), Mathf.Round(pos.z)), out var tile))
+        if(_tiles.TryGetValue(pos, out var tile))
         {
             return tile;
         }
@@ -97,52 +77,29 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    public List<Tile> AStarPathFind(Tile startTile, Tile targetTile)
+    public List<Tile> AStarPathFind(int startX, int startY, int targetX, int targetY)
     {
-        List<Tile> toSearch = new List<Tile>() { startTile };
+        List<Tile> toSearch = new List<Tile>() { GetTileAtPosition(startX, startY) };
         List<Tile> processed = new List<Tile>();
-
-        List<Tile> path = new List<Tile>() { };
 
         while (toSearch.Any())
         {
             Tile current = toSearch[0];
             foreach(Tile t in toSearch)
             {
-                if(t.F < current.F || t.F == current.F && t.H < current.H)
-                {
-                    current = t;
-                    path.Add(current);
-                }
+                if(t.F < current.F || t.F == current.F)
             }
 
             processed.Add(current);
             toSearch.Remove(current);
 
-            foreach(Tile neighbor in FindWalkableNeighbors(current, processed))
-            {
-                bool inSearch = toSearch.Contains(neighbor);
-
-                float costToNeighbor = current.G + current.GetDistance(neighbor);
-
-                if(!inSearch || costToNeighbor < neighbor.G)
-                {
-                    neighbor.G = costToNeighbor;
-
-                    if (!inSearch)
-                    {
-                        neighbor.H = neighbor.GetDistance(targetTile);
-                        neighbor.F = neighbor.G + neighbor.H;
-                        toSearch.Add(neighbor);
-                    }
-                }
-            }
+    
         }
 
-        return path;
+        return new List<Tile>();
     }
 
-    private List<Tile> FindWalkableNeighbors(Tile tile, List<Tile> processed)
+    private List<Tile> FindNeighbors(Tile tile)
     {
         List<Tile> neighbors = new List<Tile>();
 
@@ -151,27 +108,17 @@ public class GridManager : MonoBehaviour
         Tile up = GetTileAtPosition(tile.X, tile.Y + 1);
         Tile down = GetTileAtPosition(tile.X, tile.Y - 1);
 
-        if (right != null)
-        {
-            if(right.Walkable && !processed.Contains(right))
-                neighbors.Add(right);
-        }
-        if (left != null)
-        {
-            if (left.Walkable && !processed.Contains(left))
-                neighbors.Add(left);
-        }
-        if (up != null)
-        {
-            if (up.Walkable && !processed.Contains(up))
-                neighbors.Add(up);
-        }
-        if (down != null)
-        {
-            if (down.Walkable && !processed.Contains(down))
-                neighbors.Add(down);
-        }
+        if (right != null) neighbors.Add(right);
+        if (left != null) neighbors.Add(left);
+        if (up != null) neighbors.Add(up);
+        if (down != null) neighbors.Add(down);
 
         return neighbors;
+    }
+
+    private void CalculateAStarParameters(Tile t, int startX, int startY, int targetX, int targetY)
+    {
+        t.G = Vector2.Distance(new Vector2(t.X, t.Y), new Vector2(startX, startY));
+        t.H = Vector2.Distance(new Vector2(t.X, t.Y), new Vector2(targetX, targetY));
     }
 }

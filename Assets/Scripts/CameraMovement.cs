@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
     private void Start()
     {
         _offsetPosition = transform.position;
-        _playerController = PlayerController.Instance;
+        _playerController = FindObjectOfType<PlayerController>();
     }
 
     private void Update()
