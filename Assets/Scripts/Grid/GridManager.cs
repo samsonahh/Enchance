@@ -12,19 +12,30 @@ public class GridManager : MonoBehaviour
 
     [HideInInspector] public Vector3 MousePosition { get; private set; }
 
-    public Dictionary<Vector2, Tile> _tiles;
+    public Dictionary<Vector2, Tile> _tiles { get; private set; }
 
     public bool GenerateGridButton = false;
 
     private void Awake()
     {
         Instance = this;
+
+        _tiles = new Dictionary<Vector2, Tile>();
+        foreach (Transform child in transform)
+        {
+            string name = child.name;
+            int x = int.Parse(name.Split(",")[0]);
+            int y = int.Parse(name.Split(",")[1]);
+            _tiles[new Vector2(x, y)] = child.GetComponent<Tile>();
+        }
     }
 
     private void OnValidate()
     {
         if (GenerateGridButton)
         {
+            Debug.Log("Generating Grid");
+
             GenerateGrid();
 
             GenerateGridButton = false;
@@ -33,7 +44,7 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateGrid();
+
     }
 
     private void Update()
@@ -49,7 +60,7 @@ public class GridManager : MonoBehaviour
             {
                 UnityEditor.EditorApplication.delayCall += () =>
                 {
-                    UnityEditor.Undo.DestroyObjectImmediate(c.gameObject);
+                    DestroyImmediate(c.gameObject);
                 };
             }
         }
@@ -60,10 +71,10 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < _height; y++)
             {
                 int newX = 2 * (x - _width / 2);
-                int newY = 2* (y - _height / 2);
+                int newY = 2 * (y - _height / 2);
 
                 Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(newX, 0, newY), Quaternion.Euler(90, 0, 0), transform);
-                spawnedTile.name = $"Tile {newX},{newY}";
+                spawnedTile.name = $"{newX},{newY}";
 
                 spawnedTile.Init(newX, newY);
 
@@ -85,7 +96,7 @@ public class GridManager : MonoBehaviour
 
     public Tile GetTileAtPosition(Vector3 pos)
     {
-        if (_tiles.TryGetValue(new Vector2(Mathf.Round(pos.x), Mathf.Round(pos.z)), out var tile))
+        if (_tiles.TryGetValue(new Vector2(Mathf.Round(pos.x/2)*2, Mathf.Round(pos.z/2)*2), out var tile))
         {
             return tile;
         }
@@ -131,6 +142,7 @@ public class GridManager : MonoBehaviour
                     currentPathTile = currentPathTile.Connection;
                 }
 
+                path?.Reverse();
                 return path;
             }
 
@@ -160,10 +172,10 @@ public class GridManager : MonoBehaviour
     {
         List<Tile> neighbors = new List<Tile>();
 
-        Tile right = GetTileAtPosition(tile.X + 1, tile.Y);
-        Tile left = GetTileAtPosition(tile.X - 1, tile.Y);
-        Tile up = GetTileAtPosition(tile.X, tile.Y + 1);
-        Tile down = GetTileAtPosition(tile.X, tile.Y - 1);
+        Tile right = GetTileAtPosition(tile.X + 2, tile.Y);
+        Tile left = GetTileAtPosition(tile.X - 2, tile.Y);
+        Tile up = GetTileAtPosition(tile.X, tile.Y + 2);
+        Tile down = GetTileAtPosition(tile.X, tile.Y - 2);
 
         if (right != null)
         {
@@ -187,5 +199,18 @@ public class GridManager : MonoBehaviour
         }
 
         return neighbors;
+    }
+
+    public void PathTiles(List<Tile> path)
+    {
+        foreach(Tile t in _tiles.Values)
+        {
+            t.Pathed = false;
+        }
+
+        foreach(Tile t in path)
+        {
+            t.Pathed = true;
+        }
     }
 }

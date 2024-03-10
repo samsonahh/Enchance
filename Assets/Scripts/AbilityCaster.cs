@@ -19,7 +19,7 @@ public class AbilityCaster : MonoBehaviour
 
     [SerializeField] private Transform _projectileArrowPivotTransform;
     [SerializeField] private Transform _castRadiusTransform;
-    [SerializeField] private Transform _circleCastTransform;
+    public Transform CircleCastTransform;
     [SerializeField] private float _aimSpeed;
 
     public static event Action<int> OnAbilityCast; // 0 - casting, 1 - finished cast
@@ -188,7 +188,7 @@ public class AbilityCaster : MonoBehaviour
 
         _projectileArrowPivotTransform.localScale = new Vector3(_projectileArrowPivotTransform.localScale.x, _projectileArrowPivotTransform.localScale.y, CurrentAbilities[SelectedAbility].CastRadius);
         _castRadiusTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CastRadius, _castRadiusTransform.localScale.y, CurrentAbilities[SelectedAbility].CastRadius);
-        _circleCastTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CircleCastRadius, _circleCastTransform.localScale.y, CurrentAbilities[SelectedAbility].CircleCastRadius);
+        CircleCastTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CircleCastRadius, CircleCastTransform.localScale.y, CurrentAbilities[SelectedAbility].CircleCastRadius);
         _selectedOverlay.position = _coolDownOverlays[SelectedAbility].transform.parent.position;
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -255,10 +255,10 @@ public class AbilityCaster : MonoBehaviour
 
     private void HandleCircleCast()
     {
-        _circleCastTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle) && _isSelectingAbility);
+        CircleCastTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle) && _isSelectingAbility);
 
-        _circleCastTransform.position = PlayerController.Instance.MouseWorldPosition;
-        _circleCastTransform.localPosition = Vector3.ClampMagnitude(_circleCastTransform.localPosition, CurrentAbilities[SelectedAbility].CastRadius);
+        CircleCastTransform.position = PlayerController.Instance.MouseWorldPosition;
+        CircleCastTransform.localPosition = Vector3.ClampMagnitude(CircleCastTransform.localPosition, CurrentAbilities[SelectedAbility].CastRadius);
     }
 
     private void HandleCastRadius()

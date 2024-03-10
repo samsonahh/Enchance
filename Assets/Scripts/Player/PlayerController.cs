@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,10 +16,15 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 LastForwardDirection { get; private set; }
     [HideInInspector] public Vector3 MouseWorldPosition { get; private set; }
     [HideInInspector] public Vector3 LastMouseWorldPosition { get; private set; }
+    [HideInInspector] public Vector3 LastCircleWorldPosition { get; private set; }
     [HideInInspector] public Vector3 PlayerDestinationPositon { get; private set; }
+
+    public static Action<Tile> OnPlayerStepOnNewTile;
+    [HideInInspector] public Tile CurrentTile;
 
     [HideInInspector] public bool IsMoving { get; private set; }
     [HideInInspector] public bool IsCasting;
+    [HideInInspector] public bool IsStunned;
 
     //Health
     public int CurrentHealth;
@@ -48,6 +53,7 @@ public class PlayerController : MonoBehaviour
         GetMouseWorldPosition();
         HandlePlayerMoving();
         HandlePlayerFacingDirection();
+        HandleTileChange();
         ManagePlayerHealth();
 
         if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(3);
@@ -72,14 +78,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (IsStunned)
         {
-            IsMoving = true;
-
-            PlayerDestinationPositon = MouseWorldPosition;
-            _navMeshAgent.SetDestination(PlayerDestinationPositon);
-
-            _playerDestinationObject.SetIndicatorPostion(PlayerDestinationPositon);
+            StopPlayer();
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -87,8 +89,26 @@ public class PlayerController : MonoBehaviour
             StopPlayer();
         }
 
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            IsMoving = true;
+
+            SetPosition(MouseWorldPosition);
+        }
+
         IsMoving = _navMeshAgent.velocity.magnitude != 0;
+        
         _playerDestinationObject.MakeSpriteVisible(IsMoving);
+    }
+
+    private void SetPosition(Vector3 pos)
+    {
+        _navMeshAgent.ResetPath();
+
+        PlayerDestinationPositon = pos;
+        _navMeshAgent.SetDestination(PlayerDestinationPositon);
+
+        _playerDestinationObject.SetIndicatorPostion(_navMeshAgent.destination);
     }
 
     private void HandlePlayerFacingDirection()
@@ -112,14 +132,14 @@ public class PlayerController : MonoBehaviour
     {
         LastForwardDirection = ForwardDirection;
         LastMouseWorldPosition = MouseWorldPosition;
+        LastCircleWorldPosition = AbilityCaster.Instance.CircleCastTransform.position;
     }
 
-    private void StopPlayer()
+    public void StopPlayer()
     {
         IsMoving = false;
 
-        PlayerDestinationPositon = transform.position;
-        _navMeshAgent.SetDestination(PlayerDestinationPositon);
+        _navMeshAgent.ResetPath();
 
         _playerDestinationObject.MakeSpriteVisible(false);
     }
@@ -171,5 +191,15 @@ public class PlayerController : MonoBehaviour
     public void Heal(int hp)
     {
         CurrentHealth += hp;
+    }
+
+    private void HandleTileChange()
+    {
+        Tile t = GridManager.Instance.GetTileAtPosition(transform.position);
+        if(CurrentTile != t)
+        {
+            CurrentTile = t;
+            OnPlayerStepOnNewTile?.Invoke(CurrentTile);
+        }
     }
 }

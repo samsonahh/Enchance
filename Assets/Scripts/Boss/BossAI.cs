@@ -6,105 +6,190 @@ using UnityEngine.AI;
 
 public class BossAI : MonoBehaviour
 {
-    private NavMeshAgent _navMeshAgent;
     private PlayerController _playerController;
+    private GridManager _gridManager;
 
     public BossState _currentState;
 
     private float _distanceToPlayer;
-    private Vector3 _destination;
-    private Vector3 _direction;
-    private float _stopTimer;
-    private float _creepTimer;
-    private float _chargeDistance;
 
-    [SerializeField] private float _startCreepRange;
-    [SerializeField] private float _breakCreepRange;
-    [SerializeField] private float _startChargeTime;
-    [SerializeField] private float _readyingChargeTime;
+    private Action<Tile> OnBossStepOnNewTile;
+    private Tile _currentTile;
+    private Tile _playerTile;
+    private List<Tile> _path;
+
+    private List<GameState> _phaseOneStates;
+    private List<GameState> _phaseTwoStates;
+    private List<GameState> _phaseThreeStates;
+
+    #region IdleVariables
+    [Header("Idle Variables")]
+    [SerializeField] private float _activateDistance = 10f;
+    #endregion
+
+    #region FollowPlayerVariables
+    [Header("Follow Player Variables")]
+    [SerializeField] private float _followPlayerWaitTime = 1f;
+    private float _followPlayerTimer = 0f;
+    #endregion
+
+    #region PushPlayerVariables
+    [Header("Push Player Variables")]
+    [SerializeField] private float _pushStartVelocity = 1f;
+    [SerializeField] private float _stunDuration = 2f;
+    private bool _pushPlayerCoroutineStarted = false;
+    #endregion
+
+    #region SuckVariables
+    [Header("Suck Variables")]
+    [SerializeField] private float _suckDuration = 5f;
+    private float _suckTimer = 0f;
+    [SerializeField] private float _suckStrength = 10f;
+    #endregion
 
     private void Awake()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        PlayerController.OnPlayerStepOnNewTile += PlayerController_OnPlayerStepOnNewTile;
+        OnBossStepOnNewTile += BossAI_OnBossStepOnNewTile;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerController.OnPlayerStepOnNewTile -= PlayerController_OnPlayerStepOnNewTile;
+        OnBossStepOnNewTile -= BossAI_OnBossStepOnNewTile;
     }
 
     private void Start()
     {
         _playerController = PlayerController.Instance;
+        _gridManager = GridManager.Instance;
+
+        _currentTile = GridManager.Instance._tiles[new Vector2(0, 14)];
+        transform.position = _currentTile.transform.position;
     }
 
     private void Update()
     {
         CalculatePlayerDistance();
+        HandleTileChange();
 
-        if (Mathf.Abs(_navMeshAgent.velocity.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = _navMeshAgent.velocity.x < 0;
-        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ChangeBossState(BossState.Suck);
+        }
 
         switch (_currentState)
         {
             case BossState.Idle:
 
-                if(_distanceToPlayer <= _startCreepRange)
+                if(_distanceToPlayer < _activateDistance)
                 {
-                    _creepTimer = 0;
-                    _currentState = BossState.Creep;
+                    ChangeBossState(BossState.FollowPlayer);
                 }
 
                 break;
-            case BossState.Creep:
+            case BossState.FollowPlayer:
 
-                _navMeshAgent.speed = 2.5f;
-                _creepTimer += Time.deltaTime;
-                Debug.Log(_creepTimer);
-                ChasePlayer();
+                _gridManager.PathTiles(_path);
 
-                if(_distanceToPlayer >= _breakCreepRange)
+                _followPlayerTimer += Time.deltaTime;
+
+                if (_path.Count == 0) _followPlayerTimer = 0f;
+
+                if(_followPlayerTimer > _followPlayerWaitTime)
                 {
-                    _currentState = BossState.Idle;
+                    IEnumerator moving = MoveBoss();
+                    StopCoroutine(moving);
+                    StartCoroutine(moving);
+                    _followPlayerTimer = 0f;
                 }
 
-                if(_creepTimer > _startChargeTime)
+                if(_currentTile == _playerTile)
                 {
-                    _direction = (_playerController.transform.position - transform.position).normalized;
-                    _chargeDistance = 1.25f * Vector3.Magnitude(_playerController.transform.position - transform.position);
-                    _stopTimer = 0f;
-                    _currentState = BossState.ReadyingCharge;
-                }
-
-                break;
-            case BossState.ReadyingCharge:
-
-                _destination = transform.position;
-                _navMeshAgent.SetDestination(_destination);
-
-                _stopTimer += Time.deltaTime;
-                if(_stopTimer >= _readyingChargeTime)
-                {
-                    _stopTimer = 0f;
-                    _destination = _chargeDistance * _direction + transform.position;
-                    _currentState = BossState.Charge;
+                    ChangeBossState(BossState.PushAway);
                 }
 
                 break;
-            case BossState.Charge:
+            case BossState.PushAway:
 
-                _navMeshAgent.speed = 20f;
-                _navMeshAgent.SetDestination(_destination);
-
-                if(Vector3.Distance(transform.position, _destination) <= 0.05f)
+                if (!_pushPlayerCoroutineStarted)
                 {
-                    _stopTimer += Time.deltaTime;
-
-                    if(_stopTimer >= 1f)
-                    {
-                        _stopTimer = 0;
-                        _creepTimer = 0;
-                        _currentState = BossState.Creep;
-                    }
+                    _pushPlayerCoroutineStarted = true;
+                    StartCoroutine(PushPlayer());
                 }
 
                 break;
-            case BossState.Cast:
+            case BossState.SlamOntoPlayer:
+
+
+
+                break;
+            case BossState.FloorIsLava:
+                break;
+            case BossState.PawnSpawn:
+                break;
+            case BossState.TPTiles:
+                break;
+            case BossState.Root:
+                break;
+            case BossState.Suck:
+
+                _suckTimer += Time.deltaTime;
+
+                _playerController.transform.position = Vector3.MoveTowards(_playerController.transform.position, transform.position, _suckStrength * Time.deltaTime);
+
+                if(_suckTimer > _suckDuration)
+                {
+                    ChangeBossState(BossState.FollowPlayer);
+                }
+
+                if (_currentTile == _playerTile)
+                {
+                    ChangeBossState(BossState.PushAway);
+                }
+
+                break;
+            case BossState.FireTornados:
+                break;
+            case BossState.BombingRun:
+
+
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void ChangeBossState(BossState state)
+    {
+        _currentState = state;
+        switch (state)
+        {
+            case BossState.Idle:
+                break;
+            case BossState.FollowPlayer:
+                _followPlayerTimer = 0f;
+                break;
+            case BossState.PushAway:
+                _pushPlayerCoroutineStarted = false;
+                break;
+            case BossState.SlamOntoPlayer:
+                break;
+            case BossState.FloorIsLava:
+                break;
+            case BossState.PawnSpawn:
+                break;
+            case BossState.TPTiles:
+                break;
+            case BossState.Root:
+                break;
+            case BossState.Suck:
+                _suckTimer = 0f;
+                break;
+            case BossState.FireTornados:
+                break;
+            case BossState.BombingRun:
                 break;
             default:
                 break;
@@ -116,18 +201,79 @@ public class BossAI : MonoBehaviour
         _distanceToPlayer = Vector3.Distance(_playerController.transform.position, transform.position);
     }
 
-    private void ChasePlayer()
+    private void HandleTileChange()
     {
-        _destination = _playerController.transform.position;
-        _navMeshAgent.SetDestination(_destination);
+        Tile t = GridManager.Instance.GetTileAtPosition(transform.position);
+        if (_currentTile != t)
+        {
+            _currentTile = t;
+            OnBossStepOnNewTile?.Invoke(_currentTile);
+        }
+    }
+
+    private void PlayerController_OnPlayerStepOnNewTile(Tile t)
+    {
+        _playerTile = t;
+        _path = _gridManager.AStarPathFind(_currentTile, _playerTile);
+    }
+
+    private void BossAI_OnBossStepOnNewTile(Tile t)
+    {
+        _path = _gridManager.AStarPathFind(_currentTile, _playerTile);
+    }
+
+    IEnumerator MoveBoss()
+    {
+        List<Tile> path = new List<Tile>(_path);
+
+        Vector3 dir = path[0].transform.position - transform.position;
+        if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+
+        float timer = 0f;
+        while(timer < 0.5f)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector3.Slerp(transform.position, path[0].transform.position, 10f * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    IEnumerator PushPlayer()
+    {
+        Vector3 dir = (_playerController.transform.position - transform.position).normalized;
+
+        _playerController.IsStunned = true;
+        _playerController.TakeDamage(5);
+
+        float currVel = _pushStartVelocity;
+        float timer = _stunDuration;
+
+        while(timer > 0)
+        {
+            _playerController.transform.Translate(currVel * Time.deltaTime * dir);
+
+            currVel = (timer/_stunDuration) * _pushStartVelocity;
+            timer -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        _playerController.IsStunned = false;
+        ChangeBossState(BossState.FollowPlayer);
     }
 }
 
 public enum BossState
 {
     Idle,
-    Creep,
-    ReadyingCharge,
-    Charge,
-    Cast
+    FollowPlayer,
+    PushAway,
+    SlamOntoPlayer,
+    FloorIsLava,
+    PawnSpawn,
+    TPTiles,
+    Root,
+    Suck,
+    FireTornados,
+    BombingRun
 }

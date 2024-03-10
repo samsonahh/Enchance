@@ -8,7 +8,6 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private GameObject _highlight;
-    [SerializeField] private GameObject _pathed;
 
     [HideInInspector] public int X { get; private set; }
     [HideInInspector] public int Y { get; private set; }
@@ -16,27 +15,34 @@ public class Tile : MonoBehaviour
     [HideInInspector] public float H;
     [HideInInspector] public float F => G + H;
     [HideInInspector] public Tile Connection;
-    public bool Walkable;
+    public bool Walkable = true;
+    public bool Pathed = false;
 
-    public void Init(int x, int y)
+    private void Start()
     {
         _gridManager = GridManager.Instance;
 
-        X = x;
-        Y = y;
+        X = (int)transform.position.x;
+        Y = (int)transform.position.z;
 
-        bool isOffset = (x + y) % 2 == 1;
+        Walkable = true;
+    }
+
+    public void Init(int x, int y)
+    {
+        bool isOffset = Mathf.Abs(x / 2 + y / 2) % 2 == 1;
         _renderer.color = isOffset ? _offsetColor : _baseColor;
     }
 
     private void Update()
     {
-
+        _highlight.SetActive(false);
+        _highlight.SetActive(Pathed);
     }
 
     public float GetDistance(Tile t)
     {
-        return Vector3.Distance(new Vector3(X, 0, Y), transform.position);
+        return Vector3.Distance(transform.position, t.transform.position);
     }
 
     public void PrintTile()
