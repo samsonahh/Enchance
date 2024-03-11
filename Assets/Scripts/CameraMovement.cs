@@ -7,13 +7,12 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _cameraSmoothTime;
 
     private Vector3 _offsetPosition;
-    private PlayerController _playerController;
+    [SerializeField] private Transform _target;
     private float _zoom = 10f;
 
     private void Start()
     {
         _offsetPosition = transform.position;
-        _playerController = FindObjectOfType<PlayerController>();
     }
 
     private void Update()
@@ -24,7 +23,7 @@ public class CameraMovement : MonoBehaviour
 
     private void FollowPlayer()
     {
-        transform.position = Vector3.Lerp(transform.position, _playerController.transform.position + _offsetPosition, _cameraSmoothTime * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, _target.position + _offsetPosition, _cameraSmoothTime * Time.deltaTime);
     }
 
     private void HandleZoom()

@@ -201,16 +201,87 @@ public class GridManager : MonoBehaviour
         return neighbors;
     }
 
-    public void PathTiles(List<Tile> path)
+    public void ClearPath()
     {
-        foreach(Tile t in _tiles.Values)
+        foreach (Tile t in _tiles.Values)
         {
             t.Pathed = false;
         }
+    }
+
+    public void PathTiles(List<Tile> path)
+    {
+        ClearPath();
 
         foreach(Tile t in path)
         {
             t.Pathed = true;
         }
+    }
+
+    public Tile GetRandomTile()
+    {
+        int randIndex = Random.Range(0, _tiles.Values.Count);
+        return _tiles.Values.ToList()[randIndex];
+    }
+
+    public Tile GetRandomTileAwayFromPlayer(float distance)
+    {
+        List<Tile> validTiles = new List<Tile>();
+
+        foreach(Tile t in _tiles.Values)
+        {
+            if(Vector3.Distance(t.transform.position, PlayerController.Instance.transform.position) > distance)
+            {
+                validTiles.Add(t);
+            }
+        }
+
+        int randIndex = Random.Range(0, validTiles.Count);
+        return validTiles[randIndex];
+    }
+
+    public bool IsPathStraight(List<Tile> path)
+    {
+        if (path.Count == 0) return false;
+
+        bool hStraight = false;
+        bool vStraight = false;
+
+        Tile firstTile = path[0];
+
+        // check vertical
+        foreach(Tile t in path)
+        {
+            if(firstTile.X == t.X)
+            {
+                if(firstTile.Y != t.Y)
+                {
+                    vStraight = true;
+                }
+            }
+            else
+            {
+                vStraight = false;
+            }
+        }
+
+        // check horizontal
+        foreach (Tile t in path)
+        {
+            if (firstTile.Y == t.Y)
+            {
+                if (firstTile.X != t.X)
+                {
+                    hStraight = true;
+                }
+            }
+            else
+            {
+                hStraight = false;
+            }
+        }
+
+        return hStraight || vStraight;
     }
 }

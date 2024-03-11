@@ -81,8 +81,11 @@ public class PlayerController : MonoBehaviour
         if (IsStunned)
         {
             StopPlayer();
+            _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(90, 0, 0), 10f * Time.deltaTime);
             return;
         }
+
+        _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(45, 0, 0), 10f * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -92,11 +95,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             IsMoving = true;
+            _navMeshAgent.isStopped = false;
 
             SetPosition(MouseWorldPosition);
         }
 
-        IsMoving = _navMeshAgent.velocity.magnitude != 0;
+        if(Vector3.Distance(transform.position, PlayerDestinationPositon) <= 0.1f && !_navMeshAgent.isStopped)
+        {
+            IsMoving = false;
+            _navMeshAgent.isStopped = true;
+        }
         
         _playerDestinationObject.MakeSpriteVisible(IsMoving);
     }
@@ -139,6 +147,7 @@ public class PlayerController : MonoBehaviour
     {
         IsMoving = false;
 
+        _navMeshAgent.isStopped = true;
         _navMeshAgent.ResetPath();
 
         _playerDestinationObject.MakeSpriteVisible(false);
@@ -191,6 +200,52 @@ public class PlayerController : MonoBehaviour
     public void Heal(int hp)
     {
         CurrentHealth += hp;
+    }
+
+    public void PushPlayer(Vector3 dir, float stunDuration, float startVel)
+    {
+        StartCoroutine(PushPlayerCoroutine(dir, stunDuration, startVel));
+    }
+
+    public IEnumerator PushPlayerCoroutine(Vector3 dir, float stunDuration, float startVel)
+    {
+        IsStunned = true;
+
+        float currVel = startVel;
+        float timer = stunDuration;
+
+        while (timer > 0)
+        {
+            transform.Translate(currVel * Time.deltaTime * dir);
+
+            currVel = (timer / stunDuration) * startVel;
+            timer -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        IsStunned = false;
+    }
+
+    public void StunPlayer(float duration)
+    {
+        StartCoroutine(StunPlayerCoroutine(duration));
+    }
+
+    public IEnumerator StunPlayerCoroutine(float duration)
+    {
+        IsStunned = true;
+
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        IsStunned = false;
     }
 
     private void HandleTileChange()
