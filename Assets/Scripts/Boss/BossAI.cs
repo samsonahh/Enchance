@@ -205,6 +205,7 @@ public class BossAI : MonoBehaviour
                 break;
             case BossState.BombingRun:
 
+
                 if (!_bombingRunCoroutineStarted)
                 {
                     _bombingRunCoroutineStarted = true;
@@ -394,6 +395,7 @@ public class BossAI : MonoBehaviour
 
     IEnumerator BombingRun()
     {
+        StartCoroutine(CheckPlayerBurning(2f));
         for(int i = 0; i < _bombingRunJumpCount; i++)
         {
             Tile t = _playerTile;
@@ -430,8 +432,6 @@ public class BossAI : MonoBehaviour
                 }
             }
 
-            StartCoroutine(CheckPlayerOverBurningTile(dangerTiles1));
-
             yield return new WaitForSeconds(0.5f);
 
             Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
@@ -467,8 +467,6 @@ public class BossAI : MonoBehaviour
                 }
             }
 
-            StartCoroutine(CheckPlayerOverBurningTile(dangerTiles1));
-
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -476,20 +474,20 @@ public class BossAI : MonoBehaviour
         ChangeBossState(BossState.FollowPlayer);
     }
 
-    IEnumerator CheckPlayerOverBurningTile(List<Tile> tiles)
+    IEnumerator CheckPlayerBurning(float cooldown)
     {
-        for(float timer = 0; timer < 2 * (_slamDuration + 0.5f) * _bombingRunJumpCount + 3f; timer += Time.deltaTime)
+        while (true)
         {
-            foreach(Tile t in tiles)
+            if (_playerTile.Burning)
             {
-                if(_playerTile == t)
-                {
-                    _playerController.BurnPlayer(3, 1f);
-                    break;
-                }
-            }
+                _playerController.BurnPlayer(3);
 
-            yield return null;
+                yield return new WaitForSeconds(cooldown);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 }

@@ -26,7 +26,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsCasting;
     public bool IsStunned;
     public bool IsBurning;
+    [SerializeField] private float _burnTickDuration = 1f;
+    [SerializeField] private int _burnDamage = 1;
+    [HideInInspector] public int BurnTicks;
     private IEnumerator _burningPlayerCoroutine;
+    private Color _currentColor = Color.white;
 
     //Health
     public int CurrentHealth;
@@ -57,8 +61,6 @@ public class PlayerController : MonoBehaviour
         HandlePlayerFacingDirection();
         HandleTileChange();
         ManagePlayerHealth();
-
-        _spriteRenderer.color = IsBurning ? Color.red : Color.white;
 
         if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(3);
     }
@@ -199,6 +201,15 @@ public class PlayerController : MonoBehaviour
     {
         CurrentHealth -= damage;
         _lastDamagedTimer = 0f;
+
+        _spriteRenderer.color = Color.red;
+        StartCoroutine(TakeDamageCoroutine());
+    }
+
+    public IEnumerator TakeDamageCoroutine()
+    {
+        yield return new WaitForSeconds(0.15f);
+        _spriteRenderer.color = _currentColor;
     }
 
     public void Heal(int hp)
@@ -252,26 +263,39 @@ public class PlayerController : MonoBehaviour
         IsStunned = false;
     }
 
-    public void BurnPlayer(int ticks, float tickDuration)
+    public void BurnPlayer(int ticks)
     {
+        if(IsBurning)
+        {
+            BurnTicks += ticks;
+            return;
+        }
+
+        BurnTicks = ticks;
+
         if(_burningPlayerCoroutine != null)
         {
             StopCoroutine(_burningPlayerCoroutine);
         }
-        _burningPlayerCoroutine = BurnPlayerCoroutine(ticks, tickDuration);
+        _burningPlayerCoroutine = BurnPlayerCoroutine();
         StartCoroutine(_burningPlayerCoroutine);
     }
 
-    public IEnumerator BurnPlayerCoroutine(int ticks, float tickDuration)
+    public IEnumerator BurnPlayerCoroutine()
     {
         IsBurning = true;
+        _currentColor = new Color(255, 90, 0, 1);
 
-        for(int tick = 0; tick < ticks; tick++)
+        while(BurnTicks > 0)
         {
-            yield return new WaitForSeconds(tickDuration);
-            TakeDamage(1);
+            TakeDamage(_burnDamage);
+            yield return TakeDamageCoroutine();
+            yield return new WaitForSeconds(_burnTickDuration - 0.15f);
+            BurnTicks--;
         }
 
+        _currentColor = Color.white;
+        _spriteRenderer.color = _currentColor;
         IsBurning = false;
     }
 

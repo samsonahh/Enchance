@@ -178,6 +178,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &745378
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -371,6 +372,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &11478256
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -564,6 +566,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &16612383
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -757,6 +760,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &17680715
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -950,6 +954,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &18891971
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1143,6 +1148,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &22816995
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1336,6 +1342,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &34477249
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1444,6 +1451,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &35074293
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1637,6 +1645,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &42571271
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1830,6 +1839,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &49289947
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1938,6 +1948,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &50410454
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2046,6 +2057,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &50950715
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2239,6 +2251,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &57315975
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2517,6 +2530,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &72261945
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2625,6 +2639,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &75760024
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2733,6 +2748,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &78619521
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3011,6 +3027,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &82314757
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3289,6 +3306,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &82709594
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3567,6 +3585,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &95044652
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3675,6 +3694,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &98865240
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3868,6 +3888,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &99699013
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4146,6 +4167,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &102828122
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4254,6 +4276,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &114434970
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4362,6 +4385,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &117959708
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4470,6 +4494,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &118972771
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4578,6 +4603,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &124712346
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4686,6 +4712,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &128477867
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4869,6 +4896,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &132286023
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4977,6 +5005,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &135402107
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5255,6 +5284,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &141480857
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5703,6 +5733,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &150498181
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5811,6 +5842,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &151177957
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5919,6 +5951,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &152505282
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6027,6 +6060,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &155565823
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6135,6 +6169,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &159773339
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6328,6 +6363,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &160288759
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6521,6 +6557,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &173838817
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6629,6 +6666,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &174989134
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6907,6 +6945,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &184994419
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7100,6 +7139,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &195366036
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7378,6 +7418,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &199914831
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7571,6 +7612,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &201585048
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7679,6 +7721,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &201776126
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7863,6 +7906,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &205545270
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7971,6 +8015,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &208456947
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8125,12 +8170,18 @@ MonoBehaviour:
   _activateDistance: 10
   _followPlayerWaitTime: 1
   _playerStraightThresholdToSlam: 1
+  _followPlayerSpeedInterval: 0.4
   _pushStartVelocity: 25
   _pushStunDuration: 1
+  _pushDamage: 3
   _slamDuration: 1
   _slamJumpHeight: 2
+  _slamDamage: 3
   _suckDuration: 5
   _suckStrength: 6
+  _bombingRunJumpCount: 3
+  _bombingRunStunDuration: 1
+  _bombingRunDamage: 3
 --- !u!1 &211544737
 GameObject:
   m_ObjectHideFlags: 0
@@ -8186,6 +8237,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &211544740
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8379,6 +8431,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &215703415
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8487,6 +8540,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &218840609
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8595,6 +8649,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &219235307
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8788,6 +8843,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &223871763
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9406,6 +9462,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &244129961
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9684,6 +9741,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &246083574
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9877,6 +9935,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &253200727
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9985,6 +10044,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &253412430
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10093,6 +10153,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &253618731
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10201,6 +10262,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &258728594
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10649,6 +10711,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &267887919
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10842,6 +10905,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &279624314
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11035,6 +11099,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &285219921
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11313,6 +11378,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &289792514
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11836,6 +11902,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &306238581
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11944,6 +12011,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &307002696
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12052,6 +12120,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &308317932
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12160,6 +12229,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &313931810
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12268,6 +12338,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &314207882
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12376,6 +12447,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &314381933
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12654,6 +12726,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &318614811
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12794,6 +12867,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &321061475
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12902,6 +12976,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &322268397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13265,6 +13340,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &330394044
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13693,6 +13769,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &334295280
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13801,6 +13878,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &334696010
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13909,6 +13987,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &334744445
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14017,6 +14096,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &336081791
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14380,6 +14460,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &338346832
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14488,6 +14569,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &341157907
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14872,6 +14954,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &345467225
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14980,6 +15063,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &351446767
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15173,6 +15257,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &356587525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15281,6 +15366,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &357096984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15389,6 +15475,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &360131353
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15497,6 +15584,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &364709178
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15605,6 +15693,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &371096182
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15713,6 +15802,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &371519956
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15906,6 +15996,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &382639878
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16524,6 +16615,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &398302475
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16632,6 +16724,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &403524182
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17028,6 +17121,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &413930938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17306,6 +17400,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &419300806
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17414,6 +17509,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &426270198
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17607,6 +17703,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &426923399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17885,6 +17982,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &430704335
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18146,6 +18244,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &437224413
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18254,6 +18353,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &438433120
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18362,6 +18462,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &439359420
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18470,6 +18571,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &440772028
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18748,6 +18850,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &447956856
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18856,6 +18959,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &448572320
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18964,6 +19068,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &454114402
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19157,6 +19262,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &458825036
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19265,6 +19371,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &461088230
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19458,6 +19565,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &467032231
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19651,6 +19759,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &482092966
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19759,6 +19868,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &482357696
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19867,6 +19977,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &485714512
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19975,6 +20086,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &488481869
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20083,6 +20195,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &489100302
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20361,6 +20474,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &499151673
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20644,6 +20758,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &505980235
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21177,6 +21292,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &515505596
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21370,6 +21486,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &518377233
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21478,6 +21595,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &521228275
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21586,6 +21704,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &521863355
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21694,6 +21813,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &524140695
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21887,6 +22007,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &524804563
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22080,6 +22201,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &537931829
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22349,6 +22471,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &543582825
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22457,6 +22580,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &545374119
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22650,6 +22774,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &548271871
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22758,6 +22883,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &551819503
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22866,6 +22992,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &554751061
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23059,6 +23186,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &558314735
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23167,6 +23295,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &558558736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23445,6 +23574,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &565684410
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23553,6 +23683,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &566106163
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23746,6 +23877,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &572480109
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23854,6 +23986,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &573747756
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23962,6 +24095,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &574684012
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24155,6 +24289,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &580237541
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24263,6 +24398,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &582510518
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24456,6 +24592,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &590698492
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24564,6 +24701,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &594998624
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -25352,6 +25490,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &625227508
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -25545,6 +25684,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &632417286
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26163,6 +26303,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &652612981
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26271,6 +26412,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &655034027
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26719,6 +26861,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &686924726
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26827,6 +26970,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &688599053
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -26935,6 +27079,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &697087595
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27213,6 +27358,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &699958227
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27406,6 +27552,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &703247608
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27684,6 +27831,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &715818702
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27877,6 +28025,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &723578737
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27985,6 +28134,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &728137289
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28178,6 +28328,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &736829045
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28371,6 +28522,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &737844873
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28479,6 +28631,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &743178143
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28874,6 +29027,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &751407758
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29067,6 +29221,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &757330095
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29260,6 +29415,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &760333994
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29368,6 +29524,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &760667105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29560,6 +29717,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &771592251
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29838,6 +29996,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &782224921
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29946,6 +30105,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &782771395
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30054,6 +30214,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &783107124
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30247,6 +30408,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &785412790
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30440,6 +30602,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &793987171
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30548,6 +30711,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &794930430
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30656,6 +30820,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &799833068
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30849,6 +31014,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &806510555
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31212,6 +31378,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &818638694
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31320,6 +31487,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &822472333
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31428,6 +31596,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &824281728
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31536,6 +31705,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &825026793
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31863,6 +32033,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &834050870
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -31971,6 +32142,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &845244699
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32079,6 +32251,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &846273610
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32187,6 +32360,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &850704946
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32295,6 +32469,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &854230105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32743,6 +32918,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &860200471
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32851,6 +33027,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &860928733
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33129,6 +33306,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &877926320
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33237,6 +33415,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &881053271
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33345,6 +33524,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &894014780
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33708,6 +33888,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &907471904
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34071,6 +34252,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &912687562
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34179,6 +34361,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &917561259
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34372,6 +34555,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &920492568
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34650,6 +34834,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &923180163
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34758,6 +34943,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &929973278
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34951,6 +35137,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &930945632
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -35059,6 +35246,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &930950935
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -35507,6 +35695,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &938064178
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -35785,6 +35974,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &943110823
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -35893,6 +36083,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &943603396
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36001,6 +36192,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &946719058
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36109,6 +36301,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &955343500
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36472,6 +36665,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &965749794
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36580,6 +36774,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &965877748
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36688,6 +36883,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &970344291
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36796,6 +36992,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &974297032
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -36904,6 +37101,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &977351916
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37097,6 +37295,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &980043444
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37205,6 +37404,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &981693968
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37313,6 +37513,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &982212331
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37506,6 +37707,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &985905091
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37614,6 +37816,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &986737677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37722,6 +37925,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &987442476
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37830,6 +38034,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &988875135
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38269,6 +38474,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1003482898
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38377,6 +38583,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1004458819
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38485,6 +38692,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1007355940
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38593,6 +38801,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1009346138
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38701,6 +38910,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1011394563
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38809,6 +39019,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1013937567
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -38917,6 +39128,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1014875348
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39110,6 +39322,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1026501691
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39303,6 +39516,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1027274840
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39411,6 +39625,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1029041992
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39594,6 +39809,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1031133078
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39702,6 +39918,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1031586934
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39810,6 +40027,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1033909471
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -39918,6 +40136,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1034443003
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40026,6 +40245,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1035827400
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40219,6 +40439,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1039925953
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40412,6 +40633,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1047837333
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40520,6 +40742,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1048448466
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40713,6 +40936,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1049482622
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40857,6 +41081,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1051299032
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41050,6 +41275,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1054259218
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41158,6 +41384,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1054697829
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41266,6 +41493,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1057967690
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41374,6 +41602,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1058095149
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41482,6 +41711,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1059542767
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41590,6 +41820,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1060173532
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41698,6 +41929,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1060370064
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41856,6 +42088,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1061481014
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -42304,6 +42537,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1076495647
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -42667,6 +42901,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1085412293
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -42775,6 +43010,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1088161870
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -43563,6 +43799,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1099865596
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -43671,6 +43908,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1108413788
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -43779,6 +44017,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1110132702
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -43972,6 +44211,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1116353034
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -44335,6 +44575,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1136087774
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -44443,6 +44684,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1136889052
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -44721,6 +44963,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1149952766
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -44829,6 +45072,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1152544249
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -44937,6 +45181,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1156316090
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -45045,6 +45290,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1160186796
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -45153,6 +45399,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1162963858
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -45516,6 +45763,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1178590021
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -45964,6 +46212,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1188822215
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46072,6 +46321,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1189927160
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46265,6 +46515,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1202739821
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46458,6 +46709,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1208512901
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46736,6 +46988,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1210317999
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46844,6 +47097,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1213308668
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46952,6 +47206,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1216270929
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -47230,6 +47485,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1221246095
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -47508,6 +47764,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1224527498
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -47701,6 +47958,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1228631429
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -48064,6 +48322,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1238006863
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -48512,6 +48771,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1245229107
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -48695,6 +48955,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1247983616
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -48803,6 +49064,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1253602277
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -48996,6 +49258,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1264674491
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -49104,6 +49367,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1265422061
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -49627,6 +49891,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1289645230
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -49820,6 +50085,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1295797015
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -50098,6 +50364,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1300084345
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -50376,6 +50643,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1305994442
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -50908,6 +51176,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1313298194
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -51016,6 +51285,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1314076255
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -51379,6 +51649,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1327293546
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -51742,6 +52013,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1332455031
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -51935,6 +52207,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1337420648
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -52043,6 +52316,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1338403322
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -52151,6 +52425,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1342797123
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -52429,6 +52704,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1354520069
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -52756,6 +53032,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1360025948
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -52864,6 +53141,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1361137494
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -53057,6 +53335,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1369401850
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -53165,6 +53444,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1369882428
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -53273,6 +53553,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1369981346
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -53635,6 +53916,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1410417697
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -53743,6 +54025,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1411960555
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -53936,6 +54219,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1420323753
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -54178,6 +54462,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1425043159
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -54286,6 +54571,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1425841205
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -54681,6 +54967,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1428836434
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -54789,6 +55076,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1435930088
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55067,6 +55355,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1448949192
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55260,6 +55549,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1452462449
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55485,6 +55775,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1455057409
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55593,6 +55884,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1457244837
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55701,6 +55993,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1457506918
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55809,6 +56102,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1458308905
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -56087,6 +56381,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1462562750
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -56942,6 +57237,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1478203725
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -57050,6 +57346,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1479886270
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -57498,6 +57795,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1499036565
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -57776,6 +58074,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1509972686
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -57969,6 +58268,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1513585629
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -58077,6 +58377,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1514754700
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -58440,6 +58741,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1524201821
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -58548,6 +58850,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1531999097
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -58826,6 +59129,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1540914241
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -58934,6 +59238,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1542069460
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -59127,6 +59432,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1544271152
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -59320,6 +59626,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1548826062
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -59428,6 +59735,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1549380902
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -59611,6 +59919,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1560550351
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -59889,6 +60198,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1567124455
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -60082,6 +60392,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1570515525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -60529,6 +60840,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1583630001
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -60637,6 +60949,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1583890381
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -61000,6 +61313,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1589782588
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -61108,6 +61422,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1590679516
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -61216,6 +61531,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1595134877
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -61749,6 +62065,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1612536115
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -62027,6 +62344,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1622152231
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -62135,6 +62453,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1625381098
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -62498,6 +62817,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1641996490
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -62776,6 +63096,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1654883117
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -63309,6 +63630,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1675540794
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -63842,6 +64164,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1683402848
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -63950,6 +64273,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1683436557
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -64313,6 +64637,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1687691947
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -64676,6 +65001,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1702556859
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -65124,6 +65450,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1722715202
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -65232,6 +65559,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1723889953
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -65340,6 +65668,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1726882500
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -65448,6 +65777,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1728454731
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -65811,6 +66141,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1732138939
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66089,6 +66420,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1733214933
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66197,6 +66529,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1733350750
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66390,6 +66723,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1745535254
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66498,6 +66832,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1745849689
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66606,6 +66941,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1749179073
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66799,6 +67135,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1755738475
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66992,6 +67329,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1775519752
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67100,6 +67438,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1776423929
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67378,6 +67717,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1780462379
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67571,6 +67911,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1784395561
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67679,6 +68020,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1785806635
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67787,6 +68129,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1790607654
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67980,6 +68323,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1792684292
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -68258,6 +68602,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1805767928
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -68451,6 +68796,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1807980920
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -68559,6 +68905,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1809075937
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -69038,6 +69385,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1821700629
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -69363,6 +69711,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1837189237
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -69471,6 +69820,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1837840458
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -69664,6 +70014,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1845075275
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -69772,6 +70123,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1845176575
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -69965,6 +70317,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1846575705
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70073,6 +70426,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1852372904
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70606,6 +70960,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1865425137
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70789,6 +71144,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1866596588
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70982,6 +71338,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1867861898
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -71430,6 +71787,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1881077106
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -71538,6 +71896,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1881186984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -71816,6 +72175,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1890019572
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72009,6 +72369,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1892070384
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72202,6 +72563,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1894018629
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72310,6 +72672,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1903890916
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72503,6 +72866,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1907211151
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72696,6 +73060,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1911286200
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72804,6 +73169,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1911972449
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72912,6 +73278,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1916523105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73105,6 +73472,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1919995383
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73468,6 +73836,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1934248140
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73661,6 +74030,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1936837311
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73769,6 +74139,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1939525073
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73962,6 +74333,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1952907591
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74070,6 +74442,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1953826263
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74348,6 +74721,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1968046350
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74456,6 +74830,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1973070518
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74564,6 +74939,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1979061376
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74802,6 +75178,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1983989691
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74910,6 +75287,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1985981372
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -75103,6 +75481,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1990767452
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -75381,6 +75760,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &1997748373
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -75576,8 +75956,12 @@ MonoBehaviour:
   CurrentTile: {fileID: 0}
   IsCasting: 0
   IsStunned: 0
-  CurrentHealth: 20
-  MaxHealth: 20
+  IsBurning: 0
+  _burnTickDuration: 1
+  _burnDamage: 1
+  BurnTicks: 0
+  CurrentHealth: 100
+  MaxHealth: 100
   _startRegenTreshold: 5
   _regenRate: 3
 --- !u!114 &1999210798
@@ -75792,6 +76176,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2003475963
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76155,6 +76540,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2013117513
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76263,6 +76649,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2014087252
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76371,6 +76758,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2015293474
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76564,6 +76952,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2021043607
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76672,6 +77061,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2023427152
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76950,6 +77340,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2027821172
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77397,6 +77788,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2039737896
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77590,6 +77982,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2042706791
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77698,6 +78091,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2043887059
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -78061,6 +78455,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2061445730
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -78169,6 +78564,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2063547338
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -78362,6 +78758,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2070064997
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -78470,6 +78867,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2073496995
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -78578,6 +78976,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2077203886
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79196,6 +79595,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2099168146
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79389,6 +79789,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2105674053
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79582,6 +79983,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2106593497
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79690,6 +80092,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2110100244
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79798,6 +80201,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2110134054
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79991,6 +80395,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2114353368
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80099,6 +80504,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2114567942
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80292,6 +80698,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2121432550
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80400,6 +80807,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2122712085
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80593,6 +81001,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2136055908
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -80701,6 +81110,7 @@ MonoBehaviour:
   Connection: {fileID: 0}
   Walkable: 0
   Pathed: 0
+  Burning: 0
 --- !u!212 &2143767181
 SpriteRenderer:
   m_ObjectHideFlags: 0
