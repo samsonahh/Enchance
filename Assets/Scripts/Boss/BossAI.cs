@@ -32,6 +32,7 @@ public class BossAI : MonoBehaviour
     [Header("Follow Player Variables")]
     [SerializeField] private float _followPlayerWaitTime = 1f;
     [SerializeField] private float _playerStraightThresholdToSlam = 1.5f;
+    [SerializeField] private float _followPlayerSpeedInterval = 0.4f;
     private float _followPlayerTimer = 0f;
     private float _playerStraightPathTimer = 0f;
     #endregion
@@ -40,6 +41,7 @@ public class BossAI : MonoBehaviour
     [Header("Push Player Variables")]
     [SerializeField] private float _pushStartVelocity = 1f;
     [SerializeField] private float _pushStunDuration = 2f;
+    [SerializeField] private int _pushDamage = 3;
     private bool _pushPlayerCoroutineStarted = false;
     #endregion
 
@@ -47,14 +49,23 @@ public class BossAI : MonoBehaviour
     [Header("Slam Variables")]
     [SerializeField] private float _slamDuration = 1f;
     [SerializeField] private float _slamJumpHeight = 2f;
+    [SerializeField] private int _slamDamage = 3;
     private bool _slamCoroutineStarted = false;
     #endregion
 
     #region SuckVariables
     [Header("Suck Variables")]
     [SerializeField] private float _suckDuration = 5f;
-    private float _suckTimer = 0f;
     [SerializeField] private float _suckStrength = 10f;
+    private float _suckTimer = 0f;
+    #endregion
+
+    #region BombingRunVariables
+    [Header("Bombing Run Variables")]
+    [SerializeField] private float _bombingRunJumpCount = 3f;
+    [SerializeField] private float _bombingRunStunDuration = 1f;
+    [SerializeField] private int _bombingRunDamage = 3;
+    private bool _bombingRunCoroutineStarted = false;
     #endregion
 
     private void Awake()
@@ -93,6 +104,11 @@ public class BossAI : MonoBehaviour
         {
             ChangeBossState(BossState.SlamOntoPlayer);
             Debug.Log("Slam");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeBossState(BossState.BombingRun);
+            Debug.Log("Bomba");
         }
 
         switch (_currentState)
@@ -189,7 +205,11 @@ public class BossAI : MonoBehaviour
                 break;
             case BossState.BombingRun:
 
-
+                if (!_bombingRunCoroutineStarted)
+                {
+                    _bombingRunCoroutineStarted = true;
+                    StartCoroutine(BombingRun());
+                }
 
                 break;
             default:
@@ -276,13 +296,12 @@ public class BossAI : MonoBehaviour
         Vector3 dir = path[0].transform.position - transform.position;
         if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
 
-        float timer = 0f;
-        while(timer < 0.5f)
+        for(float timer = 0f; timer < _followPlayerSpeedInterval; timer += Time.deltaTime)
         {
-            timer += Time.deltaTime;
-            transform.position = Vector3.Slerp(transform.position, path[0].transform.position, 10f * Time.deltaTime);
+            transform.position = Vector3.Slerp(transform.position, path[0].transform.position, timer / _followPlayerSpeedInterval);
             yield return null;
         }
+        transform.position = path[0].transform.position;
     }
 
     IEnumerator PushPlayer()
@@ -291,7 +310,7 @@ public class BossAI : MonoBehaviour
 
         Vector3 dir = (_playerController.transform.position - transform.position).normalized;
 
-        _playerController.TakeDamage(5);
+        _playerController.TakeDamage(_pushDamage);
         _playerController.PushPlayer(dir, _pushStunDuration, _pushStartVelocity);
 
         yield return null;
@@ -326,29 +345,20 @@ public class BossAI : MonoBehaviour
 
         Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
 
-        float timer = 0f;
-        while (timer < _slamDuration)
+        float timer;
+        for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
         {
-            transform.position = Vector3.Lerp(transform.position, abovePlayerTile, 10f * Time.deltaTime);
-            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, abovePlayerTile, timer / _slamDuration);
             yield return null;
         }
+        transform.position = abovePlayerTile;
 
-        timer = 0f;
-        while(timer < 0.2f)
+        for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
         {
-            transform.position = Vector3.Lerp(transform.position, t.transform.position, 20f * Time.deltaTime);
-            timer += Time.deltaTime;
-
-            if(Vector3.Distance(transform.position, t.transform.position) <= 0.1f)
-            {
-                break;
-            }
-
+            transform.position = Vector3.Lerp(transform.position, t.transform.position, timer / 0.2f);
             yield return null;
         }
-
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        transform.position = t.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
 
@@ -358,7 +368,7 @@ public class BossAI : MonoBehaviour
 
             if(_playerTile == dangerTile)
             {
-                _playerController.TakeDamage(5);
+                _playerController.TakeDamage(_slamDamage);
                 _playerController.StunPlayer(_slamDuration + 0.5f);
                 break;
             }
@@ -368,35 +378,119 @@ public class BossAI : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
-        //Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up;
         Vector3 aboveRandTile = randTile.transform.position;
 
-        timer = 0f;
-        while (Vector3.Distance(transform.position, aboveRandTile) >= 0.1f && timer < 2f)
+        for(timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
         {
-            transform.position = Vector3.Lerp(transform.position, aboveRandTile, 5f * Time.deltaTime);
-            timer += Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, aboveRandTile, timer / _slamDuration);
             yield return null;
         }
 
-/*        timer = 0f;
-        while (timer < 0.2f)
-        {
-            transform.position = Vector3.Lerp(transform.position, randTile.transform.position, 20f * Time.deltaTime);
-            timer += Time.deltaTime;
-
-            if (Vector3.Distance(transform.position, randTile.transform.position) <= 0.1f)
-            {
-                break;
-            }
-
-            yield return null;
-        }*/
-
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        transform.position = aboveRandTile;
 
         _slamCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);
+    }
+
+    IEnumerator BombingRun()
+    {
+        for(int i = 0; i < _bombingRunJumpCount; i++)
+        {
+            Tile t = _playerTile;
+
+            Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
+
+            float timer;
+            for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
+            {
+                transform.position = Vector3.Lerp(transform.position, abovePlayerTile, timer / _slamDuration);
+                yield return null;
+            }
+            transform.position = abovePlayerTile;
+
+            for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
+            {
+                transform.position = Vector3.Lerp(transform.position, t.transform.position, timer / 0.2f);
+                yield return null;
+            }
+            transform.position = t.transform.position;
+
+            CameraShake.Instance.Shake(0.25f, 0.25f);
+            List<Tile> dangerTiles1 = _gridManager.PathCrossPattern(t);
+
+            foreach (Tile dangerTile in dangerTiles1)
+            {
+                if (dangerTile == null) continue;
+
+                if (_playerTile == dangerTile)
+                {
+                    _playerController.TakeDamage(_bombingRunDamage);
+                    _playerController.StunPlayer(_bombingRunStunDuration);
+                    break;
+                }
+            }
+
+            StartCoroutine(CheckPlayerOverBurningTile(dangerTiles1));
+
+            yield return new WaitForSeconds(0.5f);
+
+            Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
+            Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up;
+
+            for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
+            {
+                transform.position = Vector3.Lerp(transform.position, aboveRandTile, timer / _slamDuration);
+                yield return null;
+            }
+            transform.position = aboveRandTile;
+
+            for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
+            {
+                transform.position = Vector3.Lerp(transform.position, randTile.transform.position, timer / 0.2f);
+                yield return null;
+            }
+
+            transform.position = randTile.transform.position;
+
+            CameraShake.Instance.Shake(0.25f, 0.25f);
+            List<Tile> dangerTiles2 = _gridManager.PathCrossPattern(randTile);
+
+            foreach (Tile dangerTile in dangerTiles2)
+            {
+                if (dangerTile == null) continue;
+
+                if (_playerTile == dangerTile)
+                {
+                    _playerController.TakeDamage(_bombingRunDamage);
+                    _playerController.StunPlayer(_bombingRunStunDuration);
+                    break;
+                }
+            }
+
+            StartCoroutine(CheckPlayerOverBurningTile(dangerTiles1));
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        _bombingRunCoroutineStarted = false;
+        ChangeBossState(BossState.FollowPlayer);
+    }
+
+    IEnumerator CheckPlayerOverBurningTile(List<Tile> tiles)
+    {
+        for(float timer = 0; timer < 2 * (_slamDuration + 0.5f) * _bombingRunJumpCount + 3f; timer += Time.deltaTime)
+        {
+            foreach(Tile t in tiles)
+            {
+                if(_playerTile == t)
+                {
+                    _playerController.BurnPlayer(3, 1f);
+                    break;
+                }
+            }
+
+            yield return null;
+        }
     }
 }
 

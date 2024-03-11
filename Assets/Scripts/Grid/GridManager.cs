@@ -284,4 +284,26 @@ public class GridManager : MonoBehaviour
 
         return hStraight || vStraight;
     }
+
+    public List<Tile> PathCrossPattern(Tile t)
+    {
+        List<Tile> crossedTiles = new List<Tile>();
+
+        for (int x = 0; x < _height; x++)
+        {
+            for (int y = 0; y < _width; y++)
+            {
+                int newX = 2 * (x - _width / 2);
+                int newY = 2 * (y - _height / 2);
+
+                _tiles[new Vector2(t.X, newY)].Pathed = true;
+                _tiles[new Vector2(newX, t.Y)].Pathed = true;
+
+                crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);
+                crossedTiles.Add(_tiles[new Vector2(newX, t.Y)]);
+            }
+        }
+
+        return crossedTiles;
+    }
 }

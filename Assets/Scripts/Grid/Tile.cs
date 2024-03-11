@@ -17,6 +17,7 @@ public class Tile : MonoBehaviour
     [HideInInspector] public Tile Connection;
     public bool Walkable = true;
     public bool Pathed = false;
+    public bool Burning = false;
 
     private void Start()
     {

@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool IsMoving { get; private set; }
     [HideInInspector] public bool IsCasting;
-    [HideInInspector] public bool IsStunned;
+    public bool IsStunned;
+    public bool IsBurning;
+    private IEnumerator _burningPlayerCoroutine;
 
     //Health
     public int CurrentHealth;
@@ -55,6 +57,8 @@ public class PlayerController : MonoBehaviour
         HandlePlayerFacingDirection();
         HandleTileChange();
         ManagePlayerHealth();
+
+        _spriteRenderer.color = IsBurning ? Color.red : Color.white;
 
         if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(3);
     }
@@ -246,6 +250,29 @@ public class PlayerController : MonoBehaviour
         }
 
         IsStunned = false;
+    }
+
+    public void BurnPlayer(int ticks, float tickDuration)
+    {
+        if(_burningPlayerCoroutine != null)
+        {
+            StopCoroutine(_burningPlayerCoroutine);
+        }
+        _burningPlayerCoroutine = BurnPlayerCoroutine(ticks, tickDuration);
+        StartCoroutine(_burningPlayerCoroutine);
+    }
+
+    public IEnumerator BurnPlayerCoroutine(int ticks, float tickDuration)
+    {
+        IsBurning = true;
+
+        for(int tick = 0; tick < ticks; tick++)
+        {
+            yield return new WaitForSeconds(tickDuration);
+            TakeDamage(1);
+        }
+
+        IsBurning = false;
     }
 
     private void HandleTileChange()
