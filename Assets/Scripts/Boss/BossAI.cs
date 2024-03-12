@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
 
 public class BossAI : MonoBehaviour
 {
@@ -19,9 +21,11 @@ public class BossAI : MonoBehaviour
     private Tile _playerTile;
     private List<Tile> _path;
 
-    private List<GameState> _phaseOneStates;
-    private List<GameState> _phaseTwoStates;
-    private List<GameState> _phaseThreeStates;
+    [Header("Boss Stats")]
+    [SerializeField] private Slider _healthSlider;
+    [SerializeField] private TMP_Text _healthText;
+    [SerializeField] private int _currentHealth = 200;
+    [SerializeField] private int _maxHealth = 200;
 
     #region IdleVariables
     [Header("Idle Variables")]
@@ -88,12 +92,18 @@ public class BossAI : MonoBehaviour
 
         _currentTile = GridManager.Instance._tiles[new Vector2(0, 14)];
         transform.position = _currentTile.transform.position;
+
+        _currentHealth = _maxHealth;
+        _healthSlider.maxValue = _maxHealth;
+        _healthSlider.value = _currentHealth;
     }
 
     private void Update()
     {
         CalculatePlayerDistance();
         HandleTileChange();
+        HandleBossHealth();
+        
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -124,7 +134,6 @@ public class BossAI : MonoBehaviour
             case BossState.FollowPlayer:
 
                 _gridManager.ClearPath();
-                Debug.Log(_playerStraightPathTimer);
                 if (_gridManager.IsPathStraight(_path))
                 {
                     _gridManager.PathTiles(_path);
@@ -269,6 +278,17 @@ public class BossAI : MonoBehaviour
         _distanceToPlayer = Vector3.Distance(_playerController.transform.position, transform.position);
     }
 
+    private void HandleBossHealth()
+    {
+        _healthText.text = $"{_currentHealth}/{_maxHealth}";
+        _healthSlider.value = _currentHealth;
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+
+        if (_currentHealth <= 0)
+        {
+
+        }
+    }
     private void HandleTileChange()
     {
         Tile t = GridManager.Instance.GetTileAtPosition(transform.position);
@@ -345,6 +365,8 @@ public class BossAI : MonoBehaviour
         }
 
         Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
+        Vector3 dir = t.transform.position - transform.position;
+        if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
 
         float timer;
         for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
@@ -380,8 +402,10 @@ public class BossAI : MonoBehaviour
 
         Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
         Vector3 aboveRandTile = randTile.transform.position;
+        dir = randTile.transform.position - transform.position;
+        if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
 
-        for(timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
+        for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
         {
             transform.position = Vector3.Lerp(transform.position, aboveRandTile, timer / _slamDuration);
             yield return null;
@@ -401,6 +425,8 @@ public class BossAI : MonoBehaviour
             Tile t = _playerTile;
 
             Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
+            Vector3 dir = t.transform.position - transform.position;
+            if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
 
             float timer;
             for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
@@ -436,6 +462,8 @@ public class BossAI : MonoBehaviour
 
             Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
             Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up;
+            dir = randTile.transform.position - transform.position;
+            if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
 
             for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
             {
