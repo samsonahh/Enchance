@@ -297,6 +297,28 @@ public class GridManager : MonoBehaviour
                 int newX = 2 * (x - _width / 2);
                 int newY = 2 * (y - _height / 2);
 
+                _tiles[new Vector2(t.X, newY)].Pathed = true;
+                _tiles[new Vector2(newX, t.Y)].Pathed = true;
+
+                crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);
+                crossedTiles.Add(_tiles[new Vector2(newX, t.Y)]);
+            }
+        }
+
+        return crossedTiles;
+    }
+
+    public List<Tile> BurnCrossPattern(Tile t)
+    {
+        List<Tile> crossedTiles = new List<Tile>();
+
+        for (int x = 0; x < _height; x++)
+        {
+            for (int y = 0; y < _width; y++)
+            {
+                int newX = 2 * (x - _width / 2);
+                int newY = 2 * (y - _height / 2);
+
                 _tiles[new Vector2(t.X, newY)].Burning = true;
                 _tiles[new Vector2(newX, t.Y)].Burning = true;
 
@@ -306,5 +328,53 @@ public class GridManager : MonoBehaviour
         }
 
         return crossedTiles;
+    }
+
+    public void BurnCheckerBoard(bool black)
+    {
+        if (black)
+        {
+            foreach (Tile t in _tiles.Values)
+            {
+                if (t.Black)
+                {
+                    t.Burning = true;
+                }
+            }
+        }
+        else
+        {
+            foreach (Tile t in _tiles.Values)
+            {
+                if (!t.Black)
+                {
+                    t.Burning = true;
+                }
+            }
+        }
+    }
+
+    public void PathCheckerBoard(bool black)
+    {
+        if (black)
+        {
+            foreach (Tile t in _tiles.Values)
+            {
+                if (t.Black)
+                {
+                    t.Pathed = true;
+                }
+            }
+        }
+        else
+        {
+            foreach (Tile t in _tiles.Values)
+            {
+                if (!t.Black)
+                {
+                    t.Pathed = true;
+                }
+            }
+        }
     }
 }

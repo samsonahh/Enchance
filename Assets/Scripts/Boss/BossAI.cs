@@ -499,6 +499,8 @@ public class BossAI : MonoBehaviour
         {
             Tile t = _playerTile;
 
+            _gridManager.PathCrossPattern(t);
+
             Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
             Vector3 dir = t.transform.position - transform.position;
             if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
@@ -519,7 +521,7 @@ public class BossAI : MonoBehaviour
             transform.position = t.transform.position;
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
-            List<Tile> dangerTiles1 = _gridManager.PathCrossPattern(t);
+            List<Tile> dangerTiles1 = _gridManager.BurnCrossPattern(t);
 
             foreach (Tile dangerTile in dangerTiles1)
             {
@@ -536,6 +538,9 @@ public class BossAI : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
+
+            _gridManager.PathCrossPattern(randTile);
+
             Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up;
             dir = randTile.transform.position - transform.position;
             if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
@@ -556,7 +561,7 @@ public class BossAI : MonoBehaviour
             transform.position = randTile.transform.position;
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
-            List<Tile> dangerTiles2 = _gridManager.PathCrossPattern(randTile);
+            List<Tile> dangerTiles2 = _gridManager.BurnCrossPattern(randTile);
 
             foreach (Tile dangerTile in dangerTiles2)
             {
@@ -600,6 +605,8 @@ public class BossAI : MonoBehaviour
 
         Vector3 aboveCurrTile = _currentTile.transform.position + 2f * _slamJumpHeight * Vector3.up;
 
+        _gridManager.PathCheckerBoard(_currentTile.Black);
+
         float timer;
         for (timer = 0f; timer < 1f; timer += Time.deltaTime)
         {
@@ -617,7 +624,7 @@ public class BossAI : MonoBehaviour
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
 
-        SetCheckerBoardFloorIsLava(_currentTile.Black);
+        _gridManager.BurnCheckerBoard(_currentTile.Black);
 
         yield return new WaitForSeconds(_floorIsLavaDuration/2);
 
@@ -629,6 +636,7 @@ public class BossAI : MonoBehaviour
         transform.position = aboveCurrTile;
 
         _gridManager.ClearPath();
+        _gridManager.PathCheckerBoard(!_currentTile.Black);
         yield return new WaitForSeconds(0.8f);
 
         for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
@@ -640,38 +648,12 @@ public class BossAI : MonoBehaviour
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
 
-        SetCheckerBoardFloorIsLava(!_currentTile.Black);
+        _gridManager.BurnCheckerBoard(!_currentTile.Black);
 
         yield return new WaitForSeconds(_floorIsLavaDuration / 2);
 
         _floorIsLavaCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);
-    }
-
-    private void SetCheckerBoardFloorIsLava(bool black)
-    {
-        if(black)
-        {
-            foreach(Tile t in _gridManager._tiles.Values)
-            {
-                if (t.Black)
-                { 
-                    t.Pathed = true;
-                    t.Burning = true;
-                }
-            }
-        }
-        else
-        {
-            foreach (Tile t in _gridManager._tiles.Values)
-            {
-                if (!t.Black)
-                {
-                    t.Pathed = true;
-                    t.Burning = true;
-                }
-            }
-        }
     }
 }
 
