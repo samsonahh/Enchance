@@ -62,8 +62,6 @@ public class PlayerController : MonoBehaviour
         HandlePlayerFacingDirection();
         HandleTileChange();
         ManagePlayerHealth();
-
-        if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(3);
     }
 
     private void GetMouseWorldPosition()

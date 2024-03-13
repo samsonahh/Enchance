@@ -12,6 +12,7 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private Material _defaultSpriteMaterial;
     [SerializeField] private Material _transparentSpriteMaterial;
+    [SerializeField] private Material _default3DMaterial;
     private GameObject _lastObstructingObject;
 
     private void Start()
@@ -49,6 +50,12 @@ public class CameraMovement : MonoBehaviour
         {
             if(_lastObstructingObject.TryGetComponent(out Renderer renderer))
             {
+                if (_lastObstructingObject.tag == "Environment")
+                {
+                    renderer.material = _default3DMaterial;
+                    _lastObstructingObject = null;
+                    return;
+                }
                 renderer.material = _defaultSpriteMaterial;
             }
             if (_lastObstructingObject.TryGetComponent(out SpriteRenderer sRenderer))

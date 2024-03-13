@@ -10,8 +10,8 @@ public class BossAI : MonoBehaviour
 {
     private PlayerController _playerController;
     private GridManager _gridManager;
-    private Rigidbody _rigidBody;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
 
     public BossState _currentState;
 
@@ -25,6 +25,7 @@ public class BossAI : MonoBehaviour
     [Header("Boss Stats")]
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private TMP_Text _healthText;
+    [SerializeField] private GameObject _bossIndicator;
     [SerializeField] private int _currentHealth = 50;
     [SerializeField] private int _maxHealth = 50;
 
@@ -99,8 +100,8 @@ public class BossAI : MonoBehaviour
     {
         _playerController = PlayerController.Instance;
         _gridManager = GridManager.Instance;
-        _rigidBody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         _currentTile = GridManager.Instance._tiles[new Vector2(0, 14)];
         transform.position = _currentTile.transform.position;
@@ -115,7 +116,9 @@ public class BossAI : MonoBehaviour
         CalculatePlayerDistance();
         HandleTileChange();
         HandleBossHealth();
-        
+        HandleBossIndicator();
+
+        if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(5);
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -350,6 +353,21 @@ public class BossAI : MonoBehaviour
 
         }
     }
+
+    private void HandleBossIndicator()
+    {
+        Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
+        Vector3 topScreenPos = Camera.main.WorldToViewportPoint(transform.position + 5.7f * Vector3.up + 5.7f * Vector3.forward);
+        bool onScreen = (screenPos.x > 0 && screenPos.x < 1 && screenPos.y > 0 && screenPos.y < 1) || (topScreenPos.x > 0 && topScreenPos.x < 1 && topScreenPos.y > 0 && topScreenPos.y < 1);
+        _bossIndicator.SetActive(!onScreen);
+        if (!onScreen)
+        {
+            Vector3 newScreenPos = new Vector3(Mathf.Clamp(screenPos.x, 0.028f, 1f - 0.028f), Mathf.Clamp(screenPos.y, 0.05f, 0.95f), 0);
+            Vector3 uiPos = Camera.main.ViewportToScreenPoint(newScreenPos);
+            _bossIndicator.transform.position = uiPos;
+        }
+    }
+
     private void HandleTileChange()
     {
         Tile t = GridManager.Instance.GetTileAtPosition(transform.position);
@@ -376,7 +394,7 @@ public class BossAI : MonoBehaviour
         List<Tile> path = new List<Tile>(_path);
 
         Vector3 dir = path[0].transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
         if(_phase == 1)
         {
@@ -441,7 +459,7 @@ public class BossAI : MonoBehaviour
 
         Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
         Vector3 dir = t.transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
         float timer;
         for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
@@ -478,7 +496,7 @@ public class BossAI : MonoBehaviour
         Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
         Vector3 aboveRandTile = randTile.transform.position;
         dir = randTile.transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
         for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
         {
@@ -503,7 +521,7 @@ public class BossAI : MonoBehaviour
 
             Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
             Vector3 dir = t.transform.position - transform.position;
-            if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+            if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
             float timer;
             for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
@@ -543,7 +561,7 @@ public class BossAI : MonoBehaviour
 
             Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up;
             dir = randTile.transform.position - transform.position;
-            if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+            if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
             for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
             {
@@ -654,6 +672,20 @@ public class BossAI : MonoBehaviour
 
         _floorIsLavaCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);
+    }
+
+    public void TakeDamage(int dmg)
+    {
+        _currentHealth -= dmg;
+
+        _spriteRenderer.color = Color.red;
+        StartCoroutine(TakeDamageCoroutine());
+    }
+
+    public IEnumerator TakeDamageCoroutine()
+    {
+        yield return new WaitForSeconds(0.15f);
+        _spriteRenderer.color = Color.white;
     }
 }
 
