@@ -11,6 +11,7 @@ public class BossAI : MonoBehaviour
     private PlayerController _playerController;
     private GridManager _gridManager;
     private Rigidbody _rigidBody;
+    private Animator _animator;
 
     public BossState _currentState;
 
@@ -24,8 +25,10 @@ public class BossAI : MonoBehaviour
     [Header("Boss Stats")]
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private int _currentHealth = 200;
-    [SerializeField] private int _maxHealth = 200;
+    [SerializeField] private int _currentHealth = 50;
+    [SerializeField] private int _maxHealth = 50;
+
+    private int _phase => _currentHealth / _maxHealth > 0.5f ? 1 : 2;
 
     #region IdleVariables
     [Header("Idle Variables")]
@@ -35,9 +38,11 @@ public class BossAI : MonoBehaviour
     #region FollowPlayerVariables
     [Header("Follow Player Variables")]
     [SerializeField] private float _followPlayerWaitTime = 1f;
+    [SerializeField] private float _followPlayerPatienceLimit = 7f;
     [SerializeField] private float _playerStraightThresholdToSlam = 1.5f;
     [SerializeField] private float _followPlayerSpeedInterval = 0.4f;
     private float _followPlayerTimer = 0f;
+    private float _followPlayerPatienceTimer = 0f;
     private float _playerStraightPathTimer = 0f;
     #endregion
 
@@ -72,6 +77,12 @@ public class BossAI : MonoBehaviour
     private bool _bombingRunCoroutineStarted = false;
     #endregion
 
+    #region FloorIsLavaVariables
+    [Header("Floor Is Lava Variables")]
+    [SerializeField] private float _floorIsLavaDuration = 5f;
+    private bool _floorIsLavaCoroutineStarted = false;
+    #endregion
+
     private void Awake()
     {
         PlayerController.OnPlayerStepOnNewTile += PlayerController_OnPlayerStepOnNewTile;
@@ -89,6 +100,7 @@ public class BossAI : MonoBehaviour
         _playerController = PlayerController.Instance;
         _gridManager = GridManager.Instance;
         _rigidBody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
 
         _currentTile = GridManager.Instance._tiles[new Vector2(0, 14)];
         transform.position = _currentTile.transform.position;
@@ -145,6 +157,7 @@ public class BossAI : MonoBehaviour
                 }
 
                 _followPlayerTimer += Time.deltaTime;
+                _followPlayerPatienceTimer += Time.deltaTime;
 
                 if (_path.Count == 0) _followPlayerTimer = 0f;
 
@@ -156,12 +169,53 @@ public class BossAI : MonoBehaviour
                     _followPlayerTimer = 0f;
                 }
 
+                if(_phase == 1)
+                {
+                    if (_followPlayerPatienceTimer > _followPlayerPatienceLimit)
+                    {
+                        bool suck = UnityEngine.Random.Range(0, 2) == 1;
+                        if (suck)
+                        {
+                            ChangeBossState(BossState.Suck);
+                        }
+                        else
+                        {
+                            ChangeBossState(BossState.SlamOntoPlayer);
+                        }
+                    }
+                }
+                else
+                {
+                    if (_followPlayerPatienceTimer > _followPlayerPatienceLimit / 1.5f)
+                    {
+                        int randAbility = UnityEngine.Random.Range(0, 4);
+
+                        switch (randAbility)
+                        {
+                            case 0:
+                                ChangeBossState(BossState.Suck);
+                                break;
+                            case 1:
+                                ChangeBossState(BossState.SlamOntoPlayer);
+                                break;
+                            case 2:
+                                ChangeBossState(BossState.BombingRun);
+                                break;
+                            case 3:
+                                ChangeBossState(BossState.FloorIsLava);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
                 if(_currentTile == _playerTile)
                 {
                     ChangeBossState(BossState.PushAway);
                 }
 
-                if(_playerStraightPathTimer > _playerStraightThresholdToSlam)
+                if(_playerStraightPathTimer > (_phase == 1 ? _playerStraightThresholdToSlam : _playerStraightThresholdToSlam / 1.5f))
                 {
                     ChangeBossState(BossState.SlamOntoPlayer);
                 }
@@ -186,20 +240,33 @@ public class BossAI : MonoBehaviour
 
                 break;
             case BossState.FloorIsLava:
-                break;
-            case BossState.PawnSpawn:
-                break;
-            case BossState.TPTiles:
-                break;
-            case BossState.Root:
+
+                if (!_floorIsLavaCoroutineStarted)
+                {
+                    _floorIsLavaCoroutineStarted = true;
+                    StartCoroutine(FloorIsLava());
+                }
+
+                if (_currentTile == _playerTile)
+                {
+                    ChangeBossState(BossState.PushAway);
+                }
+
                 break;
             case BossState.Suck:
 
                 _suckTimer += Time.deltaTime;
 
-                _playerController.transform.position = Vector3.MoveTowards(_playerController.transform.position, transform.position, _suckStrength * Time.deltaTime);
+                if(_phase == 1)
+                {
+                    _playerController.transform.position = Vector3.MoveTowards(_playerController.transform.position, transform.position, _suckStrength * Time.deltaTime);
+                }
+                else
+                {
+                    _playerController.transform.position = Vector3.MoveTowards(_playerController.transform.position, transform.position, 1.1f * _suckStrength * Time.deltaTime);
+                }
 
-                if(_suckTimer > _suckDuration)
+                if (_suckTimer > _suckDuration)
                 {
                     ChangeBossState(BossState.FollowPlayer);
                 }
@@ -210,10 +277,7 @@ public class BossAI : MonoBehaviour
                 }
 
                 break;
-            case BossState.FireTornados:
-                break;
             case BossState.BombingRun:
-
 
                 if (!_bombingRunCoroutineStarted)
                 {
@@ -237,6 +301,10 @@ public class BossAI : MonoBehaviour
 
         _pushPlayerCoroutineStarted = false;
         _slamCoroutineStarted = false;
+        _bombingRunCoroutineStarted = false;
+        _floorIsLavaCoroutineStarted = false;
+
+        Debug.Log(state.ToString());
 
         switch (state)
         {
@@ -245,6 +313,7 @@ public class BossAI : MonoBehaviour
                 break;
             case BossState.FollowPlayer:
                 _followPlayerTimer = 0f;
+                _followPlayerPatienceTimer = 0f;
                 _playerStraightPathTimer = 0f;
                 break;
             case BossState.PushAway:
@@ -254,17 +323,9 @@ public class BossAI : MonoBehaviour
                 break;
             case BossState.FloorIsLava:
                 break;
-            case BossState.PawnSpawn:
-                break;
-            case BossState.TPTiles:
-                break;
-            case BossState.Root:
-                break;
             case BossState.Suck:
                 _suckTimer = 0f;
                 _playerController.StopPlayer();
-                break;
-            case BossState.FireTornados:
                 break;
             case BossState.BombingRun:
                 break;
@@ -317,10 +378,21 @@ public class BossAI : MonoBehaviour
         Vector3 dir = path[0].transform.position - transform.position;
         if (Mathf.Abs(dir.x) > 0) transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = dir.x < 0;
 
-        for(float timer = 0f; timer < _followPlayerSpeedInterval; timer += Time.deltaTime)
+        if(_phase == 1)
         {
-            transform.position = Vector3.Slerp(transform.position, path[0].transform.position, timer / _followPlayerSpeedInterval);
-            yield return null;
+            for (float timer = 0f; timer < _followPlayerSpeedInterval; timer += Time.deltaTime)
+            {
+                transform.position = Vector3.Slerp(transform.position, path[0].transform.position, timer / _followPlayerSpeedInterval);
+                yield return null;
+            }
+        }
+        else
+        {
+            for (float timer = 0f; timer < _followPlayerSpeedInterval / 1.5f; timer += Time.deltaTime)
+            {
+                transform.position = Vector3.Slerp(transform.position, path[0].transform.position, timer / (_followPlayerSpeedInterval / 1.5f));
+                yield return null;
+            }
         }
         transform.position = path[0].transform.position;
     }
@@ -351,10 +423,13 @@ public class BossAI : MonoBehaviour
         dangerTiles[6] = _gridManager.GetTileAtPosition(t.X - 2, t.Y + 2);
         dangerTiles[7] = _gridManager.GetTileAtPosition(t.X - 2, t.Y);
         dangerTiles[8] = _gridManager.GetTileAtPosition(t.X - 2, t.Y - 2);
-        dangerTiles[9] = _gridManager.GetTileAtPosition(t.X, t.Y - 4);
-        dangerTiles[10] = _gridManager.GetTileAtPosition(t.X, t.Y + 4);
-        dangerTiles[11] = _gridManager.GetTileAtPosition(t.X - 4, t.Y);
-        dangerTiles[12] = _gridManager.GetTileAtPosition(t.X + 4, t.Y);
+        if(_phase == 2)
+        {
+            dangerTiles[9] = _gridManager.GetTileAtPosition(t.X, t.Y - 4);
+            dangerTiles[10] = _gridManager.GetTileAtPosition(t.X, t.Y + 4);
+            dangerTiles[11] = _gridManager.GetTileAtPosition(t.X - 4, t.Y);
+            dangerTiles[12] = _gridManager.GetTileAtPosition(t.X + 4, t.Y);
+        }
 
         foreach(Tile dangerTile in dangerTiles)
         {
@@ -515,6 +590,86 @@ public class BossAI : MonoBehaviour
             else
             {
                 yield return null;
+            }
+        }
+    }
+
+    IEnumerator FloorIsLava()
+    {
+        StartCoroutine(CheckPlayerBurning(1f));
+
+        Vector3 aboveCurrTile = _currentTile.transform.position + 2f * _slamJumpHeight * Vector3.up;
+
+        float timer;
+        for (timer = 0f; timer < 1f; timer += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(transform.position, aboveCurrTile, timer / 1f);
+            yield return null;
+        }
+        transform.position = aboveCurrTile;
+
+        for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(transform.position, _currentTile.transform.position, timer / 0.2f);
+            yield return null;
+        }
+        transform.position = _currentTile.transform.position;
+
+        CameraShake.Instance.Shake(0.25f, 0.25f);
+
+        SetCheckerBoardFloorIsLava(_currentTile.Black);
+
+        yield return new WaitForSeconds(_floorIsLavaDuration/2);
+
+        for (timer = 0f; timer < 1f; timer += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(transform.position, aboveCurrTile, timer / 1f);
+            yield return null;
+        }
+        transform.position = aboveCurrTile;
+
+        _gridManager.ClearPath();
+        yield return new WaitForSeconds(0.8f);
+
+        for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(transform.position, _currentTile.transform.position, timer / 0.2f);
+            yield return null;
+        }
+        transform.position = _currentTile.transform.position;
+
+        CameraShake.Instance.Shake(0.25f, 0.25f);
+
+        SetCheckerBoardFloorIsLava(!_currentTile.Black);
+
+        yield return new WaitForSeconds(_floorIsLavaDuration / 2);
+
+        _floorIsLavaCoroutineStarted = false;
+        ChangeBossState(BossState.FollowPlayer);
+    }
+
+    private void SetCheckerBoardFloorIsLava(bool black)
+    {
+        if(black)
+        {
+            foreach(Tile t in _gridManager._tiles.Values)
+            {
+                if (t.Black)
+                { 
+                    t.Pathed = true;
+                    t.Burning = true;
+                }
+            }
+        }
+        else
+        {
+            foreach (Tile t in _gridManager._tiles.Values)
+            {
+                if (!t.Black)
+                {
+                    t.Pathed = true;
+                    t.Burning = true;
+                }
             }
         }
     }

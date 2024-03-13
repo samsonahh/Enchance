@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningPlayerCoroutine;
     private Color _currentColor = Color.white;
+    [SerializeField] private Color _burningColor;
 
     //Health
     public int CurrentHealth;
@@ -284,7 +285,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator BurnPlayerCoroutine()
     {
         IsBurning = true;
-        _currentColor = new Color(255, 90, 0, 1);
+        _currentColor = _burningColor;
 
         while(BurnTicks > 0)
         {

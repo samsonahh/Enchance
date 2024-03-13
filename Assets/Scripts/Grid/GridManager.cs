@@ -297,9 +297,7 @@ public class GridManager : MonoBehaviour
                 int newX = 2 * (x - _width / 2);
                 int newY = 2 * (y - _height / 2);
 
-                _tiles[new Vector2(t.X, newY)].Pathed = true;
                 _tiles[new Vector2(t.X, newY)].Burning = true;
-                _tiles[new Vector2(newX, t.Y)].Pathed = true;
                 _tiles[new Vector2(newX, t.Y)].Burning = true;
 
                 crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);

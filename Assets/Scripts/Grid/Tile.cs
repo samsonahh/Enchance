@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private GameObject _highlight;
+    [SerializeField] private GameObject _lava;
 
     [HideInInspector] public int X { get; private set; }
     [HideInInspector] public int Y { get; private set; }
@@ -18,6 +19,7 @@ public class Tile : MonoBehaviour
     public bool Walkable = true;
     public bool Pathed = false;
     public bool Burning = false;
+    [HideInInspector] public bool Black;
 
     private void Start()
     {
@@ -33,12 +35,16 @@ public class Tile : MonoBehaviour
     {
         bool isOffset = Mathf.Abs(x / 2 + y / 2) % 2 == 1;
         _renderer.color = isOffset ? _offsetColor : _baseColor;
+        Black = isOffset;
     }
 
     private void Update()
     {
         _highlight.SetActive(false);
         _highlight.SetActive(Pathed);
+
+        _lava.SetActive(false);
+        _lava.SetActive(Burning);
     }
 
     public float GetDistance(Tile t)
