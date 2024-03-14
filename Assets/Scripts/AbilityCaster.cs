@@ -31,6 +31,11 @@ public class AbilityCaster : MonoBehaviour
         OnAbilityCast += HandleOnAbilityCast;
     }
 
+    private void OnDestroy()
+    {
+        OnAbilityCast -= HandleOnAbilityCast;
+    }
+
     private void Start()
     {
         InitializeOverlays();

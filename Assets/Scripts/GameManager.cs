@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
             case GameState.Paused:
                 Time.timeScale = 0f;
                 break;
+            case GameState.Dead:
+                Time.timeScale = 0f;
+                LevelManager.Instance.FadeToTargetScene("Game");
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
@@ -52,5 +56,6 @@ public class GameManager : MonoBehaviour
 public enum GameState
 {
     Playing,
-    Paused
+    Paused,
+    Dead
 }

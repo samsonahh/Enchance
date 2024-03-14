@@ -84,6 +84,13 @@ public class BossAI : MonoBehaviour
     private bool _floorIsLavaCoroutineStarted = false;
     #endregion
 
+    #region GetAngryVariables
+    [Header("Get Angry Variables")]
+    [SerializeField] private float _getAngryDuration = 2f;
+    private bool _getAngryCoroutineStarted = false;
+    private bool _getAngryStarted = false;
+    #endregion
+
     private void Awake()
     {
         PlayerController.OnPlayerStepOnNewTile += PlayerController_OnPlayerStepOnNewTile;
@@ -123,17 +130,18 @@ public class BossAI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeBossState(BossState.Suck);
-            Debug.Log("Suck");
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ChangeBossState(BossState.SlamOntoPlayer);
-            Debug.Log("Slam");
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChangeBossState(BossState.BombingRun);
-            Debug.Log("Bomba");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            ChangeBossState(BossState.FloorIsLava);
         }
 
         switch (_currentState)
@@ -271,11 +279,13 @@ public class BossAI : MonoBehaviour
 
                 if (_suckTimer > _suckDuration)
                 {
+                    _animator.SetBool("IsSucking", false);
                     ChangeBossState(BossState.FollowPlayer);
                 }
 
                 if (_currentTile == _playerTile)
                 {
+                    _animator.SetBool("IsSucking", false);
                     ChangeBossState(BossState.PushAway);
                 }
 
@@ -286,6 +296,15 @@ public class BossAI : MonoBehaviour
                 {
                     _bombingRunCoroutineStarted = true;
                     StartCoroutine(BombingRun());
+                }
+
+                break;
+            case BossState.GetAngry:
+
+                if(!_getAngryCoroutineStarted)
+                {
+                    _getAngryCoroutineStarted = true;
+                    StartCoroutine(GetAngry());
                 }
 
                 break;
@@ -301,11 +320,13 @@ public class BossAI : MonoBehaviour
         StopAllCoroutines();
         _gridManager.ClearPath();
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        _spriteRenderer.color = Color.white;
 
         _pushPlayerCoroutineStarted = false;
         _slamCoroutineStarted = false;
         _bombingRunCoroutineStarted = false;
         _floorIsLavaCoroutineStarted = false;
+        _getAngryCoroutineStarted = false;
 
         Debug.Log(state.ToString());
 
@@ -328,9 +349,12 @@ public class BossAI : MonoBehaviour
                 break;
             case BossState.Suck:
                 _suckTimer = 0f;
+                _animator.SetBool("IsSucking", true);
                 _playerController.StopPlayer();
                 break;
             case BossState.BombingRun:
+                break;
+            case BossState.GetAngry:
                 break;
             default:
                 break;
@@ -348,9 +372,16 @@ public class BossAI : MonoBehaviour
         _healthSlider.value = _currentHealth;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
+        if (_currentHealth <= 25 && !_getAngryStarted)
+        {
+            _getAngryStarted = true;
+
+            ChangeBossState(BossState.GetAngry);
+        }
+
         if (_currentHealth <= 0)
         {
-
+            
         }
     }
 
@@ -418,6 +449,7 @@ public class BossAI : MonoBehaviour
     IEnumerator PushPlayer()
     {
         CameraShake.Instance.Shake(0.25f, 0.25f);
+        _animator.Play("BossPushAway");
 
         Vector3 dir = (_playerController.transform.position - transform.position).normalized;
 
@@ -426,6 +458,7 @@ public class BossAI : MonoBehaviour
 
         yield return null;
 
+        _pushPlayerCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);
     }
 
@@ -477,6 +510,7 @@ public class BossAI : MonoBehaviour
         transform.position = t.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
+        _animator.Play("BossSquish");
 
         foreach (Tile dangerTile in dangerTiles)
         {
@@ -539,6 +573,7 @@ public class BossAI : MonoBehaviour
             transform.position = t.transform.position;
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
+            _animator.Play("BossSquish");
             List<Tile> dangerTiles1 = _gridManager.BurnCrossPattern(t);
 
             foreach (Tile dangerTile in dangerTiles1)
@@ -579,6 +614,7 @@ public class BossAI : MonoBehaviour
             transform.position = randTile.transform.position;
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
+            _animator.Play("BossSquish");
             List<Tile> dangerTiles2 = _gridManager.BurnCrossPattern(randTile);
 
             foreach (Tile dangerTile in dangerTiles2)
@@ -641,6 +677,7 @@ public class BossAI : MonoBehaviour
         transform.position = _currentTile.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
+        _animator.Play("BossSquish");
 
         _gridManager.BurnCheckerBoard(_currentTile.Black);
 
@@ -665,12 +702,22 @@ public class BossAI : MonoBehaviour
         transform.position = _currentTile.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
+        _animator.Play("BossSquish");
 
         _gridManager.BurnCheckerBoard(!_currentTile.Black);
 
         yield return new WaitForSeconds(_floorIsLavaDuration / 2);
 
         _floorIsLavaCoroutineStarted = false;
+        ChangeBossState(BossState.FollowPlayer);
+    }
+
+    IEnumerator GetAngry()
+    {
+        _animator.SetBool("IsAngry", true);
+        yield return new WaitForSeconds(_getAngryDuration);
+        _animator.SetBool("IsAngry", false);
+        _getAngryCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);
     }
 
@@ -696,10 +743,7 @@ public enum BossState
     PushAway,
     SlamOntoPlayer,
     FloorIsLava,
-    PawnSpawn,
-    TPTiles,
-    Root,
     Suck,
-    FireTornados,
-    BombingRun
+    BombingRun,
+    GetAngry
 }

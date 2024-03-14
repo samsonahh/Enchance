@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Material _defaultSpriteMaterial;
     [SerializeField] private Material _transparentSpriteMaterial;
     [SerializeField] private Material _default3DMaterial;
+    [SerializeField] private Material _transparent3DMaterial;
     private GameObject _lastObstructingObject;
 
     private void Start()
@@ -53,10 +54,11 @@ public class CameraMovement : MonoBehaviour
                 if (_lastObstructingObject.tag == "Environment")
                 {
                     renderer.material = _default3DMaterial;
-                    _lastObstructingObject = null;
-                    return;
                 }
-                renderer.material = _defaultSpriteMaterial;
+                else
+                {
+                    renderer.material = _defaultSpriteMaterial;
+                }   
             }
             if (_lastObstructingObject.TryGetComponent(out SpriteRenderer sRenderer))
             {
@@ -73,7 +75,14 @@ public class CameraMovement : MonoBehaviour
                 _lastObstructingObject = hitObject;
                 if(hitObject.TryGetComponent(out Renderer renderer))
                 {
-                    renderer.material = _transparentSpriteMaterial;
+                    if(_lastObstructingObject.tag == "Environment")
+                    {
+                        renderer.material = _transparent3DMaterial;
+                    }
+                    else
+                    {
+                        renderer.material = _transparentSpriteMaterial;
+                    }
                 }
                 if (hitObject.TryGetComponent(out SpriteRenderer sRenderer))
                 {

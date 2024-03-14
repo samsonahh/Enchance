@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _arrowPivot;
     [SerializeField] private DestinationIndicator _playerDestinationObject;
     private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
 
     [HideInInspector] public static PlayerController Instance { get; private set; }
 
@@ -47,9 +48,15 @@ public class PlayerController : MonoBehaviour
         AbilityCaster.OnAbilityCast += AbilityCaster_OnAbilityCast;
     }
 
+    private void OnDestroy()
+    {
+        AbilityCaster.OnAbilityCast -= AbilityCaster_OnAbilityCast;
+    }
+
     private void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
 
         CurrentHealth = MaxHealth;
         StartCoroutine(RegenHealth());
@@ -62,6 +69,7 @@ public class PlayerController : MonoBehaviour
         HandlePlayerFacingDirection();
         HandleTileChange();
         ManagePlayerHealth();
+        HandleAnimations();
     }
 
     private void GetMouseWorldPosition()
@@ -73,6 +81,11 @@ public class PlayerController : MonoBehaviour
         {
             MouseWorldPosition = ray.GetPoint(distance);
         }
+    }
+    
+    private void HandleAnimations()
+    {
+        _animator.SetBool("IsMoving", IsMoving);
     }
 
     private void HandlePlayerMoving()
@@ -130,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 facingDirection = (MouseWorldPosition - transform.position).normalized;
 
-        if (Mathf.Abs(facingDirection.x) > 0) _spriteRenderer.flipX = facingDirection.x < 0;
+        if (Mathf.Abs(facingDirection.x) > 0) _spriteRenderer.flipX = facingDirection.x > 0;
 
         if (facingDirection.magnitude > 0)
         {
@@ -173,7 +186,7 @@ public class PlayerController : MonoBehaviour
         //HANDLE PLAYER DEATH
         if(CurrentHealth <= 0)
         {
-
+            GameManager.Instance.UpdateGameState(GameState.Dead);
         }
 
         //REGEN
