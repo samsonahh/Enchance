@@ -54,6 +54,8 @@ public class AbilityCaster : MonoBehaviour
     {
         if (CurrentAbilities[index].OnCooldown) return;
         if (PlayerController.Instance.IsCasting) return;
+        if (PlayerController.Instance.IsStunned) return;
+        if (!PlayerController.Instance.CanCast) return;
 
         StartCoroutine(UseAbilityCoroutine(index));
     }
@@ -242,7 +244,7 @@ public class AbilityCaster : MonoBehaviour
         {
             if(CurrentAbilities[SelectedAbility].AbilityPrefab != null)
             {
-                Instantiate(CurrentAbilities[SelectedAbility].AbilityPrefab);
+                Instantiate(CurrentAbilities[SelectedAbility].AbilityPrefab, transform.position, Quaternion.identity);
             }
         }  
     }

@@ -29,7 +29,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] private int _currentHealth = 50;
     [SerializeField] private int _maxHealth = 50;
 
-    private int _phase => _currentHealth / _maxHealth > 0.5f ? 1 : 2;
+    [SerializeField] private int _phase = 1;
 
     #region IdleVariables
     [Header("Idle Variables")]
@@ -81,6 +81,9 @@ public class BossAI : MonoBehaviour
     #region FloorIsLavaVariables
     [Header("Floor Is Lava Variables")]
     [SerializeField] private float _floorIsLavaDuration = 5f;
+    [SerializeField] private int _floorIsLavaDamage = 3;
+    [SerializeField] private float _floorIsLavaStunDuration = 1f;
+    [SerializeField] private GameObject _lavaBlastParticlePrefab;
     private bool _floorIsLavaCoroutineStarted = false;
     #endregion
 
@@ -125,7 +128,7 @@ public class BossAI : MonoBehaviour
         HandleBossHealth();
         HandleBossIndicator();
 
-        if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(5);
+/*        if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(5);
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -142,7 +145,7 @@ public class BossAI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             ChangeBossState(BossState.FloorIsLava);
-        }
+        }*/
 
         switch (_currentState)
         {
@@ -355,6 +358,7 @@ public class BossAI : MonoBehaviour
             case BossState.BombingRun:
                 break;
             case BossState.GetAngry:
+                _phase = 2;
                 break;
             default:
                 break;
@@ -381,7 +385,7 @@ public class BossAI : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
-            
+            GameManager.Instance.UpdateGameState(GameState.Win);
         }
     }
 
@@ -580,15 +584,17 @@ public class BossAI : MonoBehaviour
             {
                 if (dangerTile == null) continue;
 
+                dangerTile.Burning = true;
+                Instantiate(_lavaBlastParticlePrefab, dangerTile.transform.position, Quaternion.Euler(-90, 0, 0));
+
                 if (_playerTile == dangerTile)
                 {
                     _playerController.TakeDamage(_bombingRunDamage);
                     _playerController.StunPlayer(_bombingRunStunDuration);
-                    break;
                 }
-            }
 
-            yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.01f);
+            }
 
             Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
 
@@ -621,16 +627,20 @@ public class BossAI : MonoBehaviour
             {
                 if (dangerTile == null) continue;
 
+                dangerTile.Burning = true;
+                Instantiate(_lavaBlastParticlePrefab, dangerTile.transform.position, Quaternion.Euler(-90, 0, 0));
+
                 if (_playerTile == dangerTile)
                 {
                     _playerController.TakeDamage(_bombingRunDamage);
                     _playerController.StunPlayer(_bombingRunStunDuration);
-                    break;
                 }
-            }
 
-            yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.01f);
+            }
         }
+
+        yield return new WaitForSeconds(0.5f);
 
         _bombingRunCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);
@@ -679,9 +689,25 @@ public class BossAI : MonoBehaviour
         CameraShake.Instance.Shake(0.25f, 0.25f);
         _animator.Play("BossSquish");
 
-        _gridManager.BurnCheckerBoard(_currentTile.Black);
+        List<Tile> burnedTiles = _gridManager.BurnCheckerBoard(_currentTile, _currentTile.Black);
 
-        yield return new WaitForSeconds(_floorIsLavaDuration/2);
+        foreach (Tile burnedTile in burnedTiles)
+        {
+            if (burnedTile == null) continue;
+
+            burnedTile.Burning = true;
+            Instantiate(_lavaBlastParticlePrefab, burnedTile.transform.position, Quaternion.Euler(-90, 0, 0));
+
+            if (_playerTile == burnedTile)
+            {
+                _playerController.TakeDamage(_floorIsLavaDamage);
+                _playerController.StunPlayer(_floorIsLavaStunDuration);
+            }
+
+            yield return new WaitForSeconds(0.0025f);
+        }
+
+        yield return new WaitForSeconds(_floorIsLavaDuration / 2);
 
         for (timer = 0f; timer < 1f; timer += Time.deltaTime)
         {
@@ -692,7 +718,7 @@ public class BossAI : MonoBehaviour
 
         _gridManager.ClearPath();
         _gridManager.PathCheckerBoard(!_currentTile.Black);
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(_floorIsLavaDuration);
 
         for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
         {
@@ -704,9 +730,26 @@ public class BossAI : MonoBehaviour
         CameraShake.Instance.Shake(0.25f, 0.25f);
         _animator.Play("BossSquish");
 
-        _gridManager.BurnCheckerBoard(!_currentTile.Black);
+        burnedTiles = _gridManager.BurnCheckerBoard(_currentTile, !_currentTile.Black);
+
+        foreach (Tile burnedTile in burnedTiles)
+        {
+            if (burnedTile == null) continue;
+
+            burnedTile.Burning = true;
+            Instantiate(_lavaBlastParticlePrefab, burnedTile.transform.position, Quaternion.Euler(-90, 0, 0));
+
+            if (_playerTile == burnedTile)
+            {
+                _playerController.TakeDamage(_floorIsLavaDamage);
+                _playerController.StunPlayer(_floorIsLavaStunDuration);
+            }
+
+            yield return new WaitForSeconds(0.0025f);
+        }
 
         yield return new WaitForSeconds(_floorIsLavaDuration / 2);
+        yield return new WaitForSeconds(_floorIsLavaDuration);
 
         _floorIsLavaCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);

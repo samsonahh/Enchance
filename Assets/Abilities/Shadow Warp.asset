@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: Fireball
+  m_Name: Shadow Warp
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Fireball
-  <Star>k__BackingField: 1
-  <IconSprite>k__BackingField: {fileID: 21300000, guid: d897f54b835d221408c309cff6f67b65,
+  <Name>k__BackingField: Shadow Warp
+  <Star>k__BackingField: 2
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: 8fd330c7ee48a134d81b42aa60662913,
     type: 3}
   <MaxUseCount>k__BackingField: 1
-  UseCount: 5
+  UseCount: 0
   <Cooldown>k__BackingField: 1
-  Timer: -0.0025917105
+  Timer: 0
   OnCooldown: 0
-  <CastRadius>k__BackingField: 15
+  <CastRadius>k__BackingField: 0.5
   <CircleCastRadius>k__BackingField: 0
-  <AbilityPrefab>k__BackingField: {fileID: 7304449088194038640, guid: a35eb99f1f729d4429324242b8c2f9bb,
+  <AbilityPrefab>k__BackingField: {fileID: 5838280394477036272, guid: d57f622953ae9e94eb6d0330a3e6d9c3,
     type: 3}
-  <AbilityType>k__BackingField: 0
+  <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 1

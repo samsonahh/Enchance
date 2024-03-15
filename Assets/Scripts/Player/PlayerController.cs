@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] public SpriteRenderer SpriteRenderer;
     [SerializeField] private Transform _arrowPivot;
     [SerializeField] private DestinationIndicator _playerDestinationObject;
     private NavMeshAgent _navMeshAgent;
@@ -25,8 +25,10 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool IsMoving { get; private set; }
     [HideInInspector] public bool IsCasting;
-    public bool IsStunned;
-    public bool IsBurning;
+    [HideInInspector] public bool IsStunned;
+    [HideInInspector] public bool IsBurning;
+    [HideInInspector] public bool IsInvincible;
+    [HideInInspector] public bool CanCast = true;
     [SerializeField] private float _burnTickDuration = 1f;
     [SerializeField] private int _burnDamage = 1;
     [HideInInspector] public int BurnTicks;
@@ -86,24 +88,25 @@ public class PlayerController : MonoBehaviour
     private void HandleAnimations()
     {
         _animator.SetBool("IsMoving", IsMoving);
+        _animator.SetBool("IsCasting", IsCasting);
     }
 
     private void HandlePlayerMoving()
     {
+        if (IsStunned)
+        {
+            StopPlayer();
+            SpriteRenderer.transform.localRotation = Quaternion.Slerp(SpriteRenderer.transform.localRotation, Quaternion.Euler(90, 0, 0), 10f * Time.deltaTime);
+            return;
+        }
+
         if (IsCasting)
         {
             StopPlayer();
             return;
         }
 
-        if (IsStunned)
-        {
-            StopPlayer();
-            _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(90, 0, 0), 10f * Time.deltaTime);
-            return;
-        }
-
-        _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(45, 0, 0), 10f * Time.deltaTime);
+        SpriteRenderer.transform.localRotation = Quaternion.Slerp(SpriteRenderer.transform.localRotation, Quaternion.Euler(45, 0, 0), 10f * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -143,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 facingDirection = (MouseWorldPosition - transform.position).normalized;
 
-        if (Mathf.Abs(facingDirection.x) > 0) _spriteRenderer.flipX = facingDirection.x > 0;
+        if (Mathf.Abs(facingDirection.x) > 0) SpriteRenderer.flipX = facingDirection.x > 0;
 
         if (facingDirection.magnitude > 0)
         {
@@ -211,17 +214,19 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (IsInvincible) return;
+
         CurrentHealth -= damage;
         _lastDamagedTimer = 0f;
 
-        _spriteRenderer.color = Color.red;
+        SpriteRenderer.color = Color.red;
         StartCoroutine(TakeDamageCoroutine());
     }
 
     public IEnumerator TakeDamageCoroutine()
     {
         yield return new WaitForSeconds(0.15f);
-        _spriteRenderer.color = _currentColor;
+        SpriteRenderer.color = _currentColor;
     }
 
     public void Heal(int hp)
@@ -256,6 +261,8 @@ public class PlayerController : MonoBehaviour
 
     public void StunPlayer(float duration)
     {
+        if (IsInvincible) return;
+
         StartCoroutine(StunPlayerCoroutine(duration));
     }
 
@@ -307,7 +314,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _currentColor = Color.white;
-        _spriteRenderer.color = _currentColor;
+        SpriteRenderer.color = _currentColor;
         IsBurning = false;
     }
 

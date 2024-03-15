@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GameAbilities>k__BackingField:
   - {fileID: 11400000, guid: ae79e1a671bedbd44aab6afe26b1a325, type: 2}
-  - {fileID: 11400000, guid: b15d00a357c88dc43a41e5d1a70dc149, type: 2}
+  - {fileID: 11400000, guid: 0dc1291f7360b074d8fd14898426846b, type: 2}
   - {fileID: 11400000, guid: 17f161ff75f055e4fa413f1163645fc3, type: 2}
   - {fileID: 11400000, guid: 4a2d4e4bd37ce1e42b9c5b73b5ba0e20, type: 2}
   - {fileID: 11400000, guid: 5bc9a83daa665cc4db37d457e4bf4b7d, type: 2}

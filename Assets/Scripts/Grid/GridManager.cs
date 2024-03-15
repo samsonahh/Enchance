@@ -292,17 +292,20 @@ public class GridManager : MonoBehaviour
 
         for (int x = 0; x < _height; x++)
         {
-            for (int y = 0; y < _width; y++)
-            {
-                int newX = 2 * (x - _width / 2);
-                int newY = 2 * (y - _height / 2);
+            int newX = 2 * (x - _width / 2);
 
-                _tiles[new Vector2(t.X, newY)].Pathed = true;
-                _tiles[new Vector2(newX, t.Y)].Pathed = true;
+            _tiles[new Vector2(newX, t.Y)].Pathed = true;
 
-                crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);
-                crossedTiles.Add(_tiles[new Vector2(newX, t.Y)]);
-            }
+            crossedTiles.Add(_tiles[new Vector2(newX, t.Y)]);
+        }
+
+        for (int y = 0; y < _width; y++)
+        {
+            int newY = 2 * (y - _height / 2);
+
+            _tiles[new Vector2(t.X, newY)].Pathed = true;
+
+            crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);
         }
 
         return crossedTiles;
@@ -314,31 +317,35 @@ public class GridManager : MonoBehaviour
 
         for (int x = 0; x < _height; x++)
         {
-            for (int y = 0; y < _width; y++)
-            {
-                int newX = 2 * (x - _width / 2);
-                int newY = 2 * (y - _height / 2);
+            int newX = 2 * (x - _width / 2);
 
-                _tiles[new Vector2(t.X, newY)].Burning = true;
-                _tiles[new Vector2(newX, t.Y)].Burning = true;
-
-                crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);
-                crossedTiles.Add(_tiles[new Vector2(newX, t.Y)]);
-            }
+            crossedTiles.Add(_tiles[new Vector2(newX, t.Y)]);
         }
+
+        for (int y = 0; y < _width; y++)
+        {
+            int newY = 2 * (y - _height / 2);
+
+            crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);
+        }
+
+        crossedTiles = crossedTiles.OrderByDescending(tile => tile.GetDistance(t)).ToList();
+        crossedTiles.Reverse();
 
         return crossedTiles;
     }
 
-    public void BurnCheckerBoard(bool black)
+    public List<Tile> BurnCheckerBoard(Tile bossTile, bool black)
     {
+        List<Tile> checkerTiles = new List<Tile>();
+
         if (black)
         {
             foreach (Tile t in _tiles.Values)
             {
                 if (t.Black)
                 {
-                    t.Burning = true;
+                    checkerTiles.Add(t);
                 }
             }
         }
@@ -348,14 +355,21 @@ public class GridManager : MonoBehaviour
             {
                 if (!t.Black)
                 {
-                    t.Burning = true;
+                    checkerTiles.Add(t);
                 }
             }
         }
+
+        checkerTiles = checkerTiles.OrderByDescending(tile => tile.GetDistance(bossTile)).ToList();
+        checkerTiles.Reverse();
+
+        return checkerTiles;
     }
 
-    public void PathCheckerBoard(bool black)
+    public List<Tile> PathCheckerBoard(bool black)
     {
+        List<Tile> checkerTiles = new List<Tile>();
+
         if (black)
         {
             foreach (Tile t in _tiles.Values)
@@ -363,6 +377,7 @@ public class GridManager : MonoBehaviour
                 if (t.Black)
                 {
                     t.Pathed = true;
+                    checkerTiles.Add(t);
                 }
             }
         }
@@ -373,8 +388,11 @@ public class GridManager : MonoBehaviour
                 if (!t.Black)
                 {
                     t.Pathed = true;
+                    checkerTiles.Add(t);
                 }
             }
         }
+
+        return checkerTiles;
     }
 }

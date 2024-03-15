@@ -12052,6 +12052,8 @@ GameObject:
   - component: {fileID: 209969801}
   - component: {fileID: 209969803}
   - component: {fileID: 209969804}
+  - component: {fileID: 209969805}
+  - component: {fileID: 209969806}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -12095,6 +12097,7 @@ MonoBehaviour:
   _bossIndicator: {fileID: 1553139516}
   _currentHealth: 50
   _maxHealth: 50
+  _phase: 1
   _activateDistance: 10
   _followPlayerWaitTime: 1
   _followPlayerPatienceLimit: 7.5
@@ -12102,7 +12105,7 @@ MonoBehaviour:
   _followPlayerSpeedInterval: 0.4
   _pushStartVelocity: 25
   _pushStunDuration: 1
-  _pushDamage: 3
+  _pushDamage: 2
   _slamDuration: 1
   _slamJumpHeight: 2
   _slamDamage: 3
@@ -12111,7 +12114,11 @@ MonoBehaviour:
   _bombingRunJumpCount: 3
   _bombingRunStunDuration: 1
   _bombingRunDamage: 3
-  _floorIsLavaDuration: 5
+  _floorIsLavaDuration: 1
+  _floorIsLavaDamage: 3
+  _floorIsLavaStunDuration: 1
+  _lavaBlastParticlePrefab: {fileID: 3607685703869513854, guid: fc8c729324a1e514996f4e29097487a2,
+    type: 3}
   _getAngryDuration: 2
 --- !u!95 &209969804
 Animator:
@@ -12134,6 +12141,54 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &209969805
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209969798}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.91, y: 5.4, z: 1}
+  m_Center: {x: 0, y: 2.68, z: 0}
+--- !u!54 &209969806
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209969798}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 3
 --- !u!1 &215894538
 GameObject:
   m_ObjectHideFlags: 0
@@ -19192,6 +19247,7 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
+  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -19329,6 +19385,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c1ede36c930694abde6af59d9ba7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &330585549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 833fcdd618a09a746a1ff85140047a95, type: 2}
 --- !u!1 &332506696
 GameObject:
   m_ObjectHideFlags: 0
@@ -100333,7 +100406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1815781017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -109081,15 +109154,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034520780e060134aaef1568c1b0141e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 2038840252}
+  SpriteRenderer: {fileID: 2038840252}
   _arrowPivot: {fileID: 1428094223}
   _playerDestinationObject: {fileID: 5137704269139808920}
-  _navMeshAgent: {fileID: 1999210801}
-  _animator: {fileID: 1999210802}
   CurrentTile: {fileID: 0}
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsInvincible: 0
+  CanCast: 1
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
