@@ -22,6 +22,18 @@ public class FireballScript : MonoBehaviour
 
         if(Vector3.Distance(transform.position, _target) <= 0.01f)
         {
+            Collider[] collisions = Physics.OverlapSphere(transform.position, 1f);
+            if (collisions != null)
+            {
+                foreach (Collider collider in collisions)
+                {
+                    if (collider.TryGetComponent(out BossAI bossAI))
+                    {
+                        bossAI.TakeDamage(_damage);
+                    }
+                }
+            }
+            Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
             Destroy(gameObject);
         }
     }
