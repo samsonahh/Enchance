@@ -460,7 +460,20 @@ public class BossAI : MonoBehaviour
         _playerController.TakeDamage(_pushDamage);
         _playerController.PushPlayer(dir, _pushStunDuration, _pushStartVelocity);
 
-        yield return null;
+        yield return new WaitForSeconds(1f);
+
+        Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
+        Vector3 aboveRandTile = randTile.transform.position;
+        dir = randTile.transform.position - transform.position;
+        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
+
+        for (float timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(transform.position, aboveRandTile, timer / _slamDuration);
+            yield return null;
+        }
+
+        transform.position = aboveRandTile;
 
         _pushPlayerCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);
@@ -530,19 +543,6 @@ public class BossAI : MonoBehaviour
 
         _gridManager.ClearPath();
         yield return new WaitForSeconds(0.5f);
-
-        Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
-        Vector3 aboveRandTile = randTile.transform.position;
-        dir = randTile.transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
-
-        for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
-        {
-            transform.position = Vector3.Lerp(transform.position, aboveRandTile, timer / _slamDuration);
-            yield return null;
-        }
-
-        transform.position = aboveRandTile;
 
         _slamCoroutineStarted = false;
         ChangeBossState(BossState.FollowPlayer);

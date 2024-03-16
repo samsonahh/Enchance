@@ -14,11 +14,12 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Material _transparentSpriteMaterial;
     [SerializeField] private Material _default3DMaterial;
     [SerializeField] private Material _transparent3DMaterial;
-    private GameObject _lastObstructingObject;
+    private List<GameObject> _lastObstructingObjects;
 
     private void Start()
     {
         _offsetPosition = transform.position;
+        _lastObstructingObjects = new List<GameObject>();
     }
 
     private void Update()
@@ -45,48 +46,60 @@ public class CameraMovement : MonoBehaviour
     {
         Vector3 dirToPlayer = _target.position - transform.position;
         Ray ray = new Ray(transform.position, dirToPlayer);
-        RaycastHit hit;
+        RaycastHit[] hits;
 
-        if(_lastObstructingObject != null)
+        if (_lastObstructingObjects != null)
         {
-            if(_lastObstructingObject.TryGetComponent(out Renderer renderer))
+            if (_lastObstructingObjects.Count != 0)
             {
-                if (_lastObstructingObject.tag == "Environment")
+                foreach (var thing in _lastObstructingObjects)
                 {
-                    renderer.material = _default3DMaterial;
+                    if (thing.TryGetComponent(out Renderer renderer))
+                    {
+                        if (thing.tag == "Environment")
+                        {
+                            renderer.material = _default3DMaterial;
+                        }
+                        else
+                        {
+                            renderer.material = _defaultSpriteMaterial;
+                        }
+                    }
+                    if (thing.TryGetComponent(out SpriteRenderer sRenderer))
+                    {
+                        sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, 1f);
+                    }
                 }
-                else
-                {
-                    renderer.material = _defaultSpriteMaterial;
-                }   
+
+                _lastObstructingObjects = new List<GameObject>();
             }
-            if (_lastObstructingObject.TryGetComponent(out SpriteRenderer sRenderer))
-            {
-                sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, 1f);
-            }
-            _lastObstructingObject = null;
         }
 
-        if(Physics.Raycast(ray, out hit))
+        hits = Physics.RaycastAll(ray, Vector3.Distance(transform.position, PlayerController.Instance.transform.position));
+        if(hits != null)
         {
-            if(hit.collider.gameObject != _target.gameObject)
+            foreach(var hit in hits)
             {
-                GameObject hitObject = hit.collider.gameObject;
-                _lastObstructingObject = hitObject;
-                if(hitObject.TryGetComponent(out Renderer renderer))
+                if (hit.collider.gameObject == null) continue;
+                if (hit.collider.gameObject != _target.gameObject)
                 {
-                    if(_lastObstructingObject.tag == "Environment")
+                    GameObject hitObject = hit.collider.gameObject;
+                    _lastObstructingObjects.Add(hitObject);
+                    if (hitObject.TryGetComponent(out Renderer renderer))
                     {
-                        renderer.material = _transparent3DMaterial;
+                        if (hitObject.tag == "Environment")
+                        {
+                            renderer.material = _transparent3DMaterial;
+                        }
+                        else
+                        {
+                            renderer.material = _transparentSpriteMaterial;
+                        }
                     }
-                    else
+                    if (hitObject.TryGetComponent(out SpriteRenderer sRenderer))
                     {
-                        renderer.material = _transparentSpriteMaterial;
+                        sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, 0.35f);
                     }
-                }
-                if (hitObject.TryGetComponent(out SpriteRenderer sRenderer))
-                {
-                    sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, 0.35f);
                 }
             }
         }

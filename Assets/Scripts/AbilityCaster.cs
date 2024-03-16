@@ -165,7 +165,7 @@ public class AbilityCaster : MonoBehaviour
 
         if (!_isSelectingAbility)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 if (!CurrentAbilities[0].OnCooldown)
                 {
@@ -173,7 +173,7 @@ public class AbilityCaster : MonoBehaviour
                     _isSelectingAbility = true;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 if (!CurrentAbilities[1].OnCooldown)
                 {
@@ -181,7 +181,7 @@ public class AbilityCaster : MonoBehaviour
                     _isSelectingAbility = true;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 if (!CurrentAbilities[2].OnCooldown)
                 {
@@ -198,41 +198,35 @@ public class AbilityCaster : MonoBehaviour
         CircleCastTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CircleCastRadius, CircleCastTransform.localScale.y, CurrentAbilities[SelectedAbility].CircleCastRadius);
         _selectedOverlay.position = _coolDownOverlays[SelectedAbility].transform.parent.position;
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            _isSelectingAbility = false;
+            UseAbility(SelectedAbility);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if(SelectedAbility == 0)
             {
                 _isSelectingAbility = false;
-                UseAbility(SelectedAbility);
             }
-            else
-            {
-                _isSelectingAbility = false;
-            }
+            SelectedAbility = 0;
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (SelectedAbility == 1)
             {
                 _isSelectingAbility = false;
-                UseAbility(SelectedAbility);
             }
-            else
-            {
-                _isSelectingAbility = false;
-            }
+            SelectedAbility = 1;
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             if (SelectedAbility == 2)
             {
                 _isSelectingAbility = false;
-                UseAbility(SelectedAbility);
             }
-            else
-            {
-                _isSelectingAbility = false;
-            }
+            SelectedAbility = 2;
         }
     }
 
