@@ -5,9 +5,10 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] public SpriteRenderer SpriteRenderer;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _arrowPivot;
     [SerializeField] private DestinationIndicator _playerDestinationObject;
+    [SerializeField] private Transform _staffGlowEffect;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
 
@@ -89,14 +90,19 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetBool("IsMoving", IsMoving);
         _animator.SetBool("IsCasting", IsCasting);
+
+        _staffGlowEffect.localPosition = _spriteRenderer.flipX ? new Vector3(-0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z) : new Vector3(0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z);
+        _spriteRenderer.enabled = !IsInvincible;
+        _staffGlowEffect.gameObject.SetActive(!IsInvincible);
     }
 
     private void HandlePlayerMoving()
     {
+
         if (IsStunned)
         {
             StopPlayer();
-            SpriteRenderer.transform.localRotation = Quaternion.Slerp(SpriteRenderer.transform.localRotation, Quaternion.Euler(90, 0, 0), 10f * Time.deltaTime);
+            _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(90, 0, 0), 10f * Time.deltaTime);
             return;
         }
 
@@ -106,7 +112,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        SpriteRenderer.transform.localRotation = Quaternion.Slerp(SpriteRenderer.transform.localRotation, Quaternion.Euler(45, 0, 0), 10f * Time.deltaTime);
+        _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(45, 0, 0), 10f * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -146,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 facingDirection = (MouseWorldPosition - transform.position).normalized;
 
-        if (Mathf.Abs(facingDirection.x) > 0) SpriteRenderer.flipX = facingDirection.x > 0;
+        if (Mathf.Abs(facingDirection.x) > 0) _spriteRenderer.flipX = facingDirection.x > 0;
 
         if (facingDirection.magnitude > 0)
         {
@@ -219,14 +225,14 @@ public class PlayerController : MonoBehaviour
         CurrentHealth -= damage;
         _lastDamagedTimer = 0f;
 
-        SpriteRenderer.color = Color.red;
+        _spriteRenderer.color = Color.red;
         StartCoroutine(TakeDamageCoroutine());
     }
 
     public IEnumerator TakeDamageCoroutine()
     {
         yield return new WaitForSeconds(0.15f);
-        SpriteRenderer.color = _currentColor;
+        _spriteRenderer.color = _currentColor;
     }
 
     public void Heal(int hp)
@@ -314,7 +320,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _currentColor = Color.white;
-        SpriteRenderer.color = _currentColor;
+        _spriteRenderer.color = _currentColor;
         IsBurning = false;
     }
 

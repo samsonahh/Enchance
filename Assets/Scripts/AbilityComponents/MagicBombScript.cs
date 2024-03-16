@@ -57,7 +57,7 @@ public class MagicBombScript : MonoBehaviour
         }
 
         Instantiate(_explosionPrefab, transform.position + Vector3.up, Quaternion.identity);
-        CameraShake.Instance.Shake(0.15f, 0.2f);
+        CameraShake.Instance.Shake(0.25f, 0.25f);
 
         Destroy(gameObject);
     }

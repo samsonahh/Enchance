@@ -43,6 +43,6 @@ public class Ability : ScriptableObject
 
     private void OnValidate()
     {
-        Name = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(this));
+       Name = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(this));
     }
 }

@@ -17,7 +17,6 @@ public class ShadowWarpScript : MonoBehaviour
     {
         PlayerController.Instance.IsInvincible = true;
         PlayerController.Instance.CanCast = false;
-        PlayerController.Instance.SpriteRenderer.enabled = false;
 
         for (float timer = 0f; timer < _duration; timer+= Time.deltaTime)
         {
@@ -26,7 +25,6 @@ public class ShadowWarpScript : MonoBehaviour
             yield return null;
         }
 
-        PlayerController.Instance.SpriteRenderer.enabled = true;
         Instantiate(_poofPrefab, transform.position, Quaternion.identity);
         PlayerController.Instance.CanCast = true;
         PlayerController.Instance.IsInvincible = false;
