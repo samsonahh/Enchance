@@ -65,6 +65,8 @@ public class BossAI : MonoBehaviour
 
     #region SuckVariables
     [Header("Suck Variables")]
+    [SerializeField] private GameObject _suckEffectPrefab;
+    private GameObject _suckEffect;
     [SerializeField] private float _suckDuration = 5f;
     [SerializeField] private float _suckStrength = 10f;
     private float _suckTimer = 0f;
@@ -275,6 +277,11 @@ public class BossAI : MonoBehaviour
                 break;
             case BossState.Suck:
 
+                if(_suckEffect == null)
+                {
+                    _suckEffect = Instantiate(_suckEffectPrefab, transform.position, Quaternion.identity);
+                }
+
                 _suckTimer += Time.deltaTime;
 
                 if(_phase == 1)
@@ -330,6 +337,9 @@ public class BossAI : MonoBehaviour
         _gridManager.ClearPath();
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         _spriteRenderer.color = Color.white;
+
+        Destroy(_suckEffect);
+        _suckEffect = null;
 
         _pushPlayerCoroutineStarted = false;
         _slamCoroutineStarted = false;
