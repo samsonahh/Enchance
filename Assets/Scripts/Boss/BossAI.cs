@@ -202,7 +202,7 @@ public class BossAI : MonoBehaviour
                 {
                     if (_followPlayerPatienceTimer > _followPlayerPatienceLimit / 1.5f)
                     {
-                        int randAbility = UnityEngine.Random.Range(0, 4);
+                        int randAbility = UnityEngine.Random.Range(0, 6);
 
                         switch (randAbility)
                         {
@@ -216,6 +216,12 @@ public class BossAI : MonoBehaviour
                                 ChangeBossState(BossState.BombingRun);
                                 break;
                             case 3:
+                                ChangeBossState(BossState.BombingRun);
+                                break;
+                            case 4:
+                                ChangeBossState(BossState.FloorIsLava);
+                                break;
+                            case 5:
                                 ChangeBossState(BossState.FloorIsLava);
                                 break;
                             default:
@@ -397,7 +403,11 @@ public class BossAI : MonoBehaviour
         _bossIndicator.SetActive(!onScreen);
         if (!onScreen)
         {
-            Vector3 newScreenPos = new Vector3(Mathf.Clamp(screenPos.x, 0.028f, 1f - 0.028f), Mathf.Clamp(screenPos.y, 0.05f, 0.95f), 0);
+            if(screenPos.z < 0)
+            {
+                screenPos *= -1;
+            }
+            Vector3 newScreenPos = new Vector3(Mathf.Clamp(screenPos.x, 0.056f, 1f - 0.056f), Mathf.Clamp(screenPos.y, 0.1f, 0.9f), 0);
             Vector3 uiPos = Camera.main.ViewportToScreenPoint(newScreenPos);
             _bossIndicator.transform.position = uiPos;
         }
@@ -760,8 +770,10 @@ public class BossAI : MonoBehaviour
         _animator.SetBool("IsAngry", true);
         yield return new WaitForSeconds(_getAngryDuration);
         _animator.SetBool("IsAngry", false);
+
+        yield return new WaitForSeconds(0.5f);
         _getAngryCoroutineStarted = false;
-        ChangeBossState(BossState.FollowPlayer);
+        ChangeBossState(BossState.BombingRun);
     }
 
     public void TakeDamage(int dmg)

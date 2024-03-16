@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionPrefab: {fileID: 417761080263594737, guid: 4e3fca4d6e5aca74597403d526477b21,
     type: 3}
-  _damage: 5
+  _damage: 3
 --- !u!135 &2434117088867207313
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -54,6 +54,7 @@ public class CameraMovement : MonoBehaviour
             {
                 foreach (var thing in _lastObstructingObjects)
                 {
+                    if (thing == null) continue;
                     if (thing.TryGetComponent(out Renderer renderer))
                     {
                         if (thing.tag == "Environment")

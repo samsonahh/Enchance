@@ -10,6 +10,7 @@ public class HealScript : MonoBehaviour
     private void Start()
     {
         PlayerController.Instance.Heal(_healAmount);
+        PlayerController.Instance.BurnTicks = 0;
 
         Destroy(gameObject, _duration);
     }
@@ -17,6 +18,5 @@ public class HealScript : MonoBehaviour
     private void Update()
     {
         transform.position = PlayerController.Instance.transform.position;
-        
     }
 }
