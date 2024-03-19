@@ -18,17 +18,13 @@ public class ShadowWarpScript : MonoBehaviour
         PlayerController.Instance.IsInvincible = true;
         PlayerController.Instance.CanCast = false;
 
-        for (float timer = 0f; timer < _duration; timer+= Time.deltaTime)
-        {
-            PlayerController.Instance.StopPlayer();
-            PlayerController.Instance.transform.position = transform.position;
-            yield return null;
-        }
+        yield return new WaitForSeconds(_duration);
 
-        Instantiate(_poofPrefab, transform.position, Quaternion.identity);
+        Instantiate(_poofPrefab, PlayerController.Instance.transform.position, Quaternion.identity);
         PlayerController.Instance.CanCast = true;
         PlayerController.Instance.IsInvincible = false;
 
         Destroy(gameObject);
+        
     }
 }

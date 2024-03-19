@@ -55778,7 +55778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.44705886, g: 0.08235294, b: 0.08235294, a: 1}
+  m_Color: {r: 0.26253054, g: 0.9150943, b: 0.14388269, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -66967,7 +66967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.44705886, g: 0.08235294, b: 0.08235294, a: 1}
+  m_Color: {r: 0.9528302, g: 0.19476083, b: 0.19476083, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -79535,7 +79535,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerHealthSlider: {fileID: 503329191}
+  _playerHealthFill: {fileID: 1030356635}
   _playerHealthText: {fileID: 1355962962}
+  _greenColor: {r: 0.2627451, g: 0.9137255, b: 0.14509805, a: 1}
+  _yellowColor: {r: 0.9137255, g: 0.8624832, b: 0.14509803, a: 1}
+  _redColor: {r: 0.9137255, g: 0.1593034, b: 0.14509803, a: 1}
 --- !u!1 &1456087285
 GameObject:
   m_ObjectHideFlags: 0

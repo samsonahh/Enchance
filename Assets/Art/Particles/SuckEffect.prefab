@@ -752,7 +752,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 15
+      value: 30
       mode: 0
       spread: 0
       speed:
@@ -4850,5 +4850,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.49
+  m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}

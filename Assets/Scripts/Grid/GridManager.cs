@@ -177,6 +177,11 @@ public class GridManager : MonoBehaviour
         Tile up = GetTileAtPosition(tile.X, tile.Y + 2);
         Tile down = GetTileAtPosition(tile.X, tile.Y - 2);
 
+        Tile topRight = GetTileAtPosition(tile.X + 2, tile.Y + 2);
+        Tile topLeft = GetTileAtPosition(tile.X - 2, tile.Y + 2);
+        Tile botRight = GetTileAtPosition(tile.X + 2, tile.Y - 2);
+        Tile botLeft = GetTileAtPosition(tile.X - 2, tile.Y - 2);
+
         if (right != null)
         {
             if (right.Walkable && !processed.Contains(right))
@@ -196,6 +201,26 @@ public class GridManager : MonoBehaviour
         {
             if (down.Walkable && !processed.Contains(down))
                 neighbors.Add(down);
+        }
+        if (topRight != null)
+        {
+            if (topRight.Walkable && !processed.Contains(topRight))
+                neighbors.Add(topRight);
+        }
+        if (topLeft != null)
+        {
+            if (topLeft.Walkable && !processed.Contains(topLeft))
+                neighbors.Add(topLeft);
+        }
+        if (botRight != null)
+        {
+            if (botRight.Walkable && !processed.Contains(botRight))
+                neighbors.Add(botRight);
+        }
+        if (botLeft != null)
+        {
+            if (botLeft.Walkable && !processed.Contains(botLeft))
+                neighbors.Add(botLeft);
         }
 
         return neighbors;
@@ -244,6 +269,7 @@ public class GridManager : MonoBehaviour
 
     public bool IsPathStraight(List<Tile> path)
     {
+        if (path == null) return false;
         if (path.Count == 0) return false;
 
         bool hStraight = false;
@@ -284,6 +310,26 @@ public class GridManager : MonoBehaviour
         }
 
         return hStraight || vStraight;
+    }
+
+    public bool IsPathDiagonal(List<Tile> path)
+    {
+        if (path == null) return false;
+        if (path.Count == 0) return false;
+
+        Tile current = path[0];
+
+        for(int i = 1; i < path.Count; i++)
+        {
+            if(path[i].X != current.X && path[i].Y != current.Y)
+            {
+                current = path[i];
+                continue;
+            }
+            return false;
+        }
+
+        return true;
     }
 
     public List<Tile> PathCrossPattern(Tile t)

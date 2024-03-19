@@ -130,25 +130,6 @@ public class BossAI : MonoBehaviour
         HandleBossHealth();
         HandleBossIndicator();
 
-/*        if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(5);
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeBossState(BossState.Suck);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeBossState(BossState.SlamOntoPlayer);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeBossState(BossState.BombingRun);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ChangeBossState(BossState.FloorIsLava);
-        }*/
-
         switch (_currentState)
         {
             case BossState.Idle:
@@ -162,7 +143,7 @@ public class BossAI : MonoBehaviour
             case BossState.FollowPlayer:
 
                 _gridManager.ClearPath();
-                if (_gridManager.IsPathStraight(_path))
+                if (_gridManager.IsPathStraight(_path) || _gridManager.IsPathDiagonal(_path))
                 {
                     _gridManager.PathTiles(_path);
                     _playerStraightPathTimer += Time.deltaTime;
@@ -389,7 +370,7 @@ public class BossAI : MonoBehaviour
     private void HandleBossHealth()
     {
         _healthText.text = $"{_currentHealth}/{_maxHealth}";
-        _healthSlider.value = _currentHealth;
+        _healthSlider.value = Mathf.Lerp(_healthSlider.value, _currentHealth, 5f * Time.deltaTime);
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
         if (_currentHealth <= 25 && !_getAngryStarted)
@@ -727,48 +708,6 @@ public class BossAI : MonoBehaviour
             yield return new WaitForSeconds(0.0025f);
         }
 
-        yield return new WaitForSeconds(_floorIsLavaDuration / 2);
-
-        for (timer = 0f; timer < 1f; timer += Time.deltaTime)
-        {
-            transform.position = Vector3.Lerp(transform.position, aboveCurrTile, timer / 1f);
-            yield return null;
-        }
-        transform.position = aboveCurrTile;
-
-        _gridManager.ClearPath();
-        _gridManager.PathCheckerBoard(!_currentTile.Black);
-        yield return new WaitForSeconds(_floorIsLavaDuration);
-
-        for (timer = 0f; timer < 0.2f; timer += Time.deltaTime)
-        {
-            transform.position = Vector3.Lerp(transform.position, _currentTile.transform.position, timer / 0.2f);
-            yield return null;
-        }
-        transform.position = _currentTile.transform.position;
-
-        CameraShake.Instance.Shake(0.25f, 0.25f);
-        _animator.Play("BossSquish");
-
-        burnedTiles = _gridManager.BurnCheckerBoard(_currentTile, !_currentTile.Black);
-
-        foreach (Tile burnedTile in burnedTiles)
-        {
-            if (burnedTile == null) continue;
-
-            burnedTile.Burning = true;
-            Instantiate(_lavaBlastParticlePrefab, burnedTile.transform.position, Quaternion.Euler(-90, 0, 0));
-
-            if (_playerTile == burnedTile)
-            {
-                _playerController.TakeDamage(_floorIsLavaDamage);
-                _playerController.StunPlayer(_floorIsLavaStunDuration);
-            }
-
-            yield return new WaitForSeconds(0.0025f);
-        }
-
-        yield return new WaitForSeconds(_floorIsLavaDuration / 2);
         yield return new WaitForSeconds(_floorIsLavaDuration);
 
         _floorIsLavaCoroutineStarted = false;
