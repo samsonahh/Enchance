@@ -16,13 +16,16 @@ public class ShadowWarpScript : MonoBehaviour
     IEnumerator Poof()
     {
         PlayerController.Instance.IsInvincible = true;
+        PlayerController.Instance.IsVisible = false;
         PlayerController.Instance.CanCast = false;
 
         yield return new WaitForSeconds(_duration);
 
         Instantiate(_poofPrefab, PlayerController.Instance.transform.position, Quaternion.identity);
+
         PlayerController.Instance.CanCast = true;
         PlayerController.Instance.IsInvincible = false;
+        PlayerController.Instance.IsVisible = true;
 
         Destroy(gameObject);
         

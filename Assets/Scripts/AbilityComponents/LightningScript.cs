@@ -5,7 +5,9 @@ using UnityEngine;
 public class LightningScript : MonoBehaviour
 {
     [SerializeField] private GameObject _explosionPrefab;
+    [SerializeField] private GameObject _lightningEffect;
     [SerializeField] private int _damage = 5;
+    [SerializeField] private float _strikeDelay = 0.5f;
     private float _strikeRadius;
     private SphereCollider _collider;
 
@@ -17,15 +19,23 @@ public class LightningScript : MonoBehaviour
 
         _collider.radius = _strikeRadius;
 
+        StartCoroutine(Strike());
+    }
+
+    IEnumerator Strike()
+    {
+        yield return new WaitForSeconds(_strikeDelay);
+
+        _lightningEffect.SetActive(true);
         Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         CameraShake.Instance.Shake(0.1f, 0.1f);
 
         Collider[] collisions = Physics.OverlapSphere(transform.position, _strikeRadius);
         if (collisions != null)
         {
-            foreach(Collider collider in collisions)
+            foreach (Collider collider in collisions)
             {
-                if(collider.TryGetComponent(out BossAI bossAI))
+                if (collider.TryGetComponent(out BossAI bossAI))
                 {
                     bossAI.TakeDamage(_damage);
                 }

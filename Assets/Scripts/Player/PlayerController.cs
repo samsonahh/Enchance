@@ -7,9 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _arrowPivot;
-    [SerializeField] private DestinationIndicator _playerDestinationObject;
     [SerializeField] private Transform _staffGlowEffect;
-    private NavMeshAgent _navMeshAgent;
     private Animator _animator;
 
     [HideInInspector] public static PlayerController Instance { get; private set; }
@@ -29,12 +27,15 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsStunned;
     [HideInInspector] public bool IsBurning;
     [HideInInspector] public bool IsInvincible;
+    [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
     [SerializeField] private float _burnTickDuration = 1f;
     [SerializeField] private int _burnDamage = 1;
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningPlayerCoroutine;
     private Color _currentColor = Color.white;
+    [SerializeField] private float _playerCurrentMoveSpeed = 5f;
+    private float _playerRegularMoveSpeed;
     [SerializeField] private Color _burningColor;
 
     //Health
@@ -58,11 +59,12 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
 
         CurrentHealth = MaxHealth;
         StartCoroutine(RegenHealth());
+
+        _playerRegularMoveSpeed = _playerCurrentMoveSpeed;
     }
 
     private void Update()
@@ -90,60 +92,38 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetBool("IsMoving", IsMoving);
         _animator.SetBool("IsCasting", IsCasting);
+        _animator.SetBool("IsStunned", IsStunned);
 
         _staffGlowEffect.localPosition = _spriteRenderer.flipX ? new Vector3(-0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z) : new Vector3(0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z);
-        _spriteRenderer.enabled = !IsInvincible;
+        _spriteRenderer.enabled = IsVisible;
         _staffGlowEffect.gameObject.SetActive(!IsInvincible);
     }
 
     private void HandlePlayerMoving()
     {
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+
+        Vector3 movementDirection = new Vector3(x, 0, z).normalized;
 
         if (IsStunned)
         {
-            StopPlayer();
-            _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(90, 0, 0), 10f * Time.deltaTime);
+            IsMoving = false;
+            _animator.CrossFadeInFixedTime("PlayerStunned", 0.1f);
             return;
         }
 
         if (IsCasting)
         {
-            StopPlayer();
+            IsMoving = false;
             return;
         }
 
-        _spriteRenderer.transform.localRotation = Quaternion.Slerp(_spriteRenderer.transform.localRotation, Quaternion.Euler(45, 0, 0), 10f * Time.deltaTime);
+        IsMoving = movementDirection.magnitude != 0;
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            StopPlayer();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            IsMoving = true;
-            _navMeshAgent.isStopped = false;
-
-            SetPosition(MouseWorldPosition);
-        }
-
-        if(Vector3.Distance(transform.position, PlayerDestinationPositon) <= 0.1f && !_navMeshAgent.isStopped)
-        {
-            IsMoving = false;
-            _navMeshAgent.isStopped = true;
-        }
-        
-        _playerDestinationObject.MakeSpriteVisible(IsMoving);
-    }
-
-    private void SetPosition(Vector3 pos)
-    {
-        _navMeshAgent.ResetPath();
-
-        PlayerDestinationPositon = pos;
-        _navMeshAgent.SetDestination(PlayerDestinationPositon);
-
-        _playerDestinationObject.SetIndicatorPostion(_navMeshAgent.destination);
+        transform.Translate(_playerCurrentMoveSpeed * Time.deltaTime * movementDirection, Space.World);
     }
 
     private void HandlePlayerFacingDirection()
@@ -170,22 +150,11 @@ public class PlayerController : MonoBehaviour
         LastCircleWorldPosition = AbilityCaster.Instance.CircleCastTransform.position;
     }
 
-    public void StopPlayer()
-    {
-        IsMoving = false;
-
-        _navMeshAgent.isStopped = true;
-        _navMeshAgent.ResetPath();
-
-        _playerDestinationObject.MakeSpriteVisible(false);
-    }
-
     private void AbilityCaster_OnAbilityCast(int i)
     {
         if (i == 1) return;
 
         AssignLastVariables();
-        StopPlayer();
     }
 
     private void ManagePlayerHealth()

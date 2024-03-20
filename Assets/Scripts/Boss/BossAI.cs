@@ -134,7 +134,7 @@ public class BossAI : MonoBehaviour
         {
             case BossState.Idle:
 
-                if(_distanceToPlayer < _activateDistance)
+                if (_distanceToPlayer < _activateDistance)
                 {
                     ChangeBossState(BossState.FollowPlayer);
                 }
@@ -143,6 +143,9 @@ public class BossAI : MonoBehaviour
             case BossState.FollowPlayer:
 
                 _gridManager.ClearPath();
+
+                if (!PlayerController.Instance.IsVisible) return;
+
                 if (_gridManager.IsPathStraight(_path) || _gridManager.IsPathDiagonal(_path))
                 {
                     _gridManager.PathTiles(_path);
@@ -213,7 +216,7 @@ public class BossAI : MonoBehaviour
                     }
                 }
 
-                if(_currentTile == _playerTile)
+                if(IsPlayerOnBossTiles(_currentTile))
                 {
                     ChangeBossState(BossState.PushAway);
                 }
@@ -250,7 +253,7 @@ public class BossAI : MonoBehaviour
                     StartCoroutine(FloorIsLava());
                 }
 
-                if (_currentTile == _playerTile)
+                if (IsPlayerOnBossTiles(_currentTile))
                 {
                     ChangeBossState(BossState.PushAway);
                 }
@@ -280,7 +283,7 @@ public class BossAI : MonoBehaviour
                     ChangeBossState(BossState.FollowPlayer);
                 }
 
-                if (_currentTile == _playerTile)
+                if (IsPlayerOnBossTiles(_currentTile))
                 {
                     _animator.SetBool("IsSucking", false);
                     ChangeBossState(BossState.PushAway);
@@ -350,7 +353,6 @@ public class BossAI : MonoBehaviour
             case BossState.Suck:
                 _suckTimer = 0f;
                 _animator.SetBool("IsSucking", true);
-                _playerController.StopPlayer();
                 break;
             case BossState.BombingRun:
                 break;
@@ -449,6 +451,17 @@ public class BossAI : MonoBehaviour
             }
         }
         transform.position = path[0].transform.position;
+    }
+
+    private bool IsPlayerOnBossTiles(Tile t)
+    {
+        Tile left = _gridManager.GetTileAtPosition(t.X - 2, t.Y);
+        Tile right = _gridManager.GetTileAtPosition(t.X + 2, t.Y);
+
+        if (left == null) left = t;
+        if (right == null) right = t;
+
+        return _playerTile == _currentTile || _playerTile == left || _playerTile == right;
     }
 
     IEnumerator PushPlayer()

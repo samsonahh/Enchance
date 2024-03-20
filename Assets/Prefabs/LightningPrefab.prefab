@@ -1045,7 +1045,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionPrefab: {fileID: 417761080263594737, guid: 4e3fca4d6e5aca74597403d526477b21,
     type: 3}
+  _lightningEffect: {fileID: 3753706415235299011}
   _damage: 3
+  _strikeDelay: 0.5
 --- !u!135 &2434117088867207313
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1109,7 +1111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6349819070444866999
 Transform:
   m_ObjectHideFlags: 0

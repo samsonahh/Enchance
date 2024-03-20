@@ -10,16 +10,14 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Transform _target;
     private float _zoom = 10f;
 
-    [SerializeField] private Material _defaultSpriteMaterial;
     [SerializeField] private Material _transparentSpriteMaterial;
-    [SerializeField] private Material _default3DMaterial;
     [SerializeField] private Material _transparent3DMaterial;
-    private List<GameObject> _lastObstructingObjects;
+    private Dictionary<GameObject, Material> _lastObstructingObjects;
 
     private void Start()
     {
         _offsetPosition = transform.position;
-        _lastObstructingObjects = new List<GameObject>();
+        _lastObstructingObjects = new Dictionary<GameObject, Material>();
     }
 
     private void Update()
@@ -52,18 +50,18 @@ public class CameraMovement : MonoBehaviour
         {
             if (_lastObstructingObjects.Count != 0)
             {
-                foreach (var thing in _lastObstructingObjects)
+                foreach (var thing in _lastObstructingObjects.Keys)
                 {
                     if (thing == null) continue;
                     if (thing.TryGetComponent(out Renderer renderer))
                     {
                         if (thing.tag == "Environment")
                         {
-                            renderer.material = _default3DMaterial;
+                            renderer.material = _lastObstructingObjects[thing];
                         }
                         else
                         {
-                            renderer.material = _defaultSpriteMaterial;
+                            renderer.material = _lastObstructingObjects[thing];
                         }
                     }
                     if (thing.TryGetComponent(out SpriteRenderer sRenderer))
@@ -72,7 +70,7 @@ public class CameraMovement : MonoBehaviour
                     }
                 }
 
-                _lastObstructingObjects = new List<GameObject>();
+                _lastObstructingObjects.Clear();
             }
         }
 
@@ -85,15 +83,17 @@ public class CameraMovement : MonoBehaviour
                 if (hit.collider.gameObject != _target.gameObject)
                 {
                     GameObject hitObject = hit.collider.gameObject;
-                    _lastObstructingObjects.Add(hitObject);
+                    
                     if (hitObject.TryGetComponent(out Renderer renderer))
                     {
                         if (hitObject.tag == "Environment")
                         {
+                            _lastObstructingObjects.Add(hitObject, renderer.material);
                             renderer.material = _transparent3DMaterial;
                         }
                         else
                         {
+                            _lastObstructingObjects.Add(hitObject, renderer.material);
                             renderer.material = _transparentSpriteMaterial;
                         }
                     }
