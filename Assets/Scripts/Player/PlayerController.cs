@@ -19,9 +19,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 LastCircleWorldPosition { get; private set; }
     [HideInInspector] public Vector3 PlayerDestinationPositon { get; private set; }
 
-    public static Action<Tile> OnPlayerStepOnNewTile;
-    [HideInInspector] public Tile CurrentTile;
-
+    #region Conditions
     [HideInInspector] public bool IsMoving { get; private set; }
     [HideInInspector] public bool IsCasting;
     [HideInInspector] public bool IsStunned;
@@ -29,21 +27,37 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsInvincible;
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
+    #endregion
+
+    #region Speed
+    [Header("Speed")]
+    [SerializeField] private float _playerCurrentMoveSpeed = 5f;
+    private float _playerRegularMoveSpeed;
+    #endregion
+
+    #region Burning
+    [Header("Burning")]
     [SerializeField] private float _burnTickDuration = 1f;
     [SerializeField] private int _burnDamage = 1;
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningPlayerCoroutine;
     private Color _currentColor = Color.white;
-    [SerializeField] private float _playerCurrentMoveSpeed = 5f;
-    private float _playerRegularMoveSpeed;
     [SerializeField] private Color _burningColor;
+    #endregion
 
-    //Health
+    #region Health
+    [Header("Health")]
     public int CurrentHealth;
     public int MaxHealth;
     private float _lastDamagedTimer;
     [SerializeField] private float _startRegenTreshold = 5f;
     [SerializeField] private float _regenRate = 3f;
+    #endregion
+
+    #region BossGridStuff
+    public static Action<Tile> OnPlayerStepOnNewTile;
+    [HideInInspector] public Tile CurrentTile;
+    #endregion
 
     private void Awake()
     {
@@ -295,6 +309,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleTileChange()
     {
+        if (GridManager.Instance == null) return;
+
         Tile t = GridManager.Instance.GetTileAtPosition(transform.position);
         if(CurrentTile != t)
         {

@@ -115,6 +115,9 @@ public class GridManager : MonoBehaviour
 
     public List<Tile> AStarPathFind(Tile startTile, Tile targetTile)
     {
+        if (startTile == null) return new List<Tile>();
+        if (targetTile == null) return new List<Tile>();
+
         List<Tile> toSearch = new List<Tile>() { startTile };
         List<Tile> processed = new List<Tile>();
 

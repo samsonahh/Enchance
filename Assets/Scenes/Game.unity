@@ -15742,8 +15742,8 @@ Transform:
   m_GameObject: {fileID: 329758907}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 50, z: 52.112}
+  m_LocalPosition: {x: -40.8754, y: 0, z: 0}
+  m_LocalScale: {x: 39.7508, y: 50, z: 52.112}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 635092414}
@@ -33219,8 +33219,8 @@ Transform:
   m_GameObject: {fileID: 643355432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 50, z: 52.112}
+  m_LocalPosition: {x: 23.934, y: 0, z: 0.027}
+  m_LocalScale: {x: 9.869394, y: 50, z: -53.684063}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 635092414}
@@ -90940,7 +90940,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1489924848, guid: 8289419ddd237b947be01f20ee8d38b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -96848,8 +96848,8 @@ Transform:
   m_GameObject: {fileID: 1666798531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -21.5}
-  m_LocalScale: {x: 1, y: 50, z: 52.112}
+  m_LocalPosition: {x: 0, y: 0, z: -43.4285}
+  m_LocalScale: {x: 44.8567, y: 50, z: 52.112}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 635092414}
@@ -114840,22 +114840,22 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 2038840252}
   _arrowPivot: {fileID: 1428094223}
   _staffGlowEffect: {fileID: 1479570349}
-  CurrentTile: {fileID: 0}
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
+  _playerCurrentMoveSpeed: 5
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
-  _playerCurrentMoveSpeed: 5
   _burningColor: {r: 0.9716981, g: 0.527602, b: 0, a: 1}
   CurrentHealth: 20
   MaxHealth: 20
   _startRegenTreshold: 5
   _regenRate: 3
+  CurrentTile: {fileID: 0}
 --- !u!114 &1999210798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116330,8 +116330,8 @@ Transform:
   m_GameObject: {fileID: 2018527221}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 19.5}
-  m_LocalScale: {x: 1, y: 50, z: 52.112}
+  m_LocalPosition: {x: -0, y: 0, z: 38.449}
+  m_LocalScale: {x: 38.8977, y: 50, z: 52.112}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 635092414}

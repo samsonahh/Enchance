@@ -49,6 +49,8 @@ public class Tile : MonoBehaviour
 
     public float GetDistance(Tile t)
     {
+        if (t == null) return 0;
+
         return Vector3.Distance(transform.position, t.transform.position);
     }
 
