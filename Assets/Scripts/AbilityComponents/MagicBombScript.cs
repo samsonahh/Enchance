@@ -58,7 +58,7 @@ public class MagicBombScript : MonoBehaviour
                 }
                 if(collider.TryGetComponent(out PlayerController player))
                 {
-                    player.TakeDamage(_damage);
+                    player.TakeDamage(_playerDamage);
                     player.StunPlayer(1f);
                 }
             }

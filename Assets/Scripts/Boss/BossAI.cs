@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 
@@ -32,6 +31,17 @@ public class BossAI : MonoBehaviour
     [SerializeField] private int _maxHealth = 50;
 
     [SerializeField] private int _phase = 1;
+
+    #region Burning
+    [Header("Burning")]
+    [HideInInspector] public bool IsBurning = false;
+    [SerializeField] private float _burnTickDuration = 1f;
+    [SerializeField] private int _burnDamage = 1;
+    [HideInInspector] public int BurnTicks;
+    private IEnumerator _burningEnemyCoroutine;
+    private Color _currentColor = Color.white;
+    [SerializeField] private Color _burningColor;
+    #endregion
 
     #region IdleVariables
     [Header("Idle Variables")]
@@ -91,7 +101,6 @@ public class BossAI : MonoBehaviour
     [Header("Get Angry Variables")]
     [SerializeField] private float _getAngryDuration = 2f;
     private bool _getAngryStarted = false;
-    private bool _getAngryCoroutineStarted = false;
     #endregion
 
     private void Awake()
@@ -776,6 +785,42 @@ public class BossAI : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
         _spriteRenderer.color = Color.white;
+    }
+
+    public void BurnEnemy(int ticks)
+    {
+        if (IsBurning)
+        {
+            BurnTicks += ticks;
+            return;
+        }
+
+        BurnTicks = ticks;
+
+        if (_burningEnemyCoroutine != null)
+        {
+            StopCoroutine(_burningEnemyCoroutine);
+        }
+        _burningEnemyCoroutine = BurnEnemyCoroutine();
+        StartCoroutine(_burningEnemyCoroutine);
+    }
+
+    public IEnumerator BurnEnemyCoroutine()
+    {
+        IsBurning = true;
+        _currentColor = _burningColor;
+
+        while (BurnTicks > 0)
+        {
+            TakeDamage(_burnDamage);
+            yield return TakeDamageCoroutine();
+            yield return new WaitForSeconds(_burnTickDuration - 0.15f);
+            BurnTicks--;
+        }
+
+        _currentColor = Color.white;
+        _spriteRenderer.color = _currentColor;
+        IsBurning = false;
     }
 }
 
