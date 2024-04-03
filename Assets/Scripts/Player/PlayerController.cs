@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 MouseWorldPosition { get; private set; }
     [HideInInspector] public Vector3 LastMouseWorldPosition { get; private set; }
     [HideInInspector] public Vector3 LastCircleWorldPosition { get; private set; }
-    [HideInInspector] public Vector3 PlayerDestinationPositon { get; private set; }
 
     #region Conditions
     [HideInInspector] public bool IsMoving { get; private set; }
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _regenRate = 3f;
     #endregion
 
-    #region BossGridStuff
+    #region ForBossGridManager
     public static Action<Tile> OnPlayerStepOnNewTile;
     [HideInInspector] public Tile CurrentTile;
     #endregion

@@ -22,10 +22,12 @@ public class BossAI : MonoBehaviour
     private Tile _playerTile;
     private List<Tile> _path;
 
-    [Header("Boss Stats")]
+    [Header("Boss UI")]
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private TMP_Text _healthText;
     [SerializeField] private GameObject _bossIndicator;
+
+    [Header("Boss Stats")]
     [SerializeField] private int _currentHealth = 50;
     [SerializeField] private int _maxHealth = 50;
 

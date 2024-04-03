@@ -13,12 +13,9 @@ public class MagicBombScript : MonoBehaviour
     [SerializeField] private Transform _bombRadiusTransform;
     [SerializeField] private Transform _bombRadiusWarning;
 
-    private BossAI _boss;
-
     private void Start()
     {
         transform.position = PlayerController.Instance.transform.position;
-        _boss = GameObject.Find("Boss").GetComponent<BossAI>();
         _bombRadiusTransform.localScale = new Vector3(_explosionRadius * 2f, _explosionRadius * 2f, 1);
         _bombRadiusWarning.localScale = new Vector3(0, 0, 1);
 
@@ -46,14 +43,25 @@ public class MagicBombScript : MonoBehaviour
 
     public void Detonate()
     {
-        if (Vector3.Distance(_boss.transform.position, transform.position) < _explosionRadius)
+        Collider[] collisions = Physics.OverlapSphere(transform.position, _explosionRadius);
+        if (collisions != null)
         {
-            _boss.TakeDamage(_damage);
-        }
-        if (Vector3.Distance(PlayerController.Instance.transform.position, transform.position) < _explosionRadius)
-        {
-            PlayerController.Instance.TakeDamage(_playerDamage);
-            PlayerController.Instance.StunPlayer(1f);
+            foreach (Collider collider in collisions)
+            {
+                if (collider.TryGetComponent(out BossAI bossAI))
+                {
+                    bossAI.TakeDamage(_damage);
+                }
+                if (collider.TryGetComponent(out EnemyController enemy))
+                {
+                    enemy.TakeDamage(_damage);
+                }
+                if(collider.TryGetComponent(out PlayerController player))
+                {
+                    player.TakeDamage(_damage);
+                    player.StunPlayer(1f);
+                }
+            }
         }
 
         Instantiate(_explosionPrefab, transform.position + Vector3.up, Quaternion.identity);

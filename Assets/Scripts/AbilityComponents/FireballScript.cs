@@ -31,6 +31,10 @@ public class FireballScript : MonoBehaviour
                     {
                         bossAI.TakeDamage(_damage);
                     }
+                    if (collider.TryGetComponent(out EnemyController enemy))
+                    {
+                        enemy.TakeDamage(_damage);
+                    }
                     if (collider.TryGetComponent(out MagicBombScript bomb))
                     {
                         bomb.Detonate();
@@ -47,6 +51,12 @@ public class FireballScript : MonoBehaviour
         if(other.TryGetComponent(out BossAI boss))
         {
             boss.TakeDamage(_damage);
+            Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
+            Destroy(gameObject);
+        }
+        if (other.TryGetComponent(out EnemyController enemy))
+        {
+            enemy.TakeDamage(_damage);
             Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
             Destroy(gameObject);
         }

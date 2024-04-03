@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Transform _target;
     private float _zoom = 10f;
 
+    [SerializeField] private float _cameraCullOffset = 0.005f;
     [SerializeField] private Material _transparentSpriteMaterial;
     [SerializeField] private Material _transparent3DMaterial;
     private Dictionary<GameObject, Material> _lastObstructingObjects;
@@ -74,7 +75,7 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
-        hits = Physics.RaycastAll(ray, Vector3.Distance(transform.position, PlayerController.Instance.transform.position));
+        hits = Physics.RaycastAll(ray, Vector3.Distance(transform.position, PlayerController.Instance.transform.position) - _cameraCullOffset);
         if(hits != null)
         {
             foreach(var hit in hits)
@@ -83,7 +84,7 @@ public class CameraMovement : MonoBehaviour
                 if (hit.collider.gameObject != _target.gameObject)
                 {
                     GameObject hitObject = hit.collider.gameObject;
-                    
+
                     if (hitObject.TryGetComponent(out Renderer renderer))
                     {
                         if (hitObject.tag == "Environment")

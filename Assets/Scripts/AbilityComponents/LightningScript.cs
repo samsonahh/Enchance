@@ -39,6 +39,10 @@ public class LightningScript : MonoBehaviour
                 {
                     bossAI.TakeDamage(_damage);
                 }
+                if (collider.TryGetComponent(out EnemyController enemy))
+                {
+                    enemy.TakeDamage(_damage);
+                }
             }
         }
 
