@@ -80,7 +80,7 @@ public class EnemyController : MonoBehaviour
 
     private void HandleAnimations()
     {
-
+        
     }
 
     private void ManageEnemyHealth()

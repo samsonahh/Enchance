@@ -32,6 +32,8 @@ public class BossAI : MonoBehaviour
 
     [SerializeField] private int _phase = 1;
 
+    private List<Coroutine> _bossStateCoroutines;
+
     #region Burning
     [Header("Burning")]
     [HideInInspector] public bool IsBurning = false;
@@ -128,6 +130,9 @@ public class BossAI : MonoBehaviour
         _currentHealth = _maxHealth;
         _healthSlider.maxValue = _maxHealth;
         _healthSlider.value = _currentHealth;
+
+        _currentColor = Color.white;
+        _bossStateCoroutines = new List<Coroutine>();
     }
 
     private void Update()
@@ -294,10 +299,13 @@ public class BossAI : MonoBehaviour
     {
         _currentState = state;
 
-        StopAllCoroutines();
+        foreach(Coroutine coroutine in _bossStateCoroutines)
+        {
+            StopCoroutine(coroutine);
+        }
+
         _gridManager.ClearPath();
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        _spriteRenderer.color = Color.white;
 
         Destroy(_suckEffect);
         _suckEffect = null;
@@ -315,23 +323,23 @@ public class BossAI : MonoBehaviour
                 _playerStraightPathTimer = 0f;
                 break;
             case BossState.PushAway:
-                StartCoroutine(PushPlayer());
+                _bossStateCoroutines.Add(StartCoroutine(PushPlayer()));
                 break;
             case BossState.SlamOntoPlayer:
-                StartCoroutine(SlamPlayer(_playerTile));
+                _bossStateCoroutines.Add(StartCoroutine(SlamPlayer(_playerTile)));
                 break;
             case BossState.FloorIsLava:
-                StartCoroutine(FloorIsLava());
+                _bossStateCoroutines.Add(StartCoroutine(FloorIsLava()));
                 break;
             case BossState.Suck:
                 _suckTimer = 0f;
                 _animator.SetBool("IsSucking", true);
                 break;
             case BossState.BombingRun:
-                StartCoroutine(BombingRun());
+                _bossStateCoroutines.Add(StartCoroutine(BombingRun()));
                 break;
             case BossState.GetAngry:
-                StartCoroutine(GetAngry());
+                _bossStateCoroutines.Add(StartCoroutine(GetAngry()));
                 _phase = 2;
                 break;
             default:
@@ -566,7 +574,7 @@ public class BossAI : MonoBehaviour
             yield break;
         }
 
-        StartCoroutine(CheckPlayerBurning(2f));
+        _bossStateCoroutines.Add(StartCoroutine(CheckPlayerBurning(2f)));
         for(int i = 0; i < _bombingRunJumpCount; i++)
         {
             Tile t = _playerTile;
@@ -683,6 +691,12 @@ public class BossAI : MonoBehaviour
                 continue;
             }
 
+            if (_playerController.IsInvincible)
+            {
+                yield return null;
+                continue;
+            }
+
             if (_playerTile.Burning)
             {
                 _playerController.BurnPlayer(3);
@@ -710,7 +724,7 @@ public class BossAI : MonoBehaviour
             yield break;
         }
 
-        StartCoroutine(CheckPlayerBurning(1f));
+        _bossStateCoroutines.Add(StartCoroutine(CheckPlayerBurning(1f)));
 
         Vector3 aboveCurrTile = _currentTile.transform.position + 2f * _slamJumpHeight * Vector3.up;
 
@@ -784,7 +798,7 @@ public class BossAI : MonoBehaviour
     public IEnumerator TakeDamageCoroutine()
     {
         yield return new WaitForSeconds(0.15f);
-        _spriteRenderer.color = Color.white;
+        _spriteRenderer.color = _currentColor;
     }
 
     public void BurnEnemy(int ticks)
