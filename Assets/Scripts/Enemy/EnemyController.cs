@@ -90,7 +90,7 @@ public class EnemyController : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            Destroy(gameObject);
+            CurrentHealth = MaxHealth;
         }
     }
 

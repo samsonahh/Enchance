@@ -11,9 +11,27 @@ public class GameManager : MonoBehaviour
 
     public static event Action<GameState> OnGameStateChanged;
 
+    #region Singletons
+    [Header("Singletons")]
+    [SerializeField] private GameObject _camera;
+    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _abilityCanvas;
+    [SerializeField] private GameObject _playerCanvas;
+    [SerializeField] private GameObject _menuCanvas;
+    #endregion
+
     private void Awake()
     {
         Instance = this;
+
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(_camera);
+        DontDestroyOnLoad(_player);
+        DontDestroyOnLoad(_abilityCanvas);
+        DontDestroyOnLoad(_playerCanvas);
+        DontDestroyOnLoad(_menuCanvas);
+
+        LevelManager.Instance.ForceChangeToTargetScene("PracticeRange");
     }
 
     private void Start()
@@ -26,6 +44,15 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             UpdateGameState(State == GameState.Paused ? GameState.Playing : GameState.Paused);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            LevelManager.Instance.FadeToTargetScene("PracticeRange");
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            LevelManager.Instance.FadeToTargetScene("Game");
         }
     }
 
@@ -48,6 +75,12 @@ public class GameManager : MonoBehaviour
             case GameState.Win:
                 Time.timeScale = 0f;
                 LevelManager.Instance.FadeToTargetScene("Menu");
+                Destroy(gameObject);
+                Destroy(_camera);
+                Destroy(_player);
+                Destroy(_abilityCanvas);
+                Destroy(_playerCanvas);
+                Destroy(_menuCanvas);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);

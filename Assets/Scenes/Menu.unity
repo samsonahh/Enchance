@@ -530,7 +530,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1016542153}
-  - component: {fileID: 1016542152}
   - component: {fileID: 1016542154}
   m_Layer: 0
   m_Name: LevelChanger
@@ -539,27 +538,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1016542152
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1016542151}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b784637e662a2964ea65865530812136, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1016542153
 Transform:
   m_ObjectHideFlags: 0
@@ -588,7 +566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3d7eddd6859b2498217fbf3d6d539e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 1016542152}
+  _fadeCanvas: {fileID: 1727115210}
+  _fadeImage: {fileID: 711048893}
 --- !u!1 &1044447291
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,7 +660,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Game
+          m_StringArgument: Load
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1044447294

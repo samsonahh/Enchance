@@ -85,6 +85,8 @@ public class GridManager : MonoBehaviour
 
     void CalculateMousePosition()
     {
+        if (Camera.main == null) return;
+
         Plane plane = new Plane(Vector3.up, Vector3.zero);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float distance;

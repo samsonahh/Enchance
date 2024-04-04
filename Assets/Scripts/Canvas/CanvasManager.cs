@@ -18,6 +18,10 @@ public class CanvasManager : MonoBehaviour
 
     private void GameManagerOnGameStateChanged(GameState state)
     {
+        if (_menuCanvas == null) return;
+        if (_playerCanvas == null) return;
+        if (_abilityCanvas == null) return;
+
         _menuCanvas.SetActive(state == GameState.Paused);
         _playerCanvas.SetActive(state == GameState.Playing);
         _abilityCanvas.SetActive(state == GameState.Playing);

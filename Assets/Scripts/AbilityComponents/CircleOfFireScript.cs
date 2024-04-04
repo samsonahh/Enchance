@@ -30,6 +30,8 @@ public class CircleOfFireScript : MonoBehaviour
 
     private void Update()
     {
+        if (PlayerController.Instance == null) return;
+
         transform.position = PlayerController.Instance.transform.position;
     }
 

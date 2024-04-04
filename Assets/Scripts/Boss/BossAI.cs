@@ -177,7 +177,7 @@ public class BossAI : MonoBehaviour
                 {
                     IEnumerator moving = MoveBoss();
                     StopCoroutine(moving);
-                    StartCoroutine(moving);
+                    _bossStateCoroutines.Add(StartCoroutine(moving));
                     _followPlayerTimer = 0f;
                 }
 
@@ -310,7 +310,7 @@ public class BossAI : MonoBehaviour
         Destroy(_suckEffect);
         _suckEffect = null;
 
-        Debug.Log(state.ToString());
+        //Debug.Log(state.ToString());
 
         switch (state)
         {
@@ -368,11 +368,14 @@ public class BossAI : MonoBehaviour
         if (_currentHealth <= 0)
         {
             GameManager.Instance.UpdateGameState(GameState.Win);
+            Destroy(gameObject);
         }
     }
 
     private void HandleBossIndicator()
     {
+        if (Camera.main == null) return;
+
         Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
         Vector3 topScreenPos = Camera.main.WorldToViewportPoint(transform.position + 5.7f * Vector3.up + 5.7f * Vector3.forward);
         bool onScreen = (screenPos.x > 0 && screenPos.x < 1 && screenPos.y > 0 && screenPos.y < 1) || (topScreenPos.x > 0 && topScreenPos.x < 1 && topScreenPos.y > 0 && topScreenPos.y < 1);
