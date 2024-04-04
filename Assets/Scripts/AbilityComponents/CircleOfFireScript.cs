@@ -39,7 +39,7 @@ public class CircleOfFireScript : MonoBehaviour
         {
             SphereCollider collider = gameObject.AddComponent<SphereCollider>();
             collider.isTrigger = true;
-            collider.radius = 1f;
+            collider.radius = 0.5f;
             collider.center = new Vector3(_radius * Mathf.Cos(i * (2 * Mathf.PI / spheres)), 0, _radius * Mathf.Sin(i * (2 * Mathf.PI / spheres)));
         }
     }

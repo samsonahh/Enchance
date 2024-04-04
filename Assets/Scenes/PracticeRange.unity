@@ -4167,7 +4167,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -9670,7 +9670,7 @@ MonoBehaviour:
   _cameraSmoothTime: 5
   _target: {fileID: 1999210796}
   _cameraCullOffset: 0.005
-  _transparentSpriteMaterial: {fileID: 2100000, guid: 6e07ef2a32a56ad4696d2d33b5e0fd1a,
+  _transparentSpriteMaterial: {fileID: 2100000, guid: b629b6c852c6cc5498f3a0c14b8a76f4,
     type: 2}
   _transparent3DMaterial: {fileID: 2100000, guid: 8f3bd152ec24af54fa149b5a0d069d58,
     type: 2}

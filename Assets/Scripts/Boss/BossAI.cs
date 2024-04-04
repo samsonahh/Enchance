@@ -515,7 +515,7 @@ public class BossAI : MonoBehaviour
             }
         }
 
-        Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
+        Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
         Vector3 dir = t.transform.position - transform.position;
         if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
@@ -581,7 +581,7 @@ public class BossAI : MonoBehaviour
 
             _gridManager.PathCrossPattern(t);
 
-            Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up;
+            Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
             Vector3 dir = t.transform.position - transform.position;
             if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
@@ -630,7 +630,7 @@ public class BossAI : MonoBehaviour
 
             _gridManager.PathCrossPattern(randTile);
 
-            Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up;
+            Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
             dir = randTile.transform.position - transform.position;
             if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
 
@@ -726,7 +726,7 @@ public class BossAI : MonoBehaviour
 
         _bossStateCoroutines.Add(StartCoroutine(CheckPlayerBurning(1f)));
 
-        Vector3 aboveCurrTile = _currentTile.transform.position + 2f * _slamJumpHeight * Vector3.up;
+        Vector3 aboveCurrTile = _currentTile.transform.position + 2f * _slamJumpHeight * Vector3.up + 2f* _slamJumpHeight * Vector3.forward;
 
         _gridManager.PathCheckerBoard(_currentTile.Black);
 
