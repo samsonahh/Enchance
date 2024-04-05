@@ -8,12 +8,33 @@ public class SceneLoadTrigger : MonoBehaviour
     [SerializeField] private SceneField[] _scenesToLoad;
     [SerializeField] private SceneField[] _scenesToUnload;
 
+    [SerializeField] private float _checkInterval = 5f;
+    private float _checkTimer = 0f;
+
+    private void Update()
+    {
+        _checkTimer += Time.deltaTime;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out PlayerController player))
         {
             LoadScenes();
             UnloadScenes();
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (_checkTimer > _checkInterval)
+        {
+            _checkTimer = 0f;
+            if (other.TryGetComponent(out PlayerController player))
+            {
+                LoadScenes();
+                UnloadScenes();
+            }
         }
     }
 

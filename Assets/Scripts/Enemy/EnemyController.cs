@@ -7,7 +7,6 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-    private PlayerController _playerController;
 
     [Header("Enemy UI")]
     [SerializeField] private Slider _healthSlider;
@@ -64,7 +63,6 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _playerController = PlayerController.Instance;
 
         CurrentHealth = MaxHealth;
 

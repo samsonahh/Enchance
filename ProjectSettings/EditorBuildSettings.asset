@@ -12,9 +12,15 @@ EditorBuildSettings:
     path: Assets/Scenes/PersistentGameplay.unity
     guid: 4c5c694a71fd30e41b90982cb1cd7e68
   - enabled: 1
-    path: Assets/Scenes/PracticeRange.unity
-    guid: adcb39dd43aa5904d901f5464772856c
-  - enabled: 1
     path: Assets/Scenes/Boss.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Grass Mid.unity
+    guid: adcb39dd43aa5904d901f5464772856c
+  - enabled: 1
+    path: Assets/Scenes/Grass East.unity
+    guid: 11bbc8f99885a9845af928695c019371
+  - enabled: 1
+    path: Assets/Scenes/Grass West.unity
+    guid: 70157f7cff4e7df47b666925bd48b2dc
   m_configObjects: {}
