@@ -25,14 +25,13 @@ public class Tile : MonoBehaviour
     {
         _gridManager = GridManager.Instance;
 
-        X = (int)transform.position.x;
-        Y = (int)transform.position.z;
-
         Walkable = true;
     }
 
     public void Init(int x, int y)
     {
+        X = x;
+        Y = y;
         bool isOffset = Mathf.Abs(x / 2 + y / 2) % 2 == 1;
         _renderer.color = isOffset ? _offsetColor : _baseColor;
         Black = isOffset;

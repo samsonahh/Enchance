@@ -27,8 +27,8 @@ public class BossAI : MonoBehaviour
     [SerializeField] private GameObject _bossIndicator;
 
     [Header("Boss Stats")]
-    [SerializeField] private int _currentHealth = 50;
-    [SerializeField] private int _maxHealth = 50;
+    [SerializeField] private int _currentHealth = 100;
+    [SerializeField] private int _maxHealth = 100;
 
     [SerializeField] private int _phase = 1;
 
@@ -147,6 +147,11 @@ public class BossAI : MonoBehaviour
             case BossState.Idle:
 
                 if (_distanceToPlayer < _activateDistance)
+                {
+                    ChangeBossState(BossState.FollowPlayer);
+                }
+
+                if(_currentHealth < _maxHealth)
                 {
                     ChangeBossState(BossState.FollowPlayer);
                 }
@@ -358,7 +363,7 @@ public class BossAI : MonoBehaviour
         _healthSlider.value = Mathf.Lerp(_healthSlider.value, _currentHealth, 5f * Time.deltaTime);
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
-        if (_currentHealth <= 25 && !_getAngryStarted)
+        if (_currentHealth <= 50 && !_getAngryStarted)
         {
             _getAngryStarted = true;
 

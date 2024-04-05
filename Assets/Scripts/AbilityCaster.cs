@@ -59,13 +59,16 @@ public class AbilityCaster : MonoBehaviour
 
     private void Update()
     {
-        HandleCircleCast();
-        HandleCastRadius();
-        HandleProjectileArrowPivot();
-        HandleUI();
+        if (GameManager.Instance.State == GameState.Playing)
+        {
+            HandleCircleCast();
+            HandleCastRadius();
+            HandleProjectileArrowPivot();
+            HandleUI();
 
-        Cheats();
-        SelectAbility();
+            Cheats();
+            SelectAbility();
+        }
     }
 
     private void Cheats()

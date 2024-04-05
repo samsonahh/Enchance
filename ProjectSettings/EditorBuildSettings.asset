@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 344ee21100a97c84fae087f672fbd478
   - enabled: 1
-    path: Assets/Scenes/Load.unity
+    path: Assets/Scenes/PersistentGameplay.unity
     guid: 4c5c694a71fd30e41b90982cb1cd7e68
   - enabled: 1
     path: Assets/Scenes/PracticeRange.unity
     guid: adcb39dd43aa5904d901f5464772856c
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/Boss.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

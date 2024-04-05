@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     #region Speed
     [Header("Speed")]
-    [SerializeField] private float _playerCurrentMoveSpeed = 5f;
+    public float PlayerCurrentMoveSpeed = 5f;
     [HideInInspector] public float PlayerRegularMoveSpeed;
     private Coroutine _currentMoveSpeedCoroutine;
     #endregion
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         CurrentHealth = MaxHealth;
         StartCoroutine(RegenHealth());
 
-        PlayerRegularMoveSpeed = _playerCurrentMoveSpeed;
+        PlayerRegularMoveSpeed = PlayerCurrentMoveSpeed;
     }
 
     private void Update()
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
         IsMoving = movementDirection.magnitude != 0;
 
-        transform.Translate(_playerCurrentMoveSpeed * Time.deltaTime * movementDirection, Space.World);
+        transform.Translate(PlayerCurrentMoveSpeed * Time.deltaTime * movementDirection, Space.World);
     }
 
     private void HandlePlayerFacingDirection()
@@ -338,9 +338,9 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator ChangeCurrentMoveSpeedCoroutine(float speed, float duration)
     {
-        _playerCurrentMoveSpeed = speed;
+        PlayerCurrentMoveSpeed = speed;
         yield return new WaitForSeconds(duration);
-        _playerCurrentMoveSpeed = PlayerRegularMoveSpeed;
+        PlayerCurrentMoveSpeed = PlayerRegularMoveSpeed;
         _currentMoveSpeedCoroutine = null;
     }
 

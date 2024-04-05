@@ -21,13 +21,7 @@ public class GridManager : MonoBehaviour
         Instance = this;
 
         _tiles = new Dictionary<Vector2, Tile>();
-        foreach (Transform child in transform)
-        {
-            string name = child.name;
-            int x = int.Parse(name.Split(",")[0]);
-            int y = int.Parse(name.Split(",")[1]);
-            _tiles[new Vector2(x, y)] = child.GetComponent<Tile>();
-        }
+        GenerateGrid();
     }
 
     private void OnValidate()
@@ -56,12 +50,22 @@ public class GridManager : MonoBehaviour
     {
         if(_tiles != null)
         {
-            foreach(Transform c in transform)
+            if (UnityEditor.EditorApplication.isPlaying)
             {
-                UnityEditor.EditorApplication.delayCall += () =>
+                foreach (Transform c in transform)
                 {
-                    DestroyImmediate(c.gameObject);
-                };
+                    Destroy(c.gameObject);
+                }
+            }
+            else
+            {
+                foreach (Transform c in transform)
+                {
+                    UnityEditor.EditorApplication.delayCall += () =>
+                    {
+                        DestroyImmediate(c.gameObject);
+                    };
+                }
             }
         }
 
@@ -73,7 +77,8 @@ public class GridManager : MonoBehaviour
                 int newX = 2 * (x - _width / 2);
                 int newY = 2 * (y - _height / 2);
 
-                Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(newX, 0, newY), Quaternion.Euler(90, 0, 0), transform);
+                Tile spawnedTile = Instantiate(_tilePrefab, Vector3.zero, Quaternion.Euler(90, 0, 0), transform);
+                spawnedTile.transform.localPosition = new Vector3(newX, 0, newY);
                 spawnedTile.name = $"{newX},{newY}";
 
                 spawnedTile.Init(newX, newY);
@@ -98,7 +103,9 @@ public class GridManager : MonoBehaviour
 
     public Tile GetTileAtPosition(Vector3 pos)
     {
-        if (_tiles.TryGetValue(new Vector2(Mathf.Round(pos.x/2)*2, Mathf.Round(pos.z/2)*2), out var tile))
+        Vector3 localPos = pos - transform.position;
+
+        if (_tiles.TryGetValue(new Vector2(Mathf.Round(localPos.x/2)*2, Mathf.Round(localPos.z/2)*2), out var tile))
         {
             return tile;
         }
