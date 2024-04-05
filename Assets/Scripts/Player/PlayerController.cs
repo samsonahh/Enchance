@@ -26,12 +26,20 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsInvincible;
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
+    [HideInInspector] public bool LifeSteal;
     #endregion
 
     #region Speed
     [Header("Speed")]
     [SerializeField] private float _playerCurrentMoveSpeed = 5f;
-    private float _playerRegularMoveSpeed;
+    [HideInInspector] public float PlayerRegularMoveSpeed;
+    private Coroutine _currentMoveSpeedCoroutine;
+    #endregion
+
+    #region LifeSteal
+    [Header("LifeSteal")]
+    [SerializeField] private int _healPerKill = 1;
+    private Coroutine _lifeStealCoroutine;
     #endregion
 
     #region Burning
@@ -77,7 +85,7 @@ public class PlayerController : MonoBehaviour
         CurrentHealth = MaxHealth;
         StartCoroutine(RegenHealth());
 
-        _playerRegularMoveSpeed = _playerCurrentMoveSpeed;
+        PlayerRegularMoveSpeed = _playerCurrentMoveSpeed;
     }
 
     private void Update()
@@ -316,5 +324,48 @@ public class PlayerController : MonoBehaviour
             CurrentTile = t;
             OnPlayerStepOnNewTile?.Invoke(CurrentTile);
         }
+    }
+
+    public void ChangeCurrentMoveSpeed(float speed, float duration)
+    {
+        if(_currentMoveSpeedCoroutine != null)
+        {
+            StopCoroutine(_currentMoveSpeedCoroutine);
+            _currentMoveSpeedCoroutine = null;
+        }
+        _currentMoveSpeedCoroutine = StartCoroutine(ChangeCurrentMoveSpeedCoroutine(speed, duration));
+    }
+
+    public IEnumerator ChangeCurrentMoveSpeedCoroutine(float speed, float duration)
+    {
+        _playerCurrentMoveSpeed = speed;
+        yield return new WaitForSeconds(duration);
+        _playerCurrentMoveSpeed = PlayerRegularMoveSpeed;
+        _currentMoveSpeedCoroutine = null;
+    }
+
+    public void EnableLifeSteal(float duration)
+    {
+        if (_lifeStealCoroutine != null)
+        {
+            StopCoroutine(_lifeStealCoroutine);
+            _lifeStealCoroutine = null;
+        }
+        _lifeStealCoroutine = StartCoroutine(EnableLifeStealCoroutine(duration));
+    }
+
+    public IEnumerator EnableLifeStealCoroutine(float duration)
+    {
+        LifeSteal = true;
+        yield return new WaitForSeconds(duration);
+        LifeSteal = false;
+        _lifeStealCoroutine = null;
+    }
+
+    public void OnKillEnemy()
+    {
+        if (!LifeSteal) return;
+
+        Heal(_healPerKill);
     }
 }

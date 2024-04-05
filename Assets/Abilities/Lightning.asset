@@ -27,3 +27,4 @@ MonoBehaviour:
     type: 3}
   <AbilityType>k__BackingField: 1
   <CastTime>k__BackingField: 0.1
+  Description: Strikes lightning in an area splashing 3 damage

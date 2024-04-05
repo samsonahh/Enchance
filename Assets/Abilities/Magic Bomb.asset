@@ -27,3 +27,5 @@ MonoBehaviour:
     type: 3}
   <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 0.1
+  Description: Plants a magic bomb that detonates after 5 seconds, dealing 5 damage
+    to anything around it

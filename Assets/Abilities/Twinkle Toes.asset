@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: Fireball
+  m_Name: Twinkle Toes
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Fireball
+  <Name>k__BackingField: Twinkle Toes
   <Star>k__BackingField: 1
-  <IconSprite>k__BackingField: {fileID: 21300000, guid: d897f54b835d221408c309cff6f67b65,
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: 380722f8930ed3c449127346cce5643c,
     type: 3}
   <MaxUseCount>k__BackingField: 1
   UseCount: 5
   <Cooldown>k__BackingField: 1
   Timer: -0.0025917105
   OnCooldown: 0
-  <CastRadius>k__BackingField: 15
+  <CastRadius>k__BackingField: 0.5
   <CircleCastRadius>k__BackingField: 0
-  <AbilityPrefab>k__BackingField: {fileID: 7304449088194038640, guid: a35eb99f1f729d4429324242b8c2f9bb,
+  <AbilityPrefab>k__BackingField: {fileID: 3177697320865603248, guid: 543e652f59067d747a5cfccb2ca062ff,
     type: 3}
-  <AbilityType>k__BackingField: 0
+  <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 0.1
-  Description: Launches a fireball in a direction splashing for 2 damage
+  Description: Speed yourself for 3 seconds

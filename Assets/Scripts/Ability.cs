@@ -7,7 +7,7 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Ability", order = 1)]
 public class Ability : ScriptableObject
 {
-    [field: SerializeField] public string Name { get; private set; } = "";
+    [field: SerializeField] public string Name { get; private set; }
     [field: SerializeField] public int Star { get; private set; }
     [field: SerializeField] public Sprite IconSprite { get; private set; }
     [field: SerializeField] public int MaxUseCount { get; private set; }
@@ -20,6 +20,10 @@ public class Ability : ScriptableObject
     [field: SerializeField] public GameObject AbilityPrefab { get; private set; }
     [field: SerializeField] public AbilityType AbilityType { get; private set; }
     [field: SerializeField] public float CastTime { get; private set; }
+    [TextArea(15, 20)]
+    [field: SerializeField] public string Description;
+
+
 
     public static Ability CopyAbility(Ability ability)
     {
@@ -37,12 +41,13 @@ public class Ability : ScriptableObject
         a.AbilityPrefab = ability.AbilityPrefab;
         a.AbilityType = ability.AbilityType;
         a.CastTime = ability.CastTime;
+        a.Description = ability.Description;
 
         return a;
     }
 
     private void OnValidate()
     {
-       Name = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(this));
+        Name = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(this));
     }
 }

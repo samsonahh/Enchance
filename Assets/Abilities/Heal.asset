@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Heal
-  <Star>k__BackingField: 1
+  <Star>k__BackingField: 2
   <IconSprite>k__BackingField: {fileID: 21300000, guid: 331cdffa4408f7349af86cde0c3a830e,
     type: 3}
   <MaxUseCount>k__BackingField: 1
@@ -27,3 +27,4 @@ MonoBehaviour:
     type: 3}
   <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 0.1
+  Description: Heals 3 hp and cleanses player of debuffs

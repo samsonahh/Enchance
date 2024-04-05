@@ -22,27 +22,34 @@ public class FireballScript : MonoBehaviour
 
         if(Vector3.Distance(transform.position, _target) <= 0.01f)
         {
-            Collider[] collisions = Physics.OverlapSphere(transform.position, 2f);
-            if (collisions != null)
-            {
-                foreach (Collider collider in collisions)
-                {
-                    if (collider.TryGetComponent(out BossAI bossAI))
-                    {
-                        bossAI.TakeDamage(_damage);
-                    }
-                    if (collider.TryGetComponent(out EnemyController enemy))
-                    {
-                        enemy.TakeDamage(_damage);
-                    }
-                    if (collider.TryGetComponent(out MagicBombScript bomb))
-                    {
-                        bomb.Detonate();
-                    }
-                }
-            }
+            DoAreaDamage(_damage);
+
             Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
             Destroy(gameObject);
+        }
+    }
+
+    private void DoAreaDamage(int damage)
+    {
+        Collider[] collisions = Physics.OverlapSphere(transform.position + Vector3.up, 2f);
+
+        if (collisions != null)
+        {
+            foreach (Collider collider in collisions)
+            {
+                if (collider.TryGetComponent(out BossAI bossAI))
+                {
+                    bossAI.TakeDamage(damage);
+                }
+                if (collider.TryGetComponent(out EnemyController enemy))
+                {
+                    enemy.TakeDamage(damage);
+                }
+                if (collider.TryGetComponent(out MagicBombScript bomb))
+                {
+                    bomb.Detonate();
+                }
+            }
         }
     }
 
@@ -50,19 +57,19 @@ public class FireballScript : MonoBehaviour
     {
         if(other.TryGetComponent(out BossAI boss))
         {
-            boss.TakeDamage(_damage);
+            DoAreaDamage(_damage);
             Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
             Destroy(gameObject);
         }
         if (other.TryGetComponent(out EnemyController enemy))
         {
-            enemy.TakeDamage(_damage);
+            DoAreaDamage(_damage);
             Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
             Destroy(gameObject);
         }
         if (other.TryGetComponent(out MagicBombScript bomb))
         {
-            bomb.Detonate();
+            DoAreaDamage(_damage);
             Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
             Destroy(gameObject);
         }

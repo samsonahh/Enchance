@@ -23,7 +23,7 @@ public class CircleOfFireScript : MonoBehaviour
         var vel = _particle.velocityOverLifetime;
         vel.orbitalY = _rotationSpeed;
 
-        AddCompositeCollider(16);
+        AddCompositeCollider(32);
 
         Destroy(gameObject, _duration);
     }

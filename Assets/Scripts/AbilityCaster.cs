@@ -1,17 +1,15 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class AbilityCaster : MonoBehaviour
 {
     [HideInInspector] public static AbilityCaster Instance;
 
-    [SerializeField] private Abilities _abilities;
-    [SerializeField] private Image[] _abilityImages;
-    [SerializeField] private RectTransform _selectedOverlay;
-    private RectTransform[] _coolDownOverlays = new RectTransform[3];
+    public Abilities Abilities;
 
     private bool _isSelectingAbility = false;
     [HideInInspector] public int SelectedAbility = 0;
@@ -20,15 +18,32 @@ public class AbilityCaster : MonoBehaviour
     [SerializeField] private Transform _projectileArrowPivotTransform;
     [SerializeField] private Transform _castRadiusTransform;
     public Transform CircleCastTransform;
-    [SerializeField] private float _aimSpeed;
+
+    [Header("Chances")]
+    [SerializeField] private float[] _starChances = { 0.6f, 0.3f, 0.1f };
 
     public static event Action<int> OnAbilityCast; // 0 - casting, 1 - finished cast
+
+    #region UI
+    [Header("UI")]
+    [SerializeField] private Image[] _abilityImages;
+    [SerializeField] private RectTransform _selectedOverlay;
+    [SerializeField] private TMP_Text _abilityNameText;
+    [SerializeField] private TMP_Text[] _abilityStarChanceTexts;
+    private RectTransform[] _coolDownOverlays = new RectTransform[3];
+    [SerializeField] private RectTransform _abilityDescriptionPanel;
+    [SerializeField] private TMP_Text _abilityDescriptionName;
+    [SerializeField] private TMP_Text _abilityDescriptionStar;
+    [SerializeField] private TMP_Text _abilityDescription;
+    private int _hoveredAbility;
+    #endregion
 
     private void Awake()
     {
         Instance = this;
 
         OnAbilityCast += HandleOnAbilityCast;
+        SortAbilitiesByStar();
     }
 
     private void OnDestroy()
@@ -47,9 +62,28 @@ public class AbilityCaster : MonoBehaviour
         HandleCircleCast();
         HandleCastRadius();
         HandleProjectileArrowPivot();
+        HandleUI();
 
+        Cheats();
         SelectAbility();
     }
+
+    private void Cheats()
+    {
+        if(Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Alpha1))
+        {
+            RandomizeAllAbilitiesByStarCheat(0);
+        }
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Alpha2))
+        {
+            RandomizeAllAbilitiesByStarCheat(1);
+        }
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Alpha3))
+        {
+            RandomizeAllAbilitiesByStarCheat(2);
+        }
+    }
+
     private void UseAbility(int index)
     {
         if (CurrentAbilities[index].OnCooldown) return;
@@ -58,6 +92,16 @@ public class AbilityCaster : MonoBehaviour
         if (!PlayerController.Instance.CanCast) return;
 
         StartCoroutine(UseAbilityCoroutine(index));
+    }
+
+    private void SortAbilitiesByStar()
+    {
+        if (Abilities.GameAbilities.Length == 0) return;
+
+        foreach(Ability a in Abilities.GameAbilities)
+        {
+            Abilities.StarSortedAbilities[a.Star - 1].Add(a);
+        }
     }
 
     private void InitializeOverlays()
@@ -76,39 +120,112 @@ public class AbilityCaster : MonoBehaviour
 
     private void RandomizeAbility(int index)
     {
-        List<Ability> availableAbilities = new List<Ability>();
-        foreach (Ability ability in _abilities.GameAbilities)
+        while (true)
         {
-            availableAbilities.Add(ability);
-            if (CurrentAbilities[0] != null)
+            float randomStarFraction = UnityEngine.Random.Range(0f, 1f);
+            int randomStar = 0;
+            if(randomStarFraction > _starChances[0])
             {
-                if (CurrentAbilities[0].Name.Equals(ability.Name))
+                randomStar = 1;
+            }
+            if (randomStarFraction > _starChances[0] + _starChances[1])
+            {
+                randomStar = 2;
+            }
+
+            //Debug.Log($"Rolled a {randomStarFraction} resulting in a {randomStar + 1} ability");
+
+            List<Ability> availableAbilities = new List<Ability>();
+            foreach (Ability ability in Abilities.StarSortedAbilities[randomStar])
+            {
+                availableAbilities.Add(ability);
+                if (CurrentAbilities[0] != null)
                 {
-                    availableAbilities.Remove(ability);
+                    if (CurrentAbilities[0].Name.Equals(ability.Name))
+                    {
+                        availableAbilities.Remove(ability);
+                    }
+                }
+                if (CurrentAbilities[1] != null)
+                {
+                    if (CurrentAbilities[1].Name.Equals(ability.Name))
+                    {
+                        availableAbilities.Remove(ability);
+                    }
+                }
+                if (CurrentAbilities[2] != null)
+                {
+                    if (CurrentAbilities[2].Name.Equals(ability.Name))
+                    {
+                        availableAbilities.Remove(ability);
+                    }
                 }
             }
-            if (CurrentAbilities[1] != null)
+
+            if(availableAbilities.Count == 0)
             {
-                if (CurrentAbilities[1].Name.Equals(ability.Name))
-                {
-                    availableAbilities.Remove(ability);
-                }
+                //Debug.LogError($"Out of {randomStar + 1} star abilities!");
+                continue;
             }
-            if (CurrentAbilities[2] != null)
+
+            int randomIndex = UnityEngine.Random.Range(0, availableAbilities.Count);
+            Ability randomAbility = availableAbilities[randomIndex];
+
+            _abilityImages[index].sprite = randomAbility.IconSprite;
+
+            CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
+            break;
+        }
+    }
+
+    private void RandomizeAllAbilitiesByStarCheat(int star)
+    {
+        for (int index = 0; index < 3; index++)
+        {
+            while (true)
             {
-                if (CurrentAbilities[2].Name.Equals(ability.Name))
+                List<Ability> availableAbilities = new List<Ability>();
+                foreach (Ability ability in Abilities.StarSortedAbilities[star])
                 {
-                    availableAbilities.Remove(ability);
+                    availableAbilities.Add(ability);
+                    if (CurrentAbilities[0] != null)
+                    {
+                        if (CurrentAbilities[0].Name.Equals(ability.Name))
+                        {
+                            availableAbilities.Remove(ability);
+                        }
+                    }
+                    if (CurrentAbilities[1] != null)
+                    {
+                        if (CurrentAbilities[1].Name.Equals(ability.Name))
+                        {
+                            availableAbilities.Remove(ability);
+                        }
+                    }
+                    if (CurrentAbilities[2] != null)
+                    {
+                        if (CurrentAbilities[2].Name.Equals(ability.Name))
+                        {
+                            availableAbilities.Remove(ability);
+                        }
+                    }
                 }
+
+                if (availableAbilities.Count == 0)
+                {
+                    //Debug.LogError($"Out of {randomStar + 1} star abilities!");
+                    break;
+                }
+
+                int randomIndex = UnityEngine.Random.Range(0, availableAbilities.Count);
+                Ability randomAbility = availableAbilities[randomIndex];
+
+                _abilityImages[index].sprite = randomAbility.IconSprite;
+
+                CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
+                break;
             }
         }
-
-        int randomIndex = UnityEngine.Random.Range(0, availableAbilities.Count);
-        Ability randomAbility = availableAbilities[randomIndex];
-
-        _abilityImages[index].sprite = randomAbility.IconSprite;
-
-        CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
     }
 
     private void RandomizeAllAbilities()
@@ -157,11 +274,7 @@ public class AbilityCaster : MonoBehaviour
 
     private void SelectAbility()
     {
-        _selectedOverlay.gameObject.SetActive(_isSelectingAbility);
-
         if (PlayerController.Instance.IsCasting) return;
-
-        
 
         if (!_isSelectingAbility)
         {
@@ -241,6 +354,61 @@ public class AbilityCaster : MonoBehaviour
                 Instantiate(CurrentAbilities[SelectedAbility].AbilityPrefab, transform.position, Quaternion.identity);
             }
         }  
+    }
+
+    private void HandleUI()
+    {
+        _selectedOverlay.gameObject.SetActive(_isSelectingAbility);
+
+        if (_isSelectingAbility)
+        {
+            if (CurrentAbilities[SelectedAbility].Star == 1) _abilityNameText.color = Color.green;
+            if (CurrentAbilities[SelectedAbility].Star == 2) _abilityNameText.color = Color.cyan;
+            if (CurrentAbilities[SelectedAbility].Star == 3) _abilityNameText.color = Color.yellow;
+
+            _abilityNameText.text = CurrentAbilities[SelectedAbility].Name;
+        }
+        else
+        {
+            _abilityNameText.text = "";
+        }
+
+        _abilityStarChanceTexts[0].text = $"1*: {Mathf.Round(_starChances[0]*100f)}%";
+        _abilityStarChanceTexts[1].text = $"2*: {Mathf.Round(_starChances[1]*100f)}%";
+        _abilityStarChanceTexts[2].text = $"3*: {Mathf.Round(_starChances[2]*100f)}%";
+
+        if (_abilityDescriptionPanel.gameObject.activeSelf)
+        {
+            _abilityDescriptionPanel.position = Input.mousePosition;
+
+            _abilityDescriptionName.text = $"Name: {CurrentAbilities[_hoveredAbility].Name}";
+            _abilityDescriptionStar.text = $"Star: {CurrentAbilities[_hoveredAbility].Star}";
+            _abilityDescription.text = CurrentAbilities[_hoveredAbility].Description;
+
+            if (CurrentAbilities[_hoveredAbility].Star == 1)
+            {
+                _abilityDescriptionName.color = Color.green;
+                _abilityDescriptionStar.color = Color.green;
+                _abilityDescription.color = Color.green;
+            }
+            if (CurrentAbilities[_hoveredAbility].Star == 2)
+            {
+                _abilityDescriptionName.color = Color.cyan;
+                _abilityDescriptionStar.color = Color.cyan;
+                _abilityDescription.color = Color.cyan;
+            }
+            if (CurrentAbilities[_hoveredAbility].Star == 3)
+            {
+                _abilityDescriptionName.color = Color.yellow;
+                _abilityDescriptionStar.color = Color.yellow;
+                _abilityDescription.color = Color.yellow;
+            }
+        }
+    }
+
+    public void AssignHoveredAbility(int index)
+    {
+        _hoveredAbility = index;
     }
 
     private void DebugInputs()

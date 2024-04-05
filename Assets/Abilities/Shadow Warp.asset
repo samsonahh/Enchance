@@ -27,3 +27,4 @@ MonoBehaviour:
     type: 3}
   <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 0.1
+  Description: Warp into the shadow dimension and become invulnerable for 2 seconds

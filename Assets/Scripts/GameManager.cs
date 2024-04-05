@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _abilityCanvas;
     [SerializeField] private GameObject _playerCanvas;
-    [SerializeField] private GameObject _menuCanvas;
+    [SerializeField] private MenuCanvasManager _menuCanvas;
     #endregion
 
     private void Awake()
@@ -29,9 +29,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(_player);
         DontDestroyOnLoad(_abilityCanvas);
         DontDestroyOnLoad(_playerCanvas);
-        DontDestroyOnLoad(_menuCanvas);
+        DontDestroyOnLoad(_menuCanvas.gameObject);
 
-        LevelManager.Instance.ForceChangeToTargetScene("PracticeRange");
+        if(LevelManager.Instance != null)
+        {
+            LevelManager.Instance.ForceChangeToTargetScene("PracticeRange");
+        }
     }
 
     private void Start()
@@ -43,7 +46,9 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            _menuCanvas.ResetMenus();
             UpdateGameState(State == GameState.Paused ? GameState.Playing : GameState.Paused);
+            _menuCanvas.gameObject.SetActive(State == GameState.Paused);
         }
 
         if (Input.GetKeyDown(KeyCode.F1))
@@ -66,6 +71,11 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
                 break;
             case GameState.Paused:
+                GameObject descPanel = GameObject.Find("AbilityDescPanel");
+                if(descPanel != null)
+                {
+                    descPanel.SetActive(false);
+                }
                 Time.timeScale = 0f;
                 break;
             case GameState.Dead:
@@ -80,7 +90,7 @@ public class GameManager : MonoBehaviour
                 Destroy(_player);
                 Destroy(_abilityCanvas);
                 Destroy(_playerCanvas);
-                Destroy(_menuCanvas);
+                Destroy(_menuCanvas.gameObject);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
