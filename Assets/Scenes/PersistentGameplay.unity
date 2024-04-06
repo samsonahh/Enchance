@@ -11766,11 +11766,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  _camera: {fileID: 1830945972}
-  _player: {fileID: 1999210795}
-  _abilityCanvas: {fileID: 341472961}
-  _playerCanvas: {fileID: 1452704173}
   _menuCanvas: {fileID: 1815781021}
+  GreenHealthColor: {r: 0.2627451, g: 0.9137255, b: 0.14509805, a: 1}
+  YellowHealthColor: {r: 0.9137255, g: 0.8627451, b: 0.14509805, a: 1}
+  RedHealthColor: {r: 0.9137255, g: 0.16078432, b: 0.14509805, a: 1}
+  EntityBurningColor: {r: 0.972549, g: 0.5294118, b: 0, a: 1}
 --- !u!4 &1981988618
 Transform:
   m_ObjectHideFlags: 0
@@ -11849,6 +11849,7 @@ MonoBehaviour:
   IsVisible: 1
   CanCast: 1
   LifeSteal: 0
+  CanMove: 1
   PlayerCurrentMoveSpeed: 5
   PlayerRegularMoveSpeed: 0
   _healPerKill: 1

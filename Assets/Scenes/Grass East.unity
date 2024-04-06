@@ -400,7 +400,7 @@ PrefabInstance:
     - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
         type: 3}
       propertyPath: _scenesToLoad.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
         type: 3}
@@ -414,9 +414,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
         type: 3}
+      propertyPath: _scenesToLoad.Array.data[1].m_SceneName
+      value: Grass South
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
+        type: 3}
+      propertyPath: _scenesToLoad.Array.data[2].m_SceneName
+      value: Grass North
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
+        type: 3}
       propertyPath: _scenesToLoad.Array.data[0].m_SceneAsset
       value: 
       objectReference: {fileID: 102900000, guid: adcb39dd43aa5904d901f5464772856c,
+        type: 3}
+    - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
+        type: 3}
+      propertyPath: _scenesToLoad.Array.data[1].m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 9da07b00ffbb5ec4098c67865b7a49d5,
+        type: 3}
+    - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
+        type: 3}
+      propertyPath: _scenesToLoad.Array.data[2].m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 28c0d7df0280a6a4aa941a2a25efca37,
         type: 3}
     - target: {fileID: 2342263004801115707, guid: deecb52622076554786d45ee709cee4e,
         type: 3}

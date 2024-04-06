@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
     [HideInInspector] public bool LifeSteal;
+    [HideInInspector] public bool CanMove = true;
     #endregion
 
     #region Speed
@@ -49,7 +50,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningPlayerCoroutine;
     private Color _currentColor = Color.white;
-    [SerializeField] private Color _burningColor;
     #endregion
 
     #region Health
@@ -128,6 +128,12 @@ public class PlayerController : MonoBehaviour
         float z = Input.GetAxisRaw("Vertical");
 
         Vector3 movementDirection = new Vector3(x, 0, z).normalized;
+
+        if (!CanMove)
+        {
+            IsMoving = false;
+            return;
+        }
 
         if (IsStunned)
         {
@@ -299,7 +305,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator BurnPlayerCoroutine()
     {
         IsBurning = true;
-        _currentColor = _burningColor;
+        _currentColor = GameManager.Instance.EntityBurningColor;
 
         while(BurnTicks > 0)
         {

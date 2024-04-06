@@ -14,11 +14,15 @@ public class GameManager : MonoBehaviour
 
     #region Singletons
     [Header("Singletons")]
-    [SerializeField] private GameObject _camera;
-    [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _abilityCanvas;
-    [SerializeField] private GameObject _playerCanvas;
     [SerializeField] private MenuCanvasManager _menuCanvas;
+    #endregion
+
+    #region Global
+    [Header("Global")]
+    public Color GreenHealthColor;
+    public Color YellowHealthColor;
+    public Color RedHealthColor;
+    public Color EntityBurningColor;
     #endregion
 
     private void Awake()

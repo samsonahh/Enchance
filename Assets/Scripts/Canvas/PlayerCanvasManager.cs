@@ -11,9 +11,6 @@ public class PlayerCanvasManager : MonoBehaviour
     [SerializeField] private TMP_Text _playerHealthText;
 
     [Header("Health Bar Colors")]
-    [SerializeField] private Color _greenColor;
-    [SerializeField] private Color _yellowColor;
-    [SerializeField] private Color _redColor;
     [SerializeField] private float _yellowThreshold = 0.5f;
     [SerializeField] private float _redThreshold = 0.25f;
 
@@ -32,15 +29,15 @@ public class PlayerCanvasManager : MonoBehaviour
         // COLORS!!!
         if(playerHealthPercentage <= 1f && playerHealthPercentage > _yellowThreshold)
         {
-            _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, _greenColor, 5f * Time.deltaTime);
+            _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.GreenHealthColor, 5f * Time.deltaTime);
         }
         if (playerHealthPercentage <= _yellowThreshold && playerHealthPercentage > _redThreshold)
         {
-            _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, _yellowColor, 5f * Time.deltaTime);
+            _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.YellowHealthColor, 5f * Time.deltaTime);
         }
         if (playerHealthPercentage <= _redThreshold && playerHealthPercentage >= 0f)
         {
-            _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, _redColor, 5f * Time.deltaTime);
+            _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.RedHealthColor, 5f * Time.deltaTime);
         }
     }
 }

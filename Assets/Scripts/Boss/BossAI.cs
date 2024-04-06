@@ -42,7 +42,6 @@ public class BossAI : MonoBehaviour
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningEnemyCoroutine;
     private Color _currentColor = Color.white;
-    [SerializeField] private Color _burningColor;
     #endregion
 
     #region IdleVariables
@@ -830,7 +829,7 @@ public class BossAI : MonoBehaviour
     public IEnumerator BurnEnemyCoroutine()
     {
         IsBurning = true;
-        _currentColor = _burningColor;
+        _currentColor = GameManager.Instance.EntityBurningColor;
 
         while (BurnTicks > 0)
         {

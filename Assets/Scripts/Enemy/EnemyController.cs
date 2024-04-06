@@ -35,7 +35,6 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningEnemyCoroutine;
     private Color _currentColor = Color.white;
-    [SerializeField] private Color _burningColor;
     #endregion
 
     #region Health
@@ -43,12 +42,10 @@ public class EnemyController : MonoBehaviour
     public int CurrentHealth;
     public int MaxHealth;
     [Header("Health Bar Colors")]
-    [SerializeField] private Color _greenColor;
-    [SerializeField] private Color _yellowColor;
-    [SerializeField] private Color _redColor;
     [SerializeField] private float _yellowThreshold = 0.5f;
     [SerializeField] private float _redThreshold = 0.25f;
     #endregion
+
 
     private void Awake()
     {
@@ -60,7 +57,7 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    void Start()
+    public virtual void OnStart()
     {
         _animator = GetComponent<Animator>();
 
@@ -69,19 +66,28 @@ public class EnemyController : MonoBehaviour
         _enemyRegularMoveSpeed = _enemyCurrentMoveSpeed;
     }
 
-    void Update()
+    private void Start()
+    {
+        OnStart();
+    }
+
+    public virtual void OnUpdate()
     {
         ManageEnemyHealth();
         HandleAnimations();
-
     }
 
-    private void HandleAnimations()
+    private void Update()
+    {
+        OnUpdate();
+    }
+
+    public virtual void HandleAnimations()
     {
         
     }
 
-    private void ManageEnemyHealth()
+    public virtual void ManageEnemyHealth()
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
         HandleHealthBar();
@@ -93,7 +99,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void HandleHealthBar()
+    public virtual void HandleHealthBar()
     {
         float enemyHealthPercentage = (float)CurrentHealth / MaxHealth;
 
@@ -101,19 +107,19 @@ public class EnemyController : MonoBehaviour
 
         if (enemyHealthPercentage <= 1f && enemyHealthPercentage > _yellowThreshold)
         {
-            _enemyHealthFill.color = Color.Lerp(_enemyHealthFill.color, _greenColor, 5f * Time.deltaTime);
+            _enemyHealthFill.color = Color.Lerp(_enemyHealthFill.color, GameManager.Instance.GreenHealthColor, 5f * Time.deltaTime);
         }
         if (enemyHealthPercentage <= _yellowThreshold && enemyHealthPercentage > _redThreshold)
         {
-            _enemyHealthFill.color = Color.Lerp(_enemyHealthFill.color, _yellowColor, 5f * Time.deltaTime);
+            _enemyHealthFill.color = Color.Lerp(_enemyHealthFill.color, GameManager.Instance.YellowHealthColor, 5f * Time.deltaTime);
         }
         if (enemyHealthPercentage <= _redThreshold && enemyHealthPercentage >= 0f)
         {
-            _enemyHealthFill.color = Color.Lerp(_enemyHealthFill.color, _redColor, 5f * Time.deltaTime);
+            _enemyHealthFill.color = Color.Lerp(_enemyHealthFill.color, GameManager.Instance.RedHealthColor, 5f * Time.deltaTime);
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (IsInvincible) return;
 
@@ -123,18 +129,18 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(TakeDamageCoroutine());
     }
 
-    public IEnumerator TakeDamageCoroutine()
+    private IEnumerator TakeDamageCoroutine()
     {
         yield return new WaitForSeconds(0.15f);
         _spriteRenderer.color = _currentColor;
     }
 
-    public void Heal(int hp)
+    public virtual void Heal(int hp)
     {
         CurrentHealth += hp;
     }
 
-    public void BurnEnemy(int ticks)
+    public virtual void BurnEnemy(int ticks)
     {
         if (IsBurning)
         {
@@ -152,10 +158,10 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(_burningEnemyCoroutine);
     }
 
-    public IEnumerator BurnEnemyCoroutine()
+    private IEnumerator BurnEnemyCoroutine()
     {
         IsBurning = true;
-        _currentColor = _burningColor;
+        _currentColor = GameManager.Instance.EntityBurningColor;
 
         while (BurnTicks > 0)
         {
