@@ -5403,9 +5403,6 @@ MonoBehaviour:
   _playerHealthSlider: {fileID: 503329191}
   _playerHealthFill: {fileID: 1030356635}
   _playerHealthText: {fileID: 1355962962}
-  _greenColor: {r: 0.2627451, g: 0.9137255, b: 0.14509805, a: 1}
-  _yellowColor: {r: 0.9137255, g: 0.8624832, b: 0.14509803, a: 1}
-  _redColor: {r: 0.9137255, g: 0.1593034, b: 0.14509803, a: 1}
   _yellowThreshold: 0.5
   _redThreshold: 0.25
 --- !u!1 &1474121589
@@ -11856,7 +11853,6 @@ MonoBehaviour:
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
-  _burningColor: {r: 0.9716981, g: 0.527602, b: 0, a: 1}
   CurrentHealth: 20
   MaxHealth: 20
   _startRegenTreshold: 5

@@ -1099,7 +1099,7 @@ MonoBehaviour:
     m_SceneName: PersistentGameplay
   _practiceRange:
     m_SceneAsset: {fileID: 102900000, guid: adcb39dd43aa5904d901f5464772856c, type: 3}
-    m_SceneName: PracticeRange
+    m_SceneName: Grass Mid
   _startButton: {fileID: 1044447293}
 --- !u!1 &2006119436
 GameObject:

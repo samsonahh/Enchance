@@ -1457,12 +1457,8 @@ MonoBehaviour:
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
-  _burningColor: {r: 0.972549, g: 0.5294118, b: 0, a: 1}
   CurrentHealth: 10
   MaxHealth: 10
-  _greenColor: {r: 0.2627451, g: 0.9137255, b: 0.14509805, a: 1}
-  _yellowColor: {r: 0.9137255, g: 0.8627451, b: 0.14509805, a: 1}
-  _redColor: {r: 0.9137255, g: 0.16078432, b: 0.14509805, a: 1}
   _yellowThreshold: 0.5
   _redThreshold: 0.25
 --- !u!1 &1264439708
@@ -2291,12 +2287,8 @@ MonoBehaviour:
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
-  _burningColor: {r: 0.972549, g: 0.5294118, b: 0, a: 1}
   CurrentHealth: 10
   MaxHealth: 10
-  _greenColor: {r: 0.2627451, g: 0.9137255, b: 0.14509805, a: 1}
-  _yellowColor: {r: 0.9137255, g: 0.8627451, b: 0.14509805, a: 1}
-  _redColor: {r: 0.9137255, g: 0.16078432, b: 0.14509805, a: 1}
   _yellowThreshold: 0.5
   _redThreshold: 0.25
 --- !u!4 &1944163548
@@ -2513,12 +2505,8 @@ MonoBehaviour:
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
-  _burningColor: {r: 0.972549, g: 0.5294118, b: 0, a: 1}
   CurrentHealth: 10
   MaxHealth: 10
-  _greenColor: {r: 0.2627451, g: 0.9137255, b: 0.14509805, a: 1}
-  _yellowColor: {r: 0.9137255, g: 0.8627451, b: 0.14509805, a: 1}
-  _redColor: {r: 0.9137255, g: 0.16078432, b: 0.14509805, a: 1}
   _yellowThreshold: 0.5
   _redThreshold: 0.25
 --- !u!4 &1987446382

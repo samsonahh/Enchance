@@ -5,7 +5,9 @@ using UnityEngine;
 public class RockAI : EnemyController
 {
     [Header("RockAI")]
-    [SerializeField] private float _test;
+    private RockAIState _currentState; 
+
+    [SerializeField] private float _circleAroundPlayerRadius;
 
     public override void OnStart()
     {
@@ -16,4 +18,9 @@ public class RockAI : EnemyController
     {
         base.OnUpdate();
     }
+}
+
+public enum RockAIState
+{
+    Chase
 }

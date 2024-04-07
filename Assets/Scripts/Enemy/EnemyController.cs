@@ -8,6 +8,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     private Animator _animator;
 
+    protected virtual float _distanceToPlayer => Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
+
     [Header("Enemy UI")]
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private Image _enemyHealthFill;
