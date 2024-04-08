@@ -48,6 +48,8 @@ public class Ability : ScriptableObject
 
     private void OnValidate()
     {
+#if UNITY_EDITOR
         Name = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(this));
+#endif
     }
 }

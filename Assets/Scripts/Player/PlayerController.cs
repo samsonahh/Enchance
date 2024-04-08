@@ -18,6 +18,15 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 LastMouseWorldPosition { get; private set; }
     [HideInInspector] public Vector3 LastCircleWorldPosition { get; private set; }
 
+    #region Stats
+    [Header("Stats")]
+    [SerializeField] private int _currentLevel = 1;
+    [SerializeField] private int _currentExp = 0;
+    [SerializeField] private float _expRequirementGrowth = 1.1f;
+    [SerializeField] private int _expRequirementGrowthOffset = 10;
+    private int _expToNextLevel = 10;
+    #endregion
+
     #region Conditions
     [HideInInspector] public bool IsMoving { get; private set; }
     [HideInInspector] public bool IsCasting;
@@ -95,6 +104,7 @@ public class PlayerController : MonoBehaviour
         HandlePlayerFacingDirection();
         HandleTileChange();
         ManagePlayerHealth();
+        HandleLevel();
         HandleAnimations();
     }
 
@@ -368,10 +378,34 @@ public class PlayerController : MonoBehaviour
         _lifeStealCoroutine = null;
     }
 
-    public void OnKillEnemy()
+    public void OnKillEnemy(int exp)
     {
+        AddExp(exp);
+
         if (!LifeSteal) return;
 
         Heal(_healPerKill);
+    }
+
+    public void AddExp(int exp)
+    {
+        _currentExp += exp;
+    }
+
+    private void HandleLevel()
+    {
+        if(_currentExp >= _expToNextLevel)
+        {
+            _currentLevel++;
+            _currentExp = _currentExp - _expToNextLevel;
+            _expToNextLevel = (int)Mathf.Floor(_expToNextLevel * _expRequirementGrowth) + _expRequirementGrowthOffset;
+
+            OnPlayerLevelUp();
+        }
+    }
+
+    private void OnPlayerLevelUp()
+    {
+
     }
 }

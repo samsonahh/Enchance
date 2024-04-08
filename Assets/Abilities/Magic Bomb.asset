@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   <MaxUseCount>k__BackingField: 1
   UseCount: 0
-  <Cooldown>k__BackingField: 1
+  <Cooldown>k__BackingField: 3
   Timer: 0
   OnCooldown: 0
   <CastRadius>k__BackingField: 0.5

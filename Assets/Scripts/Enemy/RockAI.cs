@@ -65,6 +65,12 @@ public class RockAI : EnemyController
         Destroy(gameObject);
     }
 
+    private void OnDrawGizmos()
+    {
+        CustomGizmos.DrawWireDisk(transform.position, _activateRange, Color.red);
+        CustomGizmos.DrawDisk(transform.position, _activateRange, Color.red);
+    }
+
     private void RockStateStateMachine()
     {
         if(_distanceToPlayer > _deactivateRange)

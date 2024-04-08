@@ -50,6 +50,7 @@ public class GridManager : MonoBehaviour
     {
         if(_tiles != null)
         {
+#if UNITY_EDITOR
             if (UnityEditor.EditorApplication.isPlaying)
             {
                 foreach (Transform c in transform)
@@ -67,6 +68,12 @@ public class GridManager : MonoBehaviour
                     };
                 }
             }
+#else
+                foreach (Transform c in transform)
+                {
+                    Destroy(c.gameObject);
+                }
+#endif
         }
 
         _tiles = new Dictionary<Vector2, Tile>();

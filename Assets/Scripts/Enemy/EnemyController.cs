@@ -105,7 +105,7 @@ public class EnemyController : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            PlayerController.Instance.OnKillEnemy();
+            PlayerController.Instance.OnKillEnemy(_expDrop);
             OnDeath();
         }
     }
