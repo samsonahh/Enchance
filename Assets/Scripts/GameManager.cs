@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Dead:
                 Time.timeScale = 0f;
-                
+                SceneManager.LoadScene("Menu");
                 break;
             case GameState.Win:
                 Time.timeScale = 0f;

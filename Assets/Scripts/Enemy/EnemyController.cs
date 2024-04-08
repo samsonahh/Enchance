@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    private Animator _animator;
+    [SerializeField] protected private SpriteRenderer _spriteRenderer;
+    protected private Animator _animator;
 
     protected virtual float _distanceToPlayer => Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
 
     [Header("Enemy UI")]
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private Image _enemyHealthFill;
+    [SerializeField] private TMP_Text _enemyNameText;
+
+    #region Stats
+    [Header("Stats")]
+    [SerializeField] protected private string _enemyName; 
+    [SerializeField] protected private int _expDrop; 
+    #endregion
 
     #region Conditions
     [HideInInspector] public bool IsMoving { get; private set; }
@@ -26,8 +34,8 @@ public class EnemyController : MonoBehaviour
 
     #region Speed
     [Header("Speed")]
-    [SerializeField] private float _enemyCurrentMoveSpeed = 5f;
-    private float _enemyRegularMoveSpeed;
+    [SerializeField] protected private float _enemyCurrentMoveSpeed = 5f;
+    protected private float _enemyRegularMoveSpeed;
     #endregion
 
     #region Burning
@@ -59,11 +67,12 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    public virtual void OnStart()
+    protected virtual void OnStart()
     {
         _animator = GetComponent<Animator>();
 
         CurrentHealth = MaxHealth;
+        _enemyNameText.text = _enemyName;
 
         _enemyRegularMoveSpeed = _enemyCurrentMoveSpeed;
     }
@@ -73,7 +82,7 @@ public class EnemyController : MonoBehaviour
         OnStart();
     }
 
-    public virtual void OnUpdate()
+    protected virtual void OnUpdate()
     {
         ManageEnemyHealth();
         HandleAnimations();
@@ -84,12 +93,12 @@ public class EnemyController : MonoBehaviour
         OnUpdate();
     }
 
-    public virtual void HandleAnimations()
+    protected virtual void HandleAnimations()
     {
         
     }
 
-    public virtual void ManageEnemyHealth()
+    protected virtual void ManageEnemyHealth()
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
         HandleHealthBar();
@@ -97,11 +106,11 @@ public class EnemyController : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             PlayerController.Instance.OnKillEnemy();
-            CurrentHealth = MaxHealth;
+            OnDeath();
         }
     }
 
-    public virtual void HandleHealthBar()
+    protected virtual void HandleHealthBar()
     {
         float enemyHealthPercentage = (float)CurrentHealth / MaxHealth;
 
@@ -119,6 +128,17 @@ public class EnemyController : MonoBehaviour
         {
             _enemyHealthFill.color = Color.Lerp(_enemyHealthFill.color, GameManager.Instance.RedHealthColor, 5f * Time.deltaTime);
         }
+    }
+
+    protected virtual void LookAtPlayer()
+    {
+        Vector3 dir = PlayerController.Instance.transform.position - transform.position;
+        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x > 0;
+    }
+
+    protected virtual void OnDeath()
+    {
+
     }
 
     public virtual void TakeDamage(int damage)

@@ -46,7 +46,7 @@ public class BossAI : MonoBehaviour
 
     #region IdleVariables
     [Header("Idle Variables")]
-    [SerializeField] private float _activateDistance = 10f;
+    [SerializeField] private float _activateRange = 10f;
     #endregion
 
     #region FollowPlayerVariables
@@ -145,7 +145,7 @@ public class BossAI : MonoBehaviour
         {
             case BossState.Idle:
 
-                if (_distanceToPlayer < _activateDistance)
+                if (_distanceToPlayer < _activateRange)
                 {
                     ChangeBossState(BossState.FollowPlayer);
                 }
