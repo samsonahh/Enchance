@@ -12,11 +12,6 @@ public class GameManager : MonoBehaviour
 
     public static event Action<GameState> OnGameStateChanged;
 
-    #region Singletons
-    [Header("Singletons")]
-    [SerializeField] private MenuCanvasManager _menuCanvas;
-    #endregion
-
     #region Global
     [Header("Global")]
     public Color GreenHealthColor;
@@ -39,9 +34,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _menuCanvas.ResetMenus();
             UpdateGameState(State == GameState.Paused ? GameState.Playing : GameState.Paused);
-            _menuCanvas.gameObject.SetActive(State == GameState.Paused);
         }
     }
 
@@ -61,6 +54,9 @@ public class GameManager : MonoBehaviour
                     descPanel.SetActive(false);
                 }
 
+                Time.timeScale = 0f;
+                break;
+            case GameState.LevelUpSelect:
                 Time.timeScale = 0f;
                 break;
             case GameState.Dead:
@@ -83,6 +79,7 @@ public enum GameState
 {
     Playing,
     Paused,
+    LevelUpSelect,
     Dead,
     Win
 }

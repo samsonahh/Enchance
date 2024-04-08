@@ -34,6 +34,11 @@ public class MenuCanvasManager : MonoBehaviour
         PopulateAbilityScrolls();
     }
 
+    private void OnEnable()
+    {
+        ResetMenus();
+    }
+
     private void PopulateAbilityScrolls()
     {
         List<Ability> one = AbilityCaster.Instance.Abilities.StarSortedAbilities[0];

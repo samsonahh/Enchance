@@ -9,6 +9,8 @@ public class PlayerCanvasManager : MonoBehaviour
     [SerializeField] private Slider _playerHealthSlider;
     [SerializeField] private Image _playerHealthFill;
     [SerializeField] private TMP_Text _playerHealthText;
+    [SerializeField] private Slider _playerExpSlider;
+    [SerializeField] private TMP_Text _playerLevelText;
 
     [Header("Health Bar Colors")]
     [SerializeField] private float _yellowThreshold = 0.5f;
@@ -17,6 +19,7 @@ public class PlayerCanvasManager : MonoBehaviour
     private void Update()
     {
         HandleHealthBar();
+        HandleLevelBar();
     }
 
     private void HandleHealthBar()
@@ -39,5 +42,14 @@ public class PlayerCanvasManager : MonoBehaviour
         {
             _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.RedHealthColor, 5f * Time.deltaTime);
         }
+    }
+
+    private void HandleLevelBar()
+    {
+        _playerLevelText.text = $"{PlayerController.Instance.CurrentLevel}";
+
+        float playerLevelPercentage = (float)PlayerController.Instance.CurrentExp / PlayerController.Instance.ExpToNextLevel;
+
+        _playerExpSlider.value = Mathf.Lerp(_playerExpSlider.value, playerLevelPercentage, 5f * Time.deltaTime);
     }
 }

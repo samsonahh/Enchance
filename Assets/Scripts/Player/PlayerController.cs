@@ -20,11 +20,11 @@ public class PlayerController : MonoBehaviour
 
     #region Stats
     [Header("Stats")]
-    [SerializeField] private int _currentLevel = 1;
-    [SerializeField] private int _currentExp = 0;
+    public int CurrentLevel = 1;
+    public int CurrentExp = 0;
     [SerializeField] private float _expRequirementGrowth = 1.1f;
     [SerializeField] private int _expRequirementGrowthOffset = 10;
-    private int _expToNextLevel = 10;
+    [HideInInspector] public int ExpToNextLevel = 10;
     #endregion
 
     #region Conditions
@@ -389,16 +389,16 @@ public class PlayerController : MonoBehaviour
 
     public void AddExp(int exp)
     {
-        _currentExp += exp;
+        CurrentExp += exp;
     }
 
     private void HandleLevel()
     {
-        if(_currentExp >= _expToNextLevel)
+        if(CurrentExp >= ExpToNextLevel)
         {
-            _currentLevel++;
-            _currentExp = _currentExp - _expToNextLevel;
-            _expToNextLevel = (int)Mathf.Floor(_expToNextLevel * _expRequirementGrowth) + _expRequirementGrowthOffset;
+            CurrentLevel++;
+            CurrentExp = CurrentExp - ExpToNextLevel;
+            ExpToNextLevel = (int)Mathf.Floor(ExpToNextLevel * _expRequirementGrowth) + _expRequirementGrowthOffset;
 
             OnPlayerLevelUp();
         }
@@ -406,6 +406,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnPlayerLevelUp()
     {
-
+        GameManager.Instance.UpdateGameState(GameState.LevelUpSelect);
     }
 }

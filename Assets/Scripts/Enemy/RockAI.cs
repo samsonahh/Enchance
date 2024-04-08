@@ -51,6 +51,8 @@ public class RockAI : EnemyController
     protected override void OnStart()
     {
         base.OnStart();
+
+        ChangeState(RockState.Idle);
     }
 
     protected override void OnUpdate()
@@ -134,16 +136,21 @@ public class RockAI : EnemyController
         switch (state)
         {
             case RockState.Idle:
+                _animator.Play("RockIdle");
                 break;
             case RockState.Startled:
+                _animator.Play("RockIdle");
                 _stateCoroutines.Add(StartCoroutine(StartledCoroutine()));
                 break;
             case RockState.FollowPlayer:
+                _animator.Play("RockRoll");
                 break;
             case RockState.RollToPlayer:
+                _animator.Play("RockRollFast");
                 _stateCoroutines.Add(StartCoroutine(RollToPlayerCoroutine()));
                 break;
             case RockState.RecoverFromRoll:
+                _animator.Play("RockIdle");
                 _stateCoroutines.Add(StartCoroutine(RecoverFromRollCoroutine()));
                 break;
             default:
