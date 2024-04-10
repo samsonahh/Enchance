@@ -120,8 +120,6 @@ public class AbilityCaster : MonoBehaviour
                 randomStar = 2;
             }
 
-            //Debug.Log($"Rolled a {randomStarFraction} resulting in a {randomStar + 1} ability");
-
             List<Ability> availableAbilities = new List<Ability>();
             foreach (Ability ability in Abilities.StarSortedAbilities[randomStar])
             {
@@ -151,7 +149,6 @@ public class AbilityCaster : MonoBehaviour
 
             if(availableAbilities.Count == 0)
             {
-                //Debug.LogError($"Out of {randomStar + 1} star abilities!");
                 continue;
             }
 
@@ -273,7 +270,7 @@ public class AbilityCaster : MonoBehaviour
 
         if (!IsSelectingAbility)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && PlayerController.Instance.Target != null)
             {
                 UseAbility(3);
                 return;

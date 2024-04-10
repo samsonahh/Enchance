@@ -1046,7 +1046,7 @@ MonoBehaviour:
   _explosionPrefab: {fileID: 417761080263594737, guid: 4e3fca4d6e5aca74597403d526477b21,
     type: 3}
   _lightningEffect: {fileID: 3753706415235299011}
-  _damage: 3
+  _damage: 5
   _strikeDelay: 0.5
 --- !u!135 &2434117088867207313
 SphereCollider:

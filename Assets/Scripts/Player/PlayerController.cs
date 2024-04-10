@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
+using System.Linq;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,8 +16,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 ForwardDirection { get; private set; } = Vector3.right;
     [HideInInspector] public Vector3 LastForwardDirection { get; private set; }
     [HideInInspector] public Vector3 MouseWorldPosition { get; private set; }
+    private Vector3 _restrictedMouseWorldPosition;
     [HideInInspector] public Vector3 LastMouseWorldPosition { get; private set; }
     [HideInInspector] public Vector3 LastCircleWorldPosition { get; private set; }
+    [HideInInspector] public GameObject Target { get; private set; }
+    [HideInInspector] public GameObject LastTarget { get; private set; }
 
     #region Stats
     [Header("Stats")]
@@ -25,6 +29,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _expRequirementGrowth = 1.1f;
     [SerializeField] private int _expRequirementGrowthOffset = 10;
     [HideInInspector] public int ExpToNextLevel = 10;
+
+    [SerializeField] private float _autoAttackRadius = 15f;
+    [SerializeField] private float _targetFindRadiusOnCursor = 2f;
     #endregion
 
     #region Conditions
@@ -37,6 +44,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool CanCast = true;
     [HideInInspector] public bool LifeSteal;
     [HideInInspector] public bool CanMove = true;
+    [HideInInspector] public bool AutoAttacking;
     #endregion
 
     #region Speed
@@ -106,8 +114,19 @@ public class PlayerController : MonoBehaviour
         ManagePlayerHealth();
         HandleLevel();
         HandleAnimations();
+        AssignTarget();
     }
 
+    private void OnDrawGizmos()
+    {
+        CustomGizmos.DrawWireDisk(_restrictedMouseWorldPosition, _targetFindRadiusOnCursor, Color.green);
+        CustomGizmos.DrawWireDisk(transform.position, _autoAttackRadius, Color.black);
+
+        if(Target != null)
+        {
+            CustomGizmos.DrawDisk(Target.transform.position, 1f, Color.green);
+        }
+    }
     private void GetMouseWorldPosition()
     {
         Plane plane = new Plane(Vector3.up, Vector3.zero);
@@ -127,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
         _staffGlowEffect.localPosition = _spriteRenderer.flipX ? new Vector3(-0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z) : new Vector3(0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z);
         _spriteRenderer.enabled = IsVisible;
-        _staffGlowEffect.gameObject.SetActive(!IsInvincible);
+        _staffGlowEffect.gameObject.SetActive(!IsInvincible && !AutoAttacking);
     }
 
     private void HandlePlayerMoving()
@@ -154,6 +173,7 @@ public class PlayerController : MonoBehaviour
 
         if (IsCasting)
         {
+            _animator.Play("PlayerCasting");
             IsMoving = false;
             return;
         }
@@ -185,6 +205,7 @@ public class PlayerController : MonoBehaviour
         LastForwardDirection = ForwardDirection;
         LastMouseWorldPosition = MouseWorldPosition;
         LastCircleWorldPosition = AbilityCaster.Instance.CircleCastTransform.position;
+        LastTarget = Target;
     }
 
     private void AbilityCaster_OnAbilityCast(int i, int index)
@@ -192,6 +213,53 @@ public class PlayerController : MonoBehaviour
         if (i == 1) return;
 
         AssignLastVariables();
+    }
+
+    private void AssignTarget()
+    {
+        _restrictedMouseWorldPosition = Vector3.ClampMagnitude(MouseWorldPosition - transform.position, _autoAttackRadius) + transform.position;
+
+        Collider[] collisions = Physics.OverlapSphere(_restrictedMouseWorldPosition, _targetFindRadiusOnCursor);
+        
+        if (collisions == null)
+        {
+            Target = null;
+            return;
+        }
+        if (collisions.Length == 0)
+        { 
+            Target = null;
+            return;
+        }
+
+        List<GameObject> enemies = new List<GameObject>();
+
+        foreach (Collider collider in collisions)
+        {
+            if (collider.TryGetComponent(out EnemyController enemy))
+            {
+                enemies.Add(enemy.gameObject);
+            }
+            if(collider.TryGetComponent(out BossAI boss))
+            {
+                enemies.Add(boss.gameObject);
+            }
+        }
+
+        if(enemies == null)
+        {
+            Target = null;
+            return;
+        }
+        if(enemies.Count == 0)
+        {
+            Target = null;
+            return;
+        }
+
+        enemies = enemies.OrderByDescending(e => Vector3.Distance(transform.position, e.transform.position)).ToList();
+
+        Target = enemies[0].gameObject;
     }
 
     private void ManagePlayerHealth()

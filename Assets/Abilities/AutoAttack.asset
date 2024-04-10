@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: MeleeAttack
+  m_Name: AutoAttack
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: MeleeAttack
+  <Name>k__BackingField: AutoAttack
   <Star>k__BackingField: 0
-  <IconSprite>k__BackingField: {fileID: 21300000, guid: 9aeb2ae0471372d4185962ea7c52572c,
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: 53df7477ec543064390e9737a1a17fd3,
     type: 3}
   <MaxUseCount>k__BackingField: 420
   UseCount: 0
   <Cooldown>k__BackingField: 1
-  Timer: -0.0016591661
+  Timer: -0.0062308162
   OnCooldown: 0
   <CastRadius>k__BackingField: 1
   <CircleCastRadius>k__BackingField: 0
-  <AbilityPrefab>k__BackingField: {fileID: 7304449088194038640, guid: a35eb99f1f729d4429324242b8c2f9bb,
+  <AbilityPrefab>k__BackingField: {fileID: 2342565005478419466, guid: ab114739c49d1224db9c7b5c370e9bbb,
     type: 3}
   <AbilityType>k__BackingField: 0
-  <CastTime>k__BackingField: 0
+  <CastTime>k__BackingField: 0.25
   Description: 

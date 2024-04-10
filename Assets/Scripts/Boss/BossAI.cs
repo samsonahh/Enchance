@@ -10,7 +10,8 @@ public class BossAI : MonoBehaviour
     private PlayerController _playerController;
     private GridManager _gridManager;
     private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _targettedIndicator;
 
     public BossState _currentState;
 
@@ -20,6 +21,8 @@ public class BossAI : MonoBehaviour
     private Tile _currentTile;
     private Tile _playerTile;
     private List<Tile> _path;
+
+    private bool _isTargetted;
 
     [Header("Boss UI")]
     [SerializeField] private Slider _healthSlider;
@@ -121,7 +124,6 @@ public class BossAI : MonoBehaviour
         _playerController = PlayerController.Instance;
         _gridManager = GridManager.Instance;
         _animator = GetComponent<Animator>();
-        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         _currentTile = GridManager.Instance._tiles[new Vector2(0, 14)];
         transform.position = _currentTile.transform.position;
@@ -140,6 +142,7 @@ public class BossAI : MonoBehaviour
         HandleTileChange();
         HandleBossHealth();
         HandleBossIndicator();
+        HandleTargetting();
 
         switch (_currentState)
         {
@@ -356,6 +359,12 @@ public class BossAI : MonoBehaviour
         _distanceToPlayer = Vector3.Distance(_playerController.transform.position, transform.position);
     }
 
+    protected virtual void HandleTargetting()
+    {
+        _isTargetted = PlayerController.Instance.Target == gameObject;
+        _targettedIndicator.gameObject.SetActive(_isTargetted);
+    }
+
     private void HandleBossHealth()
     {
         _healthText.text = $"{_currentHealth}/{_maxHealth}";
@@ -406,6 +415,7 @@ public class BossAI : MonoBehaviour
         }
     }
 
+
     private void PlayerController_OnPlayerStepOnNewTile(Tile t)
     {
         _playerTile = t;
@@ -417,12 +427,21 @@ public class BossAI : MonoBehaviour
         _path = _gridManager.AStarPathFind(_currentTile, _playerTile);
     }
 
+    private void LookAtPlayer(Vector3 dir)
+    {
+        if (Mathf.Abs(dir.x) > 0)
+        {
+            _spriteRenderer.flipX = dir.x < 0;
+            _targettedIndicator.flipX = dir.x < 0;
+        }
+    }
+
     IEnumerator MoveBoss()
     {
         List<Tile> path = new List<Tile>(_path);
 
         Vector3 dir = path[0].transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
+        LookAtPlayer(dir);
 
         if(_phase == 1)
         {
@@ -469,7 +488,7 @@ public class BossAI : MonoBehaviour
         Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
         Vector3 aboveRandTile = randTile.transform.position;
         dir = randTile.transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
+        LookAtPlayer(dir);
 
         for (float timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
         {
@@ -524,7 +543,7 @@ public class BossAI : MonoBehaviour
 
         Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
         Vector3 dir = t.transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
+        LookAtPlayer(dir);
 
         float timer;
         for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
@@ -590,7 +609,7 @@ public class BossAI : MonoBehaviour
 
             Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
             Vector3 dir = t.transform.position - transform.position;
-            if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
+            LookAtPlayer(dir);
 
             float timer;
             for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
@@ -639,7 +658,7 @@ public class BossAI : MonoBehaviour
 
             Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
             dir = randTile.transform.position - transform.position;
-            if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x < 0;
+            LookAtPlayer(dir);
 
             for (timer = 0f; timer < _slamDuration; timer += Time.deltaTime)
             {

@@ -7,6 +7,7 @@ using TMPro;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] protected private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _targettedIndicator;
     protected private Animator _animator;
 
     protected virtual float _distanceToPlayer => Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
@@ -30,6 +31,7 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public bool IsInvincible;
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
+    [HideInInspector] public bool IsTargetted;
     #endregion
 
     #region Speed
@@ -86,6 +88,7 @@ public class EnemyController : MonoBehaviour
     {
         ManageEnemyHealth();
         HandleAnimations();
+        HandleTargetting();
     }
 
     private void Update()
@@ -96,6 +99,12 @@ public class EnemyController : MonoBehaviour
     protected virtual void HandleAnimations()
     {
         
+    }
+
+    protected virtual void HandleTargetting()
+    {
+        IsTargetted = PlayerController.Instance.Target == gameObject;
+        _targettedIndicator.gameObject.SetActive(IsTargetted);
     }
 
     protected virtual void ManageEnemyHealth()
@@ -133,7 +142,11 @@ public class EnemyController : MonoBehaviour
     protected virtual void LookAtPlayer()
     {
         Vector3 dir = PlayerController.Instance.transform.position - transform.position;
-        if (Mathf.Abs(dir.x) > 0) _spriteRenderer.flipX = dir.x > 0;
+        if (Mathf.Abs(dir.x) > 0) 
+        { 
+            _spriteRenderer.flipX = dir.x > 0;
+            _targettedIndicator.flipX = dir.x > 0;
+        }
     }
 
     protected virtual void OnDeath()
@@ -198,4 +211,26 @@ public class EnemyController : MonoBehaviour
         IsBurning = false;
     }
 
+    public void StunEnemy(float duration)
+    {
+        if (IsInvincible) return;
+
+        StartCoroutine(StunEnemyCoroutine(duration));
+    }
+
+    public IEnumerator StunEnemyCoroutine(float duration)
+    {
+        IsStunned = true;
+
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        IsStunned = false;
+    }
 }

@@ -303,8 +303,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 3
-  _damage: 5
-  _playerDamage: 5
+  _damage: 15
+  _playerDamage: 10
   _explosionRadius: 5
   _spriteRenderer: {fileID: 5682764566240025178}
   _explosionPrefab: {fileID: 417761080263594737, guid: 4e3fca4d6e5aca74597403d526477b21,

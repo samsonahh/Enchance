@@ -16,7 +16,7 @@ MonoBehaviour:
   <Star>k__BackingField: 2
   <IconSprite>k__BackingField: {fileID: 21300000, guid: 7c26a927278dc7b43a90e1df6c00ed64,
     type: 3}
-  <MaxUseCount>k__BackingField: 3
+  <MaxUseCount>k__BackingField: 1
   UseCount: 0
   <Cooldown>k__BackingField: 1
   Timer: 0

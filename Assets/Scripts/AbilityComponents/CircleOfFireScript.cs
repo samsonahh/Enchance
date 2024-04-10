@@ -10,6 +10,8 @@ public class CircleOfFireScript : MonoBehaviour
     [SerializeField] private float _radius = 5f;
     [SerializeField] private float _rotationSpeed = 5f;
 
+    private bool _detectingCollisions = true;
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, _radius);
@@ -25,7 +27,7 @@ public class CircleOfFireScript : MonoBehaviour
 
         AddCompositeCollider(32);
 
-        Destroy(gameObject, _duration);
+        StartCoroutine(RingCoroutine());
     }
 
     private void Update()
@@ -33,6 +35,21 @@ public class CircleOfFireScript : MonoBehaviour
         if (PlayerController.Instance == null) return;
 
         transform.position = PlayerController.Instance.transform.position;
+    }
+
+    IEnumerator RingCoroutine()
+    {
+        yield return new WaitForSeconds(_duration);
+        _detectingCollisions = false;
+        _particle.Stop();
+        while (_particle)
+        {
+            if (!_particle.IsAlive())
+            {
+                Destroy(gameObject);
+            }
+            yield return null;
+        }
     }
 
     private void AddCompositeCollider(int spheres)
@@ -48,6 +65,8 @@ public class CircleOfFireScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (!_detectingCollisions) return;
+
         if (other.TryGetComponent(out EnemyController enemy))
         {
             enemy.BurnEnemy(3);

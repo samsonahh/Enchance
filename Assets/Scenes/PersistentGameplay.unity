@@ -2646,7 +2646,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 75, y: 75}
+  m_SizeDelta: {x: 75, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &595703383
 MonoBehaviour:
@@ -12972,8 +12972,8 @@ GameObject:
   - component: {fileID: 1999210797}
   - component: {fileID: 1999210798}
   - component: {fileID: 1999210802}
-  - component: {fileID: 1999210804}
   - component: {fileID: 1999210803}
+  - component: {fileID: 1999210804}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -13021,6 +13021,8 @@ MonoBehaviour:
   _expRequirementGrowth: 1.1
   _expRequirementGrowthOffset: 10
   ExpToNextLevel: 10
+  _autoAttackRadius: 7.5
+  _targetFindRadiusOnCursor: 2
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
@@ -13029,6 +13031,7 @@ MonoBehaviour:
   CanCast: 1
   LifeSteal: 0
   CanMove: 1
+  AutoAttacking: 0
   PlayerCurrentMoveSpeed: 5
   PlayerRegularMoveSpeed: 0
   _healPerKill: 1
@@ -13118,8 +13121,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 3
---- !u!65 &1999210804
-BoxCollider:
+--- !u!136 &1999210804
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -13136,9 +13139,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.1081977, y: 0.6073821, z: 0.742556}
-  m_Center: {x: 0, y: 0.30369106, z: 0.08070642}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &2038840250
 GameObject:
   m_ObjectHideFlags: 0
