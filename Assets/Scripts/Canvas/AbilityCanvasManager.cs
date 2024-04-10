@@ -10,7 +10,7 @@ public class AbilityCanvasManager : MonoBehaviour
     public RectTransform SelectedOverlay;
     public TMP_Text AbilityNameText;
     public TMP_Text[] AbilityStarChanceTexts;
-    public RectTransform[] CoolDownOverlays = new RectTransform[3];
+    public RectTransform[] CoolDownOverlays = new RectTransform[4];
     public RectTransform AbilityDescriptionPanel;
     public TMP_Text AbilityDescriptionName;
     public TMP_Text AbilityDescriptionStar;
@@ -33,9 +33,9 @@ public class AbilityCanvasManager : MonoBehaviour
 
     private void InitializeOverlays()
     {
-        for (int i = 0; i < AbilityImages.Length; i++)
+        foreach(var overlay in CoolDownOverlays)
         {
-            SetRectHeight(CoolDownOverlays[i], 0);
+            SetRectHeight(overlay, 0);
         }
     }
 

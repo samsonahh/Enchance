@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
         LastCircleWorldPosition = AbilityCaster.Instance.CircleCastTransform.position;
     }
 
-    private void AbilityCaster_OnAbilityCast(int i)
+    private void AbilityCaster_OnAbilityCast(int i, int index)
     {
         if (i == 1) return;
 

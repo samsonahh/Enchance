@@ -9,10 +9,11 @@ public class AbilityCaster : MonoBehaviour
 
     [Header("Global Abilities")]
     public Abilities Abilities;
+    [SerializeField] private Ability _meleeAttackAbility;
 
     [HideInInspector] public bool IsSelectingAbility = false;
-    [HideInInspector] public int SelectedAbility = 0;
-    [HideInInspector] public Ability[] CurrentAbilities = new Ability[3];
+    [HideInInspector] public int SelectedAbility;
+    [HideInInspector] public Ability[] CurrentAbilities;
 
     [Header("Canvas")]
     [SerializeField] private AbilityCanvasManager _abilityCanvas;
@@ -26,7 +27,7 @@ public class AbilityCaster : MonoBehaviour
     [Header("Chances")]
     public float[] StarChances = { 0.75f, 0.2f, 0.05f };
 
-    public static event Action<int> OnAbilityCast; // 0 - casting, 1 - finished cast
+    public static event Action<int, int> OnAbilityCast; // 0 - casting, 1 - finished cast
 
     private void Awake()
     {
@@ -43,20 +44,22 @@ public class AbilityCaster : MonoBehaviour
 
     private void Start()
     {
+        CurrentAbilities = new Ability[4];
+        SelectedAbility = 3;
+
         RandomizeAllAbilities();
     }
 
     private void Update()
     {
-        if (GameManager.Instance.State == GameState.Playing)
-        {
-            HandleCircleCast();
-            HandleCastRadius();
-            HandleProjectileArrowPivot();
+        if (GameManager.Instance.State != GameState.Playing) return;
 
-            Cheats();
-            SelectAbility();
-        }
+        HandleCircleCast();
+        HandleCastRadius();
+        HandleProjectileArrowPivot();
+
+        Cheats();
+        SelectAbility();
     }
 
     private void Cheats()
@@ -97,6 +100,13 @@ public class AbilityCaster : MonoBehaviour
 
     private void RandomizeAbility(int index)
     {
+        if(index == 3)
+        {
+            _abilityCanvas.AbilityImages[index].sprite = _meleeAttackAbility.IconSprite;
+            CurrentAbilities[index] = _meleeAttackAbility;
+            return;
+        }
+
         while (true)
         {
             float randomStarFraction = UnityEngine.Random.Range(0f, 1f);
@@ -210,6 +220,7 @@ public class AbilityCaster : MonoBehaviour
         RandomizeAbility(0);
         RandomizeAbility(1);
         RandomizeAbility(2);
+        RandomizeAbility(3);
     }
 
     private IEnumerator AbilityCooldown(int index)
@@ -222,14 +233,18 @@ public class AbilityCaster : MonoBehaviour
         {
             CurrentAbilities[index].Timer -= Time.deltaTime;
 
-            _abilityCanvas.SetRectHeight(_abilityCanvas.CoolDownOverlays[index], (CurrentAbilities[index].Timer / CurrentAbilities[index].Cooldown) * 150);
+            _abilityCanvas.SetRectHeight(_abilityCanvas.CoolDownOverlays[index], (CurrentAbilities[index].Timer / CurrentAbilities[index].Cooldown) * _abilityCanvas.AbilityImages[index].rectTransform.rect.height);
 
             yield return null;
         }
 
         _abilityCanvas.SetRectHeight(_abilityCanvas.CoolDownOverlays[index], 0);
-        CurrentAbilities[index].UseCount--;
 
+        if(index != 3)
+        {
+            CurrentAbilities[index].UseCount--;
+        }
+        
         if (CurrentAbilities[index].UseCount == 0) RandomizeAbility(index);
 
         CurrentAbilities[index].OnCooldown = false;
@@ -237,14 +252,17 @@ public class AbilityCaster : MonoBehaviour
 
     private IEnumerator UseAbilityCoroutine(int index)
     {
-        PlayerController.Instance.IsCasting = true;
-        OnAbilityCast?.Invoke(0);
+        if(CurrentAbilities[index].CastTime != 0)
+        {
+            PlayerController.Instance.IsCasting = true;
+        }
+        OnAbilityCast?.Invoke(0, index);
 
         yield return new WaitForSeconds(CurrentAbilities[index].CastTime);
 
         PlayerController.Instance.IsCasting = false;
 
-        OnAbilityCast?.Invoke(1);
+        OnAbilityCast?.Invoke(1, index);
 
         StartCoroutine(AbilityCooldown(index));
     }
@@ -255,6 +273,12 @@ public class AbilityCaster : MonoBehaviour
 
         if (!IsSelectingAbility)
         {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                UseAbility(3);
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 if (!CurrentAbilities[0].OnCooldown)
@@ -320,15 +344,15 @@ public class AbilityCaster : MonoBehaviour
         }
     }
 
-    private void HandleOnAbilityCast(int i)
+    private void HandleOnAbilityCast(int i, int index)
     {
         if (i == 0) return;
 
         if(i == 1)
         {
-            if(CurrentAbilities[SelectedAbility].AbilityPrefab != null)
+            if(CurrentAbilities[index].AbilityPrefab != null)
             {
-                Instantiate(CurrentAbilities[SelectedAbility].AbilityPrefab, transform.position, Quaternion.identity);
+                Instantiate(CurrentAbilities[index].AbilityPrefab, transform.position, Quaternion.identity);
             }
         }  
     }
