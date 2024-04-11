@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
     {
         _restrictedMouseWorldPosition = Vector3.ClampMagnitude(MouseWorldPosition - transform.position, _autoAttackRadius) + transform.position;
 
-        Collider[] collisions = Physics.OverlapSphere(_restrictedMouseWorldPosition, _targetFindRadiusOnCursor);
+        Collider[] collisions = Physics.OverlapCapsule(_restrictedMouseWorldPosition, _restrictedMouseWorldPosition + 5f * Vector3.up, _targetFindRadiusOnCursor);
         
         if (collisions == null)
         {

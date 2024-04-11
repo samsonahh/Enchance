@@ -94,6 +94,11 @@ public class MenuCanvasManager : MonoBehaviour
         GameManager.Instance.UpdateGameState(GameState.Playing);
     }
 
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void ScaleMenuButtonSize(float size)
     {
         LeanTween.scale(_menuButton.gameObject, new Vector3(size, size, size), 0.25f).setEase(LeanTweenType.easeOutQuint).setIgnoreTimeScale(true);

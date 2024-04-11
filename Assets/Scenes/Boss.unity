@@ -10609,10 +10609,10 @@ MonoBehaviour:
   _followPlayerSpeedInterval: 0.4
   _pushStartVelocity: 25
   _pushStunDuration: 1
-  _pushDamage: 2
+  _pushDamage: 4
   _slamDuration: 1
   _slamJumpHeight: 2
-  _slamDamage: 3
+  _slamDamage: 4
   _suckEffectPrefab: {fileID: 7320418277817464344, guid: a8b2ea09eb7fba84b96d9037a4938ba6,
     type: 3}
   _suckDuration: 5
@@ -43660,7 +43660,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1573650919}
-  - {fileID: 1158212654}
   m_Father: {fileID: 209969801}
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1 &841304909
@@ -61175,7 +61174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1158212654
 Transform:
   m_ObjectHideFlags: 0
@@ -61184,12 +61183,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158212653}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.23, z: 0.01}
-  m_LocalScale: {x: 2.1, y: 2.1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.11499995, z: 0.010000095}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 839477698}
+  m_Father: {fileID: 1573650919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1158212655
 BoxCollider:
@@ -83592,7 +83591,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1158212654}
   m_Father: {fileID: 839477698}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1573650920

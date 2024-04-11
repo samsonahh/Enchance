@@ -103,7 +103,7 @@ public class AbilityCaster : MonoBehaviour
         if(index == 3)
         {
             _abilityCanvas.AbilityImages[index].sprite = _meleeAttackAbility.IconSprite;
-            CurrentAbilities[index] = _meleeAttackAbility;
+            CurrentAbilities[index] = Ability.CopyAbility(_meleeAttackAbility);
             return;
         }
 
