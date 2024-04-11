@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class AutoAttackScript : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem _particle;
+    [SerializeField] private GameObject _wandSplashPrefab;
+
     [SerializeField] private int _damage = 1;
     [SerializeField] private float _speed = 10f;
 
     private GameObject _target;
+    private bool _detectingCollisions = true;
 
     private void Start()
     {
@@ -26,6 +30,8 @@ public class AutoAttackScript : MonoBehaviour
             return;
         }
 
+        if (!_detectingCollisions) return;
+
         transform.position = Vector3.MoveTowards(transform.position, _target.transform.position + Vector3.up, _speed * Time.deltaTime);
 
         if(Vector3.Distance(transform.position, _target.transform.position + Vector3.up) <= 0.01f)
@@ -34,32 +40,54 @@ public class AutoAttackScript : MonoBehaviour
             { 
                 enemy.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
-                Destroy(gameObject);
+                Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
+                _detectingCollisions = false;
+                StartCoroutine(DestroySelfCoroutine());
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
                 boss.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
+                Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
+                _detectingCollisions = false;
+                StartCoroutine(DestroySelfCoroutine());
+            }
+        }
+    }
+
+    IEnumerator DestroySelfCoroutine()
+    {
+        _particle.Stop();
+        while (_particle)
+        {
+            if (!_particle.IsAlive())
+            {
                 Destroy(gameObject);
             }
+            yield return null;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other == _target)
+        if (!_detectingCollisions) return;
+        if (other.gameObject == _target)
         {
             if (_target.TryGetComponent(out EnemyController enemy))
             {
                 enemy.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
-                Destroy(gameObject);
+                Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
+                _detectingCollisions = false;
+                StartCoroutine(DestroySelfCoroutine());
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
                 boss.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
-                Destroy(gameObject);
+                Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
+                _detectingCollisions = false;
+                StartCoroutine(DestroySelfCoroutine());
             }
         }
     }

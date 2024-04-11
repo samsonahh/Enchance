@@ -9,7 +9,7 @@ public class AbilityCaster : MonoBehaviour
 
     [Header("Global Abilities")]
     public Abilities Abilities;
-    [SerializeField] private Ability _meleeAttackAbility;
+    [SerializeField] private Ability _autoAttackAbility;
 
     [HideInInspector] public bool IsSelectingAbility = false;
     [HideInInspector] public int SelectedAbility;
@@ -102,8 +102,8 @@ public class AbilityCaster : MonoBehaviour
     {
         if(index == 3)
         {
-            _abilityCanvas.AbilityImages[index].sprite = _meleeAttackAbility.IconSprite;
-            CurrentAbilities[index] = Ability.CopyAbility(_meleeAttackAbility);
+            _abilityCanvas.AbilityImages[index].sprite = _autoAttackAbility.IconSprite;
+            CurrentAbilities[index] = Ability.CopyAbility(_autoAttackAbility);
             return;
         }
 
