@@ -5835,6 +5835,7 @@ MonoBehaviour:
   _playerLevelText: {fileID: 1402176471}
   _yellowThreshold: 0.5
   _redThreshold: 0.25
+  _lowHpDangerSfx: {fileID: 8300000, guid: e8ec9a831d2686e4fb80d42f6431286b, type: 3}
 --- !u!1 &1474121589
 GameObject:
   m_ObjectHideFlags: 0

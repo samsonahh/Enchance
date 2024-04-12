@@ -75,6 +75,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] private float _slamDuration = 1f;
     [SerializeField] private float _slamJumpHeight = 2f;
     [SerializeField] private int _slamDamage = 3;
+    [SerializeField] private AudioClip _slamSfx;
     #endregion
 
     #region SuckVariables
@@ -84,6 +85,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] private float _suckDuration = 5f;
     [SerializeField] private float _suckStrength = 10f;
     private float _suckTimer = 0f;
+    [SerializeField] private AudioClip _suckSfx;
     #endregion
 
     #region BombingRunVariables
@@ -341,6 +343,7 @@ public class BossAI : MonoBehaviour
             case BossState.Suck:
                 _suckTimer = 0f;
                 _animator.SetBool("IsSucking", true);
+                AudioSource.PlayClipAtPoint(_suckSfx, transform.position);
                 break;
             case BossState.BombingRun:
                 _bossStateCoroutines.Add(StartCoroutine(BombingRun()));
@@ -561,6 +564,7 @@ public class BossAI : MonoBehaviour
         transform.position = t.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
+        AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
         _animator.Play("BossSquish");
 
         foreach (Tile dangerTile in dangerTiles)
@@ -628,6 +632,7 @@ public class BossAI : MonoBehaviour
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
             _animator.Play("BossSquish");
+            AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
             List<Tile> dangerTiles1 = _gridManager.BurnCrossPattern(t);
 
             foreach (Tile dangerTile in dangerTiles1)
@@ -677,6 +682,7 @@ public class BossAI : MonoBehaviour
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
             _animator.Play("BossSquish");
+            AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
             List<Tile> dangerTiles2 = _gridManager.BurnCrossPattern(randTile);
 
             foreach (Tile dangerTile in dangerTiles2)
@@ -772,6 +778,7 @@ public class BossAI : MonoBehaviour
         transform.position = _currentTile.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
+        AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
         _animator.Play("BossSquish");
 
         List<Tile> burnedTiles = _gridManager.BurnCheckerBoard(_currentTile, _currentTile.Black);

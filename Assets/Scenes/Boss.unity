@@ -11045,14 +11045,16 @@ MonoBehaviour:
   _followPlayerSpeedInterval: 0.4
   _pushStartVelocity: 25
   _pushStunDuration: 1
-  _pushDamage: 4
+  _pushDamage: 3
   _slamDuration: 1
   _slamJumpHeight: 2
-  _slamDamage: 4
+  _slamDamage: 3
+  _slamSfx: {fileID: 8300000, guid: 237b649ec31792d41bb5951b0208cec2, type: 3}
   _suckEffectPrefab: {fileID: 7320418277817464344, guid: a8b2ea09eb7fba84b96d9037a4938ba6,
     type: 3}
   _suckDuration: 5
   _suckStrength: 6
+  _suckSfx: {fileID: 8300000, guid: 8269250644e1a53419e3c209cc48e54a, type: 3}
   _bombingRunJumpCount: 3
   _bombingRunStunDuration: 1
   _bombingRunDamage: 3

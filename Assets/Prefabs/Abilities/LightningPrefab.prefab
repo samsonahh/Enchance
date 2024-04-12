@@ -1043,6 +1043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa185a358191124ebae195d708e1006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sfx: {fileID: 8300000, guid: 4848a5ab699413e42b0a6cb3e3628d4d, type: 3}
   _explosionPrefab: {fileID: 417761080263594737, guid: 4e3fca4d6e5aca74597403d526477b21,
     type: 3}
   _lightningEffect: {fileID: 3753706415235299011}

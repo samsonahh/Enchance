@@ -16,6 +16,10 @@ public class PlayerCanvasManager : MonoBehaviour
     [SerializeField] private float _yellowThreshold = 0.5f;
     [SerializeField] private float _redThreshold = 0.25f;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip _lowHpDangerSfx;
+    private bool _canPlayLowHpDangerSfx = true;
+
     private void Update()
     {
         HandleHealthBar();
@@ -33,13 +37,20 @@ public class PlayerCanvasManager : MonoBehaviour
         if(playerHealthPercentage <= 1f && playerHealthPercentage > _yellowThreshold)
         {
             _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.GreenHealthColor, 5f * Time.deltaTime);
+            _canPlayLowHpDangerSfx = true;
         }
         if (playerHealthPercentage <= _yellowThreshold && playerHealthPercentage > _redThreshold)
         {
             _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.YellowHealthColor, 5f * Time.deltaTime);
+            _canPlayLowHpDangerSfx = true;
         }
         if (playerHealthPercentage <= _redThreshold && playerHealthPercentage >= 0f)
         {
+            if (_canPlayLowHpDangerSfx)
+            {
+                AudioSource.PlayClipAtPoint(_lowHpDangerSfx, PlayerController.Instance.transform.position);
+            }
+            _canPlayLowHpDangerSfx = false;
             _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.RedHealthColor, 5f * Time.deltaTime);
         }
     }

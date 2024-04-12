@@ -4873,5 +4873,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3cd37c55eee16428727a5b0e396474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sfx: {fileID: 8300000, guid: 80520ac3a9977f349b9a27eabab87dc2, type: 3}
   _healAmount: 3
   _duration: 1
