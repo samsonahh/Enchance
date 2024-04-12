@@ -27,4 +27,4 @@ MonoBehaviour:
     type: 3}
   <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 0.1
-  Description: Allows player to heal from enemy kills for 10 seconds
+  Description: Allows player to heal from basic wand attacks

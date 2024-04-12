@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8576175228836760394}
   - component: {fileID: 6582404802848235064}
   - component: {fileID: 6611659344483901069}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CircleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4839,7 +4839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4602318515143117297}
   - component: {fileID: 4942348784364085307}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CircleOfFirePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

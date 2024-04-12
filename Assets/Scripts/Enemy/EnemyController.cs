@@ -38,6 +38,7 @@ public class EnemyController : MonoBehaviour
     [Header("Speed")]
     [SerializeField] protected private float _enemyCurrentMoveSpeed = 5f;
     protected private float _enemyRegularMoveSpeed;
+    private Coroutine _currentMoveSpeedCoroutine;
     #endregion
 
     #region Burning
@@ -98,7 +99,6 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void HandleAnimations()
     {
-        
     }
 
     protected virtual void HandleTargetting()
@@ -232,5 +232,23 @@ public class EnemyController : MonoBehaviour
         }
 
         IsStunned = false;
+    }
+
+    public void ChangeCurrentMoveSpeed(float speed, float duration)
+    {
+        if (_currentMoveSpeedCoroutine != null)
+        {
+            StopCoroutine(_currentMoveSpeedCoroutine);
+            _currentMoveSpeedCoroutine = null;
+        }
+        _currentMoveSpeedCoroutine = StartCoroutine(ChangeCurrentMoveSpeedCoroutine(speed, duration));
+    }
+
+    public IEnumerator ChangeCurrentMoveSpeedCoroutine(float speed, float duration)
+    {
+        _enemyCurrentMoveSpeed = speed;
+        yield return new WaitForSeconds(duration);
+        _enemyCurrentMoveSpeed = _enemyRegularMoveSpeed;
+        _currentMoveSpeedCoroutine = null;
     }
 }

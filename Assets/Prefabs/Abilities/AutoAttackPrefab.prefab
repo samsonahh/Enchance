@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3445156108340660630}
   - component: {fileID: 4287271488933383054}
   - component: {fileID: 5923918125056446562}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: AutoAttackPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 8658222234823636354}
   - component: {fileID: 4457485334344259342}
   - component: {fileID: 1201580589042314905}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: StaffEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}

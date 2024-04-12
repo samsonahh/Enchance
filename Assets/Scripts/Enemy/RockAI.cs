@@ -33,7 +33,6 @@ public class RockAI : EnemyController
 
     #region FollowPlayer
     [Header("Follow Player Variables")]
-    [SerializeField] private float _followSpeed = 10f;
     private float _followTimer = 0f;
     [SerializeField] private float _followPatienceDuration = 4f;
     #endregion
@@ -67,6 +66,18 @@ public class RockAI : EnemyController
         Destroy(gameObject);
     }
 
+    protected override void HandleAnimations()
+    {
+        if (IsStunned)
+        {
+            _spriteRenderer.transform.parent.localRotation = Quaternion.Lerp(_spriteRenderer.transform.parent.localRotation, Quaternion.Euler(90f, 0, 0), 20f * Time.deltaTime);
+        }
+        else
+        {
+            _spriteRenderer.transform.parent.localRotation = Quaternion.Lerp(_spriteRenderer.transform.parent.localRotation, Quaternion.Euler(45f, 0, 0), 20f * Time.deltaTime);
+        }
+    }
+
     private void OnDrawGizmos()
     {
         CustomGizmos.DrawWireDisk(transform.position, _activateRange, Color.red);
@@ -78,6 +89,13 @@ public class RockAI : EnemyController
         if(_distanceToPlayer > _deactivateRange)
         {
             ChangeState(RockState.Idle);
+        }
+
+        if (IsStunned)
+        {
+            _animator.Play("RockIdle");
+            ChangeState(RockState.FollowPlayer);
+            return;
         }
 
         switch (_currentState)
@@ -99,11 +117,19 @@ public class RockAI : EnemyController
                 break;
             case RockState.FollowPlayer:
 
+                if (PlayerController.Instance.IsInvincible)
+                {
+                    _animator.Play("RockIdle");
+                    return;
+                }
+
+                _animator.Play("RockRoll");
+
                 LookAtPlayer();
 
                 _followTimer += Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(transform.position, PlayerController.Instance.transform.position, _followSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PlayerController.Instance.transform.position, _enemyCurrentMoveSpeed * Time.deltaTime);
 
                 if(_followTimer >= _followPatienceDuration)
                 {
@@ -143,7 +169,6 @@ public class RockAI : EnemyController
                 _stateCoroutines.Add(StartCoroutine(StartledCoroutine()));
                 break;
             case RockState.FollowPlayer:
-                _animator.Play("RockRoll");
                 break;
             case RockState.RollToPlayer:
                 _animator.Play("RockRollFast");
@@ -158,9 +183,9 @@ public class RockAI : EnemyController
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.TryGetComponent(out PlayerController player))
+        if (collision.gameObject.TryGetComponent(out PlayerController player))
         {
             player.TakeDamage(_contactDamage);
 
@@ -170,9 +195,17 @@ public class RockAI : EnemyController
 
             _followTimer = 0f;
 
-            if(_currentState == RockState.FollowPlayer)
+            if (_currentState == RockState.FollowPlayer)
             {
                 ChangeState(RockState.Startled);
+            }
+        }
+
+        if(collision.gameObject.tag == "Wall")
+        {
+            if (_currentState == RockState.RollToPlayer)
+            {
+                ChangeState(RockState.RecoverFromRoll);
             }
         }
     }
@@ -191,7 +224,7 @@ public class RockAI : EnemyController
         LookAtPlayer();
 
         Vector3 dirToPlayer = PlayerController.Instance.transform.position - transform.position;
-        Vector3 destToRoll = 2 * dirToPlayer + transform.position;
+        Vector3 destToRoll = (dirToPlayer + 2.5f * dirToPlayer.normalized) + transform.position;
 
         while(Vector3.Distance(transform.position, destToRoll) > 0.05f)
         {

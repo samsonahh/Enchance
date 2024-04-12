@@ -46,6 +46,7 @@ public class LightningScript : MonoBehaviour
                 if (collider.TryGetComponent(out EnemyController enemy))
                 {
                     enemy.TakeDamage(_damage);
+                    enemy.StunEnemy(1f);
                 }
             }
         }

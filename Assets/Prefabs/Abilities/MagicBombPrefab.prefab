@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3154175258761441380}
   - component: {fileID: 8040073588524514531}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ProgressCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 448511703681868074}
   - component: {fileID: 5682764566240025178}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3914400870268661868}
   - component: {fileID: 2424752017964070362}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BombRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 7837084149080437631}
   - component: {fileID: 5567281893862487742}
   - component: {fileID: 7253011358416640593}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MagicBombPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

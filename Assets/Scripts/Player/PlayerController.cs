@@ -316,6 +316,8 @@ public class PlayerController : MonoBehaviour
 
     public void PushPlayer(Vector3 dir, float stunDuration, float startVel)
     {
+        if (IsInvincible) return;
+
         StartCoroutine(PushPlayerCoroutine(dir, stunDuration, startVel));
     }
 
@@ -449,10 +451,6 @@ public class PlayerController : MonoBehaviour
     public void OnKillEnemy(int exp)
     {
         AddExp(exp);
-
-        if (!LifeSteal) return;
-
-        Heal(_healPerKill);
     }
 
     public void AddExp(int exp)

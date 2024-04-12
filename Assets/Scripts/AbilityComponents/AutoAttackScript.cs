@@ -37,7 +37,12 @@ public class AutoAttackScript : MonoBehaviour
         if(Vector3.Distance(transform.position, _target.transform.position + Vector3.up) <= 0.01f)
         {
             if(_target.TryGetComponent(out EnemyController enemy))
-            { 
+            {
+                if (PlayerController.Instance.LifeSteal)
+                {
+                    PlayerController.Instance.Heal(1);
+                }
+
                 enemy.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
@@ -46,6 +51,11 @@ public class AutoAttackScript : MonoBehaviour
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
+                if (PlayerController.Instance.LifeSteal)
+                {
+                    PlayerController.Instance.Heal(1);
+                }
+
                 boss.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
@@ -75,6 +85,11 @@ public class AutoAttackScript : MonoBehaviour
         {
             if (_target.TryGetComponent(out EnemyController enemy))
             {
+                if (PlayerController.Instance.LifeSteal)
+                {
+                    PlayerController.Instance.Heal(1);
+                }
+
                 enemy.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
@@ -83,6 +98,11 @@ public class AutoAttackScript : MonoBehaviour
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
+                if (PlayerController.Instance.LifeSteal)
+                {
+                    PlayerController.Instance.Heal(1);
+                }
+
                 boss.TakeDamage(_damage);
                 PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);

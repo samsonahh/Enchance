@@ -380,7 +380,7 @@ public class AbilityCaster : MonoBehaviour
 
     private void HandleCastRadius()
     {
-        _castRadiusTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle || CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Self) && IsSelectingAbility);
+        _castRadiusTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle || CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Self || CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Closest) && IsSelectingAbility);
     }
 
     private void HandleProjectileArrowPivot()
