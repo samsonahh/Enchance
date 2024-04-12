@@ -31,7 +31,7 @@ public class LightningScript : MonoBehaviour
 
         _lightningEffect.SetActive(true);
         Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-        CameraShake.Instance.Shake(0.1f, 0.1f);
+        CameraShake.Instance.Shake(0.25f, 0.15f);
         AudioSource.PlayClipAtPoint(_sfx, transform.position);
 
         Collider[] collisions = Physics.OverlapSphere(transform.position, _strikeRadius);

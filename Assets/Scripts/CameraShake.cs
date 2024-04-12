@@ -6,6 +6,8 @@ public class CameraShake : MonoBehaviour
 {
     public static CameraShake Instance;
 
+    private float _shakeSpeed = 20f;
+
     private void Awake()
     {
         Instance = this;
@@ -13,7 +15,6 @@ public class CameraShake : MonoBehaviour
 
     public void Shake(float d, float m)
     {
-        StopAllCoroutines();
         StartCoroutine(ShakeCamera(d, m));
     }
 
@@ -25,15 +26,20 @@ public class CameraShake : MonoBehaviour
 
         while(elapsed < duration)
         {
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+            float x = Random.Range(-1f, 1f) * magnitude * 10f;
+            float y = Random.Range(-1f, 1f) * magnitude * 10f;
 
-            transform.localPosition = new Vector3(x, y, originalPos.z);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(x, y, originalPos.z), _shakeSpeed * Time.deltaTime);
 
-            elapsed += Time.unscaledTime;
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
+        while(Vector3.Distance(transform.localPosition, originalPos) >= 0.01f)
+        {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, originalPos, _shakeSpeed * Time.deltaTime);
+            yield return null;
+        }
         transform.localPosition = originalPos;
     }
 }
