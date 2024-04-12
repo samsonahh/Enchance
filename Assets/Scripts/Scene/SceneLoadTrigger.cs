@@ -13,7 +13,7 @@ public class SceneLoadTrigger : MonoBehaviour
 
     private void Update()
     {
-        _checkTimer += Time.deltaTime;
+       // _checkTimer += Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +27,7 @@ public class SceneLoadTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (_checkTimer > _checkInterval)
+/*        if (_checkTimer > _checkInterval)
         {
             _checkTimer = 0f;
             if (other.TryGetComponent(out PlayerController player))
@@ -35,7 +35,7 @@ public class SceneLoadTrigger : MonoBehaviour
                 LoadScenes();
                 UnloadScenes();
             }
-        }
+        }*/
     }
 
     private void LoadScenes()

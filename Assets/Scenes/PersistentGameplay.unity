@@ -11998,7 +11998,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraSmoothTime: 5
   _target: {fileID: 1999210796}
-  _cameraCullOffset: 0.01
+  _cameraCullLayer:
+    serializedVersion: 2
+    m_Bits: 256
   _transparentSpriteMaterial: {fileID: 2100000, guid: b629b6c852c6cc5498f3a0c14b8a76f4,
     type: 2}
   _transparent3DMaterial: {fileID: 2100000, guid: 8f3bd152ec24af54fa149b5a0d069d58,

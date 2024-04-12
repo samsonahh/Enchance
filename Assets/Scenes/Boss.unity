@@ -216,6 +216,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 635092414}
     m_Modifications:
+    - target: {fileID: 2208169120067818194, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154374466655618116, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8052545058446632123, guid: 8a6f97f38fad0284a91d333b755ce42d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -270,6 +280,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SideTorch
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217429347870276379, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9217429347870276379, guid: 8a6f97f38fad0284a91d333b755ce42d,
         type: 3}
@@ -2677,6 +2692,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 635092414}
     m_Modifications:
+    - target: {fileID: 2208169120067818194, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154374466655618116, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8052545058446632123, guid: 8a6f97f38fad0284a91d333b755ce42d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2731,6 +2756,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SideTorch (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217429347870276379, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9217429347870276379, guid: 8a6f97f38fad0284a91d333b755ce42d,
         type: 3}
@@ -10990,7 +11020,7 @@ GameObject:
   - component: {fileID: 209969804}
   - component: {fileID: 209969805}
   - component: {fileID: 209969806}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11006,7 +11036,7 @@ Transform:
   m_GameObject: {fileID: 209969798}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9410515, y: 0, z: 74.9795}
+  m_LocalPosition: {x: 0.9410515, y: 0, z: 69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22712,6 +22742,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 635092414}
     m_Modifications:
+    - target: {fileID: 4473238732149769811, guid: b058995570840b7409cb1f1e3910237e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5199283638620534135, guid: b058995570840b7409cb1f1e3910237e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22762,10 +22797,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6436586104799017949, guid: b058995570840b7409cb1f1e3910237e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7786406211055102932, guid: b058995570840b7409cb1f1e3910237e,
         type: 3}
       propertyPath: m_Name
       value: FrontTorch (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786406211055102932, guid: b058995570840b7409cb1f1e3910237e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7786406211055102932, guid: b058995570840b7409cb1f1e3910237e,
         type: 3}
@@ -34419,7 +34464,7 @@ Transform:
   m_GameObject: {fileID: 635092413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9410515, y: 0, z: 60.9795}
+  m_LocalPosition: {x: 0.9410515, y: 0, z: 55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40595,7 +40640,7 @@ Transform:
   m_GameObject: {fileID: 761431168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.7, y: 2.7387004, z: 2.7920787}
+  m_LocalPosition: {x: 41.7, y: 2.7387004, z: -3.1874218}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44736,7 +44781,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 839477698}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54036,6 +54081,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 635092414}
     m_Modifications:
+    - target: {fileID: 2208169120067818194, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154374466655618116, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8052545058446632123, guid: 8a6f97f38fad0284a91d333b755ce42d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -54090,6 +54145,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SideTorch (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217429347870276379, guid: 8a6f97f38fad0284a91d333b755ce42d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9217429347870276379, guid: 8a6f97f38fad0284a91d333b755ce42d,
         type: 3}
@@ -58177,7 +58237,7 @@ Transform:
   m_GameObject: {fileID: 1107746853}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.7, y: 2.7387004, z: 1.7920787}
+  m_LocalPosition: {x: 41.7, y: 2.7387004, z: -4.187422}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61063,7 +61123,7 @@ GameObject:
   - component: {fileID: 1158212654}
   - component: {fileID: 1158212656}
   - component: {fileID: 1158212655}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpriteHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63231,7 +63291,7 @@ Transform:
   m_GameObject: {fileID: 1193081786}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.18557, y: 0, z: 6}
+  m_LocalPosition: {x: 42.18557, y: 0, z: 0.020500183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77890,7 +77950,7 @@ Transform:
   m_GameObject: {fileID: 1475507748}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9410515, y: 0, z: 60.9795}
+  m_LocalPosition: {x: 0.9410515, y: 0, z: 55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -78911,7 +78971,7 @@ Transform:
   m_GameObject: {fileID: 1491961321}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.7, y: 2.7387004, z: 2.7920787}
+  m_LocalPosition: {x: 41.7, y: 2.7387004, z: -3.1874218}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83946,7 +84006,7 @@ GameObject:
   - component: {fileID: 1573650919}
   - component: {fileID: 1573650920}
   - component: {fileID: 1573650922}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95154,6 +95214,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 635092414}
     m_Modifications:
+    - target: {fileID: 4473238732149769811, guid: b058995570840b7409cb1f1e3910237e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5199283638620534135, guid: b058995570840b7409cb1f1e3910237e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -95204,10 +95269,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6436586104799017949, guid: b058995570840b7409cb1f1e3910237e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7786406211055102932, guid: b058995570840b7409cb1f1e3910237e,
         type: 3}
       propertyPath: m_Name
       value: FrontTorch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786406211055102932, guid: b058995570840b7409cb1f1e3910237e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7786406211055102932, guid: b058995570840b7409cb1f1e3910237e,
         type: 3}
@@ -115108,7 +115183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2689149442428677326}
   - component: {fileID: 3708840607773996264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115125,7 +115200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2689149443471001835}
   - component: {fileID: 3708840606702260429}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115142,7 +115217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2689149443918586256}
   - component: {fileID: 3708840606210718134}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115361,7 +115436,7 @@ GameObject:
   - component: {fileID: 9173800484128840898}
   - component: {fileID: 8596955050103710351}
   - component: {fileID: 5439961912460633353}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115379,7 +115454,7 @@ GameObject:
   - component: {fileID: 9173800483061479655}
   - component: {fileID: 8596955049015330474}
   - component: {fileID: 5439961913507119404}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115397,7 +115472,7 @@ GameObject:
   - component: {fileID: 9173800482632372636}
   - component: {fileID: 8596955049446141905}
   - component: {fileID: 5439961913948416087}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129975,7 +130050,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8052545060175311090}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SideTorch (5)
   m_TagString: Environment
   m_Icon: {fileID: 0}
@@ -129991,7 +130066,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8052545059731593609}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SideTorch (4)
   m_TagString: Environment
   m_Icon: {fileID: 0}
@@ -130007,7 +130082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8052545058651585964}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SideTorch (3)
   m_TagString: Environment
   m_Icon: {fileID: 0}

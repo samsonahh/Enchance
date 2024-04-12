@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Transform _target;
     private float _zoom = 10f;
 
-    [SerializeField] private float _cameraCullOffset = 0.005f;
+    [SerializeField] private LayerMask _cameraCullLayer;
     [SerializeField] private Material _transparentSpriteMaterial;
     [SerializeField] private Material _transparent3DMaterial;
     private Dictionary<GameObject, Material> _lastObstructingObjects;
@@ -75,7 +75,7 @@ public class CameraMovement : MonoBehaviour
             }
         }
 
-        hits = Physics.RaycastAll(ray, Vector3.Distance(transform.position, PlayerController.Instance.transform.position) - _cameraCullOffset);
+        hits = Physics.RaycastAll(ray, dirToPlayer.magnitude, _cameraCullLayer);
         if(hits != null)
         {
             foreach(var hit in hits)
