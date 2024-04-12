@@ -3,6 +3,7 @@
 A game based around the idea of randomizing abilities
 
 ## Made by:
+- Joshua - Programmer
 - Samson - Programmer
 - Emily - Artist
 - Wicke - Sound Designer
