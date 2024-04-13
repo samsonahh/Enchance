@@ -19,7 +19,9 @@ public class SlowpokeScript : MonoBehaviour
 
         if (PlayerController.Instance.Target.TryGetComponent(out BossAI boss))
         {
-            Destroy(gameObject);
+            _targetTransform = boss.transform;
+            boss.ChangeCurrentMoveSpeed(0.5f, _duration);
+            Destroy(gameObject, _duration);
             return;
         }
 

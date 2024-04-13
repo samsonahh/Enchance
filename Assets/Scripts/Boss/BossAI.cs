@@ -32,6 +32,7 @@ public class BossAI : MonoBehaviour
     [Header("Boss Stats")]
     [SerializeField] private int _currentHealth = 100;
     [SerializeField] private int _maxHealth = 100;
+    private Coroutine _currentMoveSpeedCoroutine;
 
     [SerializeField] private int _phase = 1;
 
@@ -868,6 +869,33 @@ public class BossAI : MonoBehaviour
         _currentColor = Color.white;
         _spriteRenderer.color = _currentColor;
         IsBurning = false;
+    }
+
+    public void ChangeCurrentMoveSpeed(float fraction, float duration)
+    {
+        if (_currentMoveSpeedCoroutine != null)
+        {
+            StopCoroutine(_currentMoveSpeedCoroutine);
+            _currentMoveSpeedCoroutine = null;
+        }
+        _currentMoveSpeedCoroutine = StartCoroutine(ChangeCurrentMoveSpeedCoroutine(fraction, duration));
+    }
+
+    public IEnumerator ChangeCurrentMoveSpeedCoroutine(float fraction, float duration)
+    {
+        float multiplier = 1f / fraction;
+        float originalInterval = _followPlayerSpeedInterval;
+        float originalWaitTime = _followPlayerWaitTime;
+
+        _followPlayerSpeedInterval *= multiplier;
+        _followPlayerWaitTime *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        _followPlayerSpeedInterval = originalInterval;
+        _followPlayerWaitTime = originalWaitTime;
+
+        _currentMoveSpeedCoroutine = null;
     }
 }
 
