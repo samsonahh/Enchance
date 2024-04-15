@@ -63,9 +63,11 @@ public class BossAI : MonoBehaviour
     #region FollowPlayerVariables
     [Header("Follow Player Variables")]
     [SerializeField] private float _followPlayerWaitTime = 1f;
+    private float _originalFollowPlayerWaitTime = 1f;
     [SerializeField] private float _followPlayerPatienceLimit = 7f;
     [SerializeField] private float _playerStraightThresholdToSlam = 1.5f;
     [SerializeField] private float _followPlayerSpeedInterval = 0.4f;
+    private float _originalFollowPlayerSpeedInterval = 0.4f;
     private float _followPlayerTimer = 0f;
     private float _followPlayerPatienceTimer = 0f;
     private float _playerStraightPathTimer = 0f;
@@ -144,10 +146,15 @@ public class BossAI : MonoBehaviour
 
         _currentColor = Color.white;
         _bossStateCoroutines = new List<Coroutine>();
+
+        _originalFollowPlayerWaitTime = _followPlayerWaitTime;
+        _originalFollowPlayerSpeedInterval = _followPlayerSpeedInterval;
     }
 
     private void Update()
     {
+        Debug.Log($"{_followPlayerSpeedInterval}, {_followPlayerWaitTime}");
+
         CalculatePlayerDistance();
         HandleTileChange();
         HandleBossHealth();
@@ -918,6 +925,8 @@ public class BossAI : MonoBehaviour
     {
         if (_currentMoveSpeedCoroutine != null)
         {
+            _followPlayerSpeedInterval = _originalFollowPlayerSpeedInterval;
+            _followPlayerWaitTime = _originalFollowPlayerWaitTime;
             StopCoroutine(_currentMoveSpeedCoroutine);
             _currentMoveSpeedCoroutine = null;
         }
@@ -927,16 +936,14 @@ public class BossAI : MonoBehaviour
     public IEnumerator ChangeCurrentMoveSpeedCoroutine(float fraction, float duration)
     {
         float multiplier = 1f / fraction;
-        float originalInterval = _followPlayerSpeedInterval;
-        float originalWaitTime = _followPlayerWaitTime;
 
         _followPlayerSpeedInterval *= multiplier;
         _followPlayerWaitTime *= multiplier;
 
         yield return new WaitForSeconds(duration);
 
-        _followPlayerSpeedInterval = originalInterval;
-        _followPlayerWaitTime = originalWaitTime;
+        _followPlayerSpeedInterval = _originalFollowPlayerSpeedInterval;
+        _followPlayerWaitTime = _originalFollowPlayerWaitTime;
 
         _currentMoveSpeedCoroutine = null;
     }

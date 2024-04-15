@@ -37,8 +37,8 @@ public class EnemyController : MonoBehaviour
 
     #region Speed
     [Header("Speed")]
-    [SerializeField] protected private float _enemyCurrentMoveSpeed = 5f;
-    protected private float _enemyRegularMoveSpeed;
+    [SerializeField] public float EnemyCurrentMoveSpeed = 5f;
+    public float EnemyRegularMoveSpeed;
     private Coroutine _currentMoveSpeedCoroutine;
     #endregion
 
@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
         CurrentHealth = MaxHealth;
         _enemyNameText.text = _enemyName;
 
-        _enemyRegularMoveSpeed = _enemyCurrentMoveSpeed;
+        EnemyRegularMoveSpeed = EnemyCurrentMoveSpeed;
     }
 
     private void Start()
@@ -291,9 +291,9 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator ChangeCurrentMoveSpeedCoroutine(float speed, float duration)
     {
-        _enemyCurrentMoveSpeed = speed;
+        EnemyCurrentMoveSpeed = speed;
         yield return new WaitForSeconds(duration);
-        _enemyCurrentMoveSpeed = _enemyRegularMoveSpeed;
+        EnemyCurrentMoveSpeed = EnemyRegularMoveSpeed;
         _currentMoveSpeedCoroutine = null;
     }
 
@@ -302,9 +302,9 @@ public class EnemyController : MonoBehaviour
         BurnTicks = 0;
         PoisonTicks = 0;
 
-        if (_enemyRegularMoveSpeed > _enemyCurrentMoveSpeed)
+        if (EnemyRegularMoveSpeed > EnemyCurrentMoveSpeed)
         {
-            ChangeCurrentMoveSpeed(_enemyRegularMoveSpeed, 0f);
+            ChangeCurrentMoveSpeed(EnemyRegularMoveSpeed, 0f);
         }
     }
 }

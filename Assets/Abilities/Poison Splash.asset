@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: Poison Mist
+  m_Name: Poison Splash
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Poison Mist
+  <Name>k__BackingField: Poison Splash
   <Star>k__BackingField: 2
   <IconSprite>k__BackingField: {fileID: 21300000, guid: 20f215fc1971f184da1d4f7620bf6441,
     type: 3}
@@ -21,10 +21,11 @@ MonoBehaviour:
   <Cooldown>k__BackingField: 2
   Timer: 0
   OnCooldown: 0
-  <CastRadius>k__BackingField: 12.5
-  <CircleCastRadius>k__BackingField: 5
+  <CastRadius>k__BackingField: 10
+  <CircleCastRadius>k__BackingField: 4
   <AbilityPrefab>k__BackingField: {fileID: 1515807923794954783, guid: 9e5921d0755fd3e4390ee3a07b355f4f,
     type: 3}
   <AbilityType>k__BackingField: 1
   <CastTime>k__BackingField: 0.2
-  Description: Creates a poison mist that poisons both players and enemies inside
+  Description: Creates a poison circle. Players and enemies inside become poisoned
+    and slowed by 70% for 3 seconds.

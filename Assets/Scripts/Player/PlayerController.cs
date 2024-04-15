@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _arrowPivot;
     [SerializeField] private Transform _staffGlowEffect;
+    [SerializeField] private Renderer _shieldRenderer;
     private Animator _animator;
 
     [HideInInspector] public static PlayerController Instance { get; private set; }
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsBurning;
     [HideInInspector] public bool IsPoisoned;
     [HideInInspector] public bool IsInvincible;
+    [HideInInspector] public bool IsShielded;
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
     [HideInInspector] public bool LifeSteal;
@@ -57,7 +59,6 @@ public class PlayerController : MonoBehaviour
 
     #region LifeSteal
     [Header("LifeSteal")]
-    [SerializeField] private int _healPerKill = 1;
     private Coroutine _lifeStealCoroutine;
     #endregion
 
@@ -85,6 +86,12 @@ public class PlayerController : MonoBehaviour
     private float _lastDamagedTimer;
     [SerializeField] private float _startRegenTreshold = 5f;
     [SerializeField] private float _regenRate = 3f;
+    #endregion
+
+    #region Shield
+    [Header("Shield")]
+    public int CurrentShieldHealth;
+    private Coroutine _shieldPlayerCoroutine;
     #endregion
 
     #region ForBossGridManager
@@ -156,6 +163,7 @@ public class PlayerController : MonoBehaviour
         _staffGlowEffect.localPosition = _spriteRenderer.flipX ? new Vector3(-0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z) : new Vector3(0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z);
         _spriteRenderer.enabled = IsVisible;
         _staffGlowEffect.gameObject.SetActive(!IsInvincible && !AutoAttacking);
+        _shieldRenderer.gameObject.SetActive(IsShielded);
     }
 
     private void HandlePlayerMoving()
@@ -305,6 +313,29 @@ public class PlayerController : MonoBehaviour
     {
         if (IsInvincible) return;
 
+        if(CurrentShieldHealth > 0 && IsShielded)
+        {
+            if(damage > CurrentShieldHealth)
+            {
+                damage -= CurrentShieldHealth;
+                CurrentShieldHealth = 0;
+                IsShielded = false;
+            }
+            else
+            {
+                CurrentShieldHealth -= damage;
+                _spriteRenderer.color = Color.red;
+                StartCoroutine(TakeDamageCoroutine());
+                
+                if(CurrentShieldHealth == 0)
+                {
+                    IsShielded = false;
+                }
+
+                return;
+            }
+        }
+
         CurrentHealth -= damage;
         _lastDamagedTimer = 0f;
 
@@ -314,8 +345,12 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator TakeDamageCoroutine()
     {
+        _shieldRenderer.material.color = new Color(_shieldRenderer.material.color.r, _shieldRenderer.material.color.g, _shieldRenderer.material.color.b, 1);
+
         yield return new WaitForSeconds(0.15f);
+
         _spriteRenderer.color = _currentColor;
+        _shieldRenderer.material.color = new Color(_shieldRenderer.material.color.r, _shieldRenderer.material.color.g, _shieldRenderer.material.color.b, 70f/255f);
     }
 
     public void Heal(int hp)
@@ -443,6 +478,26 @@ public class PlayerController : MonoBehaviour
         _currentColor = Color.white;
         _spriteRenderer.color = _currentColor;
         IsPoisoned = false;
+    }
+
+    public void ShieldPlayer(int shieldAmount, float duration)
+    {
+        if (_shieldPlayerCoroutine != null)
+        {
+            StopCoroutine(_shieldPlayerCoroutine);
+            _shieldPlayerCoroutine = null;
+        }
+        _shieldPlayerCoroutine = StartCoroutine(ShieldPlayerCoroutine(shieldAmount, duration));
+    }
+
+    public IEnumerator ShieldPlayerCoroutine(int shieldAmount, float duration)
+    {
+        IsShielded = true;
+        CurrentShieldHealth = shieldAmount;
+        yield return new WaitForSeconds(duration);
+        CurrentShieldHealth = 0;
+        IsShielded = false;
+        _shieldPlayerCoroutine = null;
     }
 
     private void HandleTileChange()

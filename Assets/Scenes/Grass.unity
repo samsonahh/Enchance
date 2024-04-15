@@ -341,14 +341,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -1006,14 +1011,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -2147,14 +2157,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -2543,14 +2558,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -3296,14 +3316,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -4597,14 +4622,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -4767,14 +4797,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -6847,14 +6882,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5
@@ -7002,14 +7042,19 @@ MonoBehaviour:
   IsCasting: 0
   IsStunned: 0
   IsBurning: 0
+  IsPoisoned: 0
   IsInvincible: 0
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
-  _enemyCurrentMoveSpeed: 3
+  EnemyCurrentMoveSpeed: 3
+  EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
   _burnDamage: 1
   BurnTicks: 0
+  _poisonTickDuration: 1
+  _poisonDamage: 1
+  PoisonTicks: 0
   CurrentHealth: 10
   MaxHealth: 10
   _yellowThreshold: 0.5

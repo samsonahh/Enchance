@@ -129,7 +129,7 @@ public class RockAI : EnemyController
 
                 _followTimer += Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(transform.position, PlayerController.Instance.transform.position, _enemyCurrentMoveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PlayerController.Instance.transform.position, EnemyCurrentMoveSpeed * Time.deltaTime);
 
                 if(_followTimer >= _followPatienceDuration)
                 {

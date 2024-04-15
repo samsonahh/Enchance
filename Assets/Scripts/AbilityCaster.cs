@@ -84,6 +84,15 @@ public class AbilityCaster : MonoBehaviour
         if (PlayerController.Instance.IsCasting) return;
         if (PlayerController.Instance.IsStunned) return;
         if (!PlayerController.Instance.CanCast) return;
+        if (_abilityCanvas.AbilityDescriptionPanel.gameObject.activeSelf) return;
+
+        if (CurrentAbilities[index].AbilityType == AbilityType.Closest)
+        {
+            if (PlayerController.Instance.Target == null)
+            {
+                return;
+            }
+        }
 
         StartCoroutine(UseAbilityCoroutine(index));
     }
@@ -309,7 +318,7 @@ public class AbilityCaster : MonoBehaviour
         CircleCastTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CircleCastRadius, CircleCastTransform.localScale.y, CurrentAbilities[SelectedAbility].CircleCastRadius);
         _abilityCanvas.SelectedOverlay.position = _abilityCanvas.CoolDownOverlays[SelectedAbility].transform.parent.position;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !_abilityCanvas.AbilityDescriptionPanel.gameObject.activeSelf)
         {
             IsSelectingAbility = false;
             UseAbility(SelectedAbility);
@@ -341,6 +350,30 @@ public class AbilityCaster : MonoBehaviour
         }
     }
 
+    public void UISelectAbility(int index)
+    {
+        if (PlayerController.Instance.IsCasting) return;
+
+        if (!IsSelectingAbility)
+        {
+            if (!CurrentAbilities[index].OnCooldown)
+            {
+                SelectedAbility = index;
+                IsSelectingAbility = true;
+            }
+            return;
+        }
+
+        if (SelectedAbility == index)
+        {
+            IsSelectingAbility = false;
+            return;
+        }
+        if (!CurrentAbilities[index].OnCooldown)
+        {
+            SelectedAbility = index;
+        }
+    }
     private void HandleOnAbilityCast(int i, int index)
     {
         if (i == 0) return;

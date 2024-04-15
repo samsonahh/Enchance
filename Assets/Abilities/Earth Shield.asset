@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: Slowpoke
+  m_Name: Earth Shield
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Slowpoke
-  <Star>k__BackingField: 1
-  <IconSprite>k__BackingField: {fileID: 21300000, guid: e2573040fb239dc428ece7bc8df89f87,
+  <Name>k__BackingField: Earth Shield
+  <Star>k__BackingField: 2
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: fb5156afb40d835409ec4b761fd8cd6e,
     type: 3}
   <MaxUseCount>k__BackingField: 1
-  UseCount: 5
+  UseCount: 0
   <Cooldown>k__BackingField: 1
-  Timer: -0.0025917105
+  Timer: 0
   OnCooldown: 0
-  <CastRadius>k__BackingField: 8.5
+  <CastRadius>k__BackingField: 0.5
   <CircleCastRadius>k__BackingField: 0
-  <AbilityPrefab>k__BackingField: {fileID: 3177697320865603248, guid: b620c601a57573642bcccb35b8e5184b,
+  <AbilityPrefab>k__BackingField: {fileID: 3177697320865603248, guid: a176915b5818a3e40a765cd3f953d384,
     type: 3}
-  <AbilityType>k__BackingField: 3
+  <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 0.1
-  Description: Slow an enemy for 3 seconds
+  Description: Shields 3 damage for 5 seconds

@@ -8,6 +8,7 @@ public class PlayerCanvasManager : MonoBehaviour
 {
     [SerializeField] private Slider _playerHealthSlider;
     [SerializeField] private Image _playerHealthFill;
+    [SerializeField] private Slider _playerShieldSlider;
     [SerializeField] private TMP_Text _playerHealthText;
     [SerializeField] private Slider _playerExpSlider;
     [SerializeField] private TMP_Text _playerLevelText;
@@ -24,6 +25,7 @@ public class PlayerCanvasManager : MonoBehaviour
     {
         HandleHealthBar();
         HandleLevelBar();
+        HandleShieldBar();
     }
 
     private void HandleHealthBar()
@@ -62,5 +64,12 @@ public class PlayerCanvasManager : MonoBehaviour
         float playerLevelPercentage = (float)PlayerController.Instance.CurrentExp / PlayerController.Instance.ExpToNextLevel;
 
         _playerExpSlider.value = Mathf.Lerp(_playerExpSlider.value, playerLevelPercentage, 5f * Time.deltaTime);
+    }
+
+    private void HandleShieldBar()
+    {
+        float playerShieldPercentage = (float)PlayerController.Instance.CurrentShieldHealth / PlayerController.Instance.MaxHealth;
+
+        _playerShieldSlider.value = Mathf.Lerp(_playerShieldSlider.value, playerShieldPercentage, 5f * Time.deltaTime);
     }
 }
