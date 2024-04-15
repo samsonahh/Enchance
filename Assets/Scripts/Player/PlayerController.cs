@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsCasting;
     [HideInInspector] public bool IsStunned;
     [HideInInspector] public bool IsBurning;
+    [HideInInspector] public bool IsPoisoned;
     [HideInInspector] public bool IsInvincible;
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
@@ -67,6 +68,14 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningPlayerCoroutine;
     private Color _currentColor = Color.white;
+    #endregion
+
+    #region Poison
+    [Header("Poison")]
+    [SerializeField] private float _poisonTickDuration = 1f;
+    [SerializeField] private int _poisonDamage = 1;
+    [HideInInspector] public int PoisonTicks;
+    private IEnumerator _poisonPlayerCoroutine;
     #endregion
 
     #region Health
@@ -400,6 +409,42 @@ public class PlayerController : MonoBehaviour
         IsBurning = false;
     }
 
+    public void PoisonPlayer(int ticks)
+    {
+        if (IsPoisoned)
+        {
+            PoisonTicks += ticks;
+            return;
+        }
+
+        PoisonTicks = ticks;
+
+        if (_poisonPlayerCoroutine != null)
+        {
+            StopCoroutine(_poisonPlayerCoroutine);
+        }
+        _poisonPlayerCoroutine = PoisonPlayerCoroutine();
+        StartCoroutine(_poisonPlayerCoroutine);
+    }
+
+    public IEnumerator PoisonPlayerCoroutine()
+    {
+        IsPoisoned = true;
+        _currentColor = GameManager.Instance.EntityPoisonedColor;
+
+        while (PoisonTicks > 0)
+        {
+            TakeDamage(_poisonDamage);
+            yield return TakeDamageCoroutine();
+            yield return new WaitForSeconds(_poisonTickDuration - 0.15f);
+            PoisonTicks--;
+        }
+
+        _currentColor = Color.white;
+        _spriteRenderer.color = _currentColor;
+        IsPoisoned = false;
+    }
+
     private void HandleTileChange()
     {
         if (GridManager.Instance == null) return;
@@ -473,5 +518,16 @@ public class PlayerController : MonoBehaviour
     private void OnPlayerLevelUp()
     {
         GameManager.Instance.UpdateGameState(GameState.LevelUpSelect);
+    }
+
+    public void Cleanse()
+    {
+        BurnTicks = 0;
+        PoisonTicks = 0;
+
+        if(PlayerRegularMoveSpeed > PlayerCurrentMoveSpeed)
+        {
+            ChangeCurrentMoveSpeed(PlayerRegularMoveSpeed, 0f);
+        }
     }
 }

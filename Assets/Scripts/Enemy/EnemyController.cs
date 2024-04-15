@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public bool IsCasting;
     [HideInInspector] public bool IsStunned;
     [HideInInspector] public bool IsBurning;
+    [HideInInspector] public bool IsPoisoned;
     [HideInInspector] public bool IsInvincible;
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
@@ -48,6 +49,14 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public int BurnTicks;
     private IEnumerator _burningEnemyCoroutine;
     private Color _currentColor = Color.white;
+    #endregion
+
+    #region Poison
+    [Header("Poison")]
+    [SerializeField] private float _poisonTickDuration = 1f;
+    [SerializeField] private int _poisonDamage = 1;
+    [HideInInspector] public int PoisonTicks;
+    private IEnumerator _poisonEnemyCoroutine;
     #endregion
 
     #region Health
@@ -211,6 +220,42 @@ public class EnemyController : MonoBehaviour
         IsBurning = false;
     }
 
+    public void PoisonEnemy(int ticks)
+    {
+        if (IsPoisoned)
+        {
+            PoisonTicks += ticks;
+            return;
+        }
+
+        PoisonTicks = ticks;
+
+        if (_poisonEnemyCoroutine != null)
+        {
+            StopCoroutine(_poisonEnemyCoroutine);
+        }
+        _poisonEnemyCoroutine = PoisonEnemyCoroutine();
+        StartCoroutine(_poisonEnemyCoroutine);
+    }
+
+    public IEnumerator PoisonEnemyCoroutine()
+    {
+        IsPoisoned = true;
+        _currentColor = GameManager.Instance.EntityPoisonedColor;
+
+        while (PoisonTicks > 0)
+        {
+            TakeDamage(_poisonDamage);
+            yield return TakeDamageCoroutine();
+            yield return new WaitForSeconds(_poisonTickDuration - 0.15f);
+            PoisonTicks--;
+        }
+
+        _currentColor = Color.white;
+        _spriteRenderer.color = _currentColor;
+        IsPoisoned = false;
+    }
+
     public void StunEnemy(float duration)
     {
         if (IsInvincible) return;
@@ -250,5 +295,16 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         _enemyCurrentMoveSpeed = _enemyRegularMoveSpeed;
         _currentMoveSpeedCoroutine = null;
+    }
+
+    public void Cleanse()
+    {
+        BurnTicks = 0;
+        PoisonTicks = 0;
+
+        if (_enemyRegularMoveSpeed > _enemyCurrentMoveSpeed)
+        {
+            ChangeCurrentMoveSpeed(_enemyRegularMoveSpeed, 0f);
+        }
     }
 }

@@ -13,11 +13,11 @@ public class HealScript : MonoBehaviour
     {
         AudioSource.PlayClipAtPoint(_sfx, PlayerController.Instance.transform.position);
         PlayerController.Instance.Heal(_healAmount);
-        PlayerController.Instance.BurnTicks = 0;
+/*        PlayerController.Instance.BurnTicks = 0;
         if(PlayerController.Instance.PlayerRegularMoveSpeed > PlayerController.Instance.PlayerCurrentMoveSpeed)
         {
             PlayerController.Instance.ChangeCurrentMoveSpeed(PlayerController.Instance.PlayerRegularMoveSpeed, 0.1f);
-        }
+        }*/
 
         Destroy(gameObject, _duration);
     }

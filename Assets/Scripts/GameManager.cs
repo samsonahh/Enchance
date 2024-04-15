@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public Color YellowHealthColor;
     public Color RedHealthColor;
     public Color EntityBurningColor;
+    public Color EntityPoisonedColor;
     #endregion
 
     private void Awake()

@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870645b7a100f7b4d96cbe2c1876a0cf, type: 3}
-  m_Name: Heal
+  m_Name: Poison Mist
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Heal
+  <Name>k__BackingField: Poison Mist
   <Star>k__BackingField: 2
-  <IconSprite>k__BackingField: {fileID: 21300000, guid: 331cdffa4408f7349af86cde0c3a830e,
+  <IconSprite>k__BackingField: {fileID: 21300000, guid: 20f215fc1971f184da1d4f7620bf6441,
     type: 3}
   <MaxUseCount>k__BackingField: 1
   UseCount: 0
-  <Cooldown>k__BackingField: 1
+  <Cooldown>k__BackingField: 2
   Timer: 0
   OnCooldown: 0
-  <CastRadius>k__BackingField: 0.5
-  <CircleCastRadius>k__BackingField: 0
-  <AbilityPrefab>k__BackingField: {fileID: 3177697320865603248, guid: f03a1f9efe49ac54e859f0ecd05f222b,
-    type: 3}
-  <AbilityType>k__BackingField: 2
-  <CastTime>k__BackingField: 0.1
-  Description: Heals 3 hp
+  <CastRadius>k__BackingField: 7.5
+  <CircleCastRadius>k__BackingField: 4
+  <AbilityPrefab>k__BackingField: {fileID: 0}
+  <AbilityType>k__BackingField: 1
+  <CastTime>k__BackingField: 0.2
+  Description: 
