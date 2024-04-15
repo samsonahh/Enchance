@@ -48,6 +48,13 @@ public class BossAI : MonoBehaviour
     private Color _currentColor = Color.white;
     #endregion
 
+    [Header("Poison")]
+    [HideInInspector] public bool IsPoisoned = false;
+    [SerializeField] private float _poisonTickDuration = 1f;
+    [SerializeField] private int _poisonDamage = 1;
+    [HideInInspector] public int PoisonTicks;
+    private IEnumerator _poisonEnemyCoroutine;
+
     #region IdleVariables
     [Header("Idle Variables")]
     [SerializeField] private float _activateRange = 10f;
@@ -869,6 +876,42 @@ public class BossAI : MonoBehaviour
         _currentColor = Color.white;
         _spriteRenderer.color = _currentColor;
         IsBurning = false;
+    }
+
+    public void PoisonEnemy(int ticks)
+    {
+        if (IsPoisoned)
+        {
+            PoisonTicks += ticks;
+            return;
+        }
+
+        PoisonTicks = ticks;
+
+        if (_poisonEnemyCoroutine != null)
+        {
+            StopCoroutine(_poisonEnemyCoroutine);
+        }
+        _poisonEnemyCoroutine = PoisonEnemyCoroutine();
+        StartCoroutine(_poisonEnemyCoroutine);
+    }
+
+    public IEnumerator PoisonEnemyCoroutine()
+    {
+        IsPoisoned = true;
+        _currentColor = GameManager.Instance.EntityPoisonedColor;
+
+        while (PoisonTicks > 0)
+        {
+            TakeDamage(_poisonDamage);
+            yield return TakeDamageCoroutine();
+            yield return new WaitForSeconds(_poisonTickDuration - 0.15f);
+            PoisonTicks--;
+        }
+
+        _currentColor = Color.white;
+        _spriteRenderer.color = _currentColor;
+        IsPoisoned = false;
     }
 
     public void ChangeCurrentMoveSpeed(float fraction, float duration)

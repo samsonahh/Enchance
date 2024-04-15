@@ -21,9 +21,10 @@ MonoBehaviour:
   <Cooldown>k__BackingField: 2
   Timer: 0
   OnCooldown: 0
-  <CastRadius>k__BackingField: 7.5
-  <CircleCastRadius>k__BackingField: 4
-  <AbilityPrefab>k__BackingField: {fileID: 0}
+  <CastRadius>k__BackingField: 12.5
+  <CircleCastRadius>k__BackingField: 5
+  <AbilityPrefab>k__BackingField: {fileID: 1515807923794954783, guid: 9e5921d0755fd3e4390ee3a07b355f4f,
+    type: 3}
   <AbilityType>k__BackingField: 1
   <CastTime>k__BackingField: 0.2
-  Description: 
+  Description: Creates a poison mist that poisons both players and enemies inside
