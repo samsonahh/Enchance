@@ -418,13 +418,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 515642816}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 682861692}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -2113,13 +2113,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 599434750}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 920486621}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -4005,13 +4005,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 2060217763}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 661763194}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -13166,6 +13166,7 @@ GameObject:
   - component: {fileID: 1999210796}
   - component: {fileID: 1999210797}
   - component: {fileID: 1999210798}
+  - component: {fileID: 1999210805}
   - component: {fileID: 1999210802}
   - component: {fileID: 1999210803}
   - component: {fileID: 1999210804}
@@ -13238,8 +13239,8 @@ MonoBehaviour:
   _poisonTickDuration: 1
   _poisonDamage: 1
   PoisonTicks: 0
-  CurrentHealth: 20
-  MaxHealth: 20
+  CurrentHealth: 5
+  MaxHealth: 5
   _startRegenTreshold: 5
   _regenRate: 3
   CurrentShieldHealth: 0
@@ -13344,6 +13345,34 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &1999210805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999210795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486fc7134fecef84899817e3b75dc2c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RewardPool: 
+  _hpIncreaseAmount: 2
+  MoreHPName: Tanky Body
+  MoreHPSprite: {fileID: 0}
+  MoreHPDescription: 
+  _speedIncreaseAmount: 1
+  SpeedName: Quickfeet
+  SpeedSprite: {fileID: 0}
+  SpeedDescription: 
+  _cooldownReduceFraction: 0.9
+  CooldownReductionName: Fast Chanter
+  CooldownReductionSprite: {fileID: 0}
+  CooldownReductionDescription: 
+  HigherChancesName: Lucky Roller
+  HigherChancesSprite: {fileID: 0}
+  HigherChancesDescription: 
 --- !u!1 &2038840250
 GameObject:
   m_ObjectHideFlags: 0

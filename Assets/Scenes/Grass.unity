@@ -359,7 +359,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -1029,7 +1029,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -2175,7 +2175,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -2576,7 +2576,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -3334,7 +3334,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -4640,7 +4640,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -4815,7 +4815,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -6900,7 +6900,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6
@@ -7060,7 +7060,7 @@ MonoBehaviour:
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
-  _contactDamage: 2
+  _contactDamage: 1
   _stunDuration: 1
   _pushStartVelocity: 10
   _activateRange: 6

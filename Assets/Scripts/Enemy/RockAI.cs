@@ -187,6 +187,15 @@ public class RockAI : EnemyController
     {
         if (collision.gameObject.TryGetComponent(out PlayerController player))
         {
+            if (_currentState == RockState.RollToPlayer)
+            {
+                player.TakeDamage(_contactDamage);
+                player.StunPlayer(_stunDuration);
+                _followTimer = 0f;
+
+                return;
+            }
+
             player.TakeDamage(_contactDamage);
 
             Vector3 dirToPush = (player.transform.position - transform.position).normalized;
@@ -224,7 +233,7 @@ public class RockAI : EnemyController
         LookAtPlayer();
 
         Vector3 dirToPlayer = PlayerController.Instance.transform.position - transform.position;
-        Vector3 destToRoll = (dirToPlayer + 2.5f * dirToPlayer.normalized) + transform.position;
+        Vector3 destToRoll = (dirToPlayer + 4.5f * dirToPlayer.normalized) + transform.position;
 
         while(Vector3.Distance(transform.position, destToRoll) > 0.05f)
         {

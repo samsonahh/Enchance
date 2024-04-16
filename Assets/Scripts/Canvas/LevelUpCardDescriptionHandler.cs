@@ -10,8 +10,14 @@ public class LevelUpCardDescriptionHandler : MonoBehaviour
     public TMP_Text CardName;
     public TMP_Text CardDescription;
 
-    public void OnClickCard()
+    public LevelUpReward Reward;
+
+    public void OnSelectButtonPressed()
     {
+        LevelUpManager.Instance.ApplyReward(Reward);
+
         GameManager.Instance.UpdateGameState(GameState.Playing);
     }
+
+
 }

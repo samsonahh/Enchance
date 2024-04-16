@@ -35,6 +35,8 @@ public class SlowpokeScript : MonoBehaviour
 
     void Update()
     {
+        if (_targetTransform == null) return;
+
         transform.position = _targetTransform.position;
     }
 }

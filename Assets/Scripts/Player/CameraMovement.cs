@@ -35,6 +35,7 @@ public class CameraMovement : MonoBehaviour
 
     private void HandleZoom()
     {
+        if (GameManager.Instance.State != GameState.Playing) return;
         _zoom -= Input.mouseScrollDelta.y;
         _zoom = Mathf.Clamp(_zoom, 3f, 10f);
 
