@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class BossAI : MonoBehaviour
 {
@@ -153,8 +154,6 @@ public class BossAI : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"{_followPlayerSpeedInterval}, {_followPlayerWaitTime}");
-
         CalculatePlayerDistance();
         HandleTileChange();
         HandleBossHealth();
@@ -625,6 +624,7 @@ public class BossAI : MonoBehaviour
             Tile t = _playerTile;
 
             _gridManager.PathCrossPattern(t);
+            _gridManager.PathDiagonalPattern(t);
 
             Vector3 abovePlayerTile = t.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
             Vector3 dir = t.transform.position - transform.position;
@@ -649,6 +649,9 @@ public class BossAI : MonoBehaviour
             _animator.Play("BossSquish");
             AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
             List<Tile> dangerTiles1 = _gridManager.BurnCrossPattern(t);
+            dangerTiles1.AddRange(_gridManager.BurnDiagonalPattern(t));
+
+            dangerTiles1 = dangerTiles1.OrderBy(tile => tile.GetDistance(t)).ToList();
 
             foreach (Tile dangerTile in dangerTiles1)
             {
@@ -659,7 +662,7 @@ public class BossAI : MonoBehaviour
 
                 if (_playerTile == null)
                 {
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(0.005f);
                     continue;
                 }
 
@@ -669,12 +672,13 @@ public class BossAI : MonoBehaviour
                     _playerController.StunPlayer(_bombingRunStunDuration);
                 }
 
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.005f);
             }
 
             Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
 
             _gridManager.PathCrossPattern(randTile);
+            _gridManager.PathDiagonalPattern(randTile);
 
             Vector3 aboveRandTile = randTile.transform.position + _slamJumpHeight * Vector3.up + _slamJumpHeight * Vector3.forward;
             dir = randTile.transform.position - transform.position;
@@ -699,6 +703,9 @@ public class BossAI : MonoBehaviour
             _animator.Play("BossSquish");
             AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
             List<Tile> dangerTiles2 = _gridManager.BurnCrossPattern(randTile);
+            dangerTiles2.AddRange(_gridManager.BurnDiagonalPattern(randTile));
+
+            dangerTiles2 = dangerTiles2.OrderBy(tile => tile.GetDistance(randTile)).ToList();
 
             foreach (Tile dangerTile in dangerTiles2)
             {
@@ -709,7 +716,7 @@ public class BossAI : MonoBehaviour
 
                 if (_playerTile == null)
                 {
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(0.005f);
                     continue;
                 }
 
@@ -719,7 +726,7 @@ public class BossAI : MonoBehaviour
                     _playerController.StunPlayer(_bombingRunStunDuration);
                 }
 
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.005f);
             }
         }
 
@@ -807,7 +814,7 @@ public class BossAI : MonoBehaviour
 
             if (_playerTile == null)
             {
-                yield return new WaitForSeconds(0.0015f);
+                yield return new WaitForSeconds(0.0005f);
                 continue;
             }
 

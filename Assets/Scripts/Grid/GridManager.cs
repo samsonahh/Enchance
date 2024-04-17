@@ -394,10 +394,129 @@ public class GridManager : MonoBehaviour
             crossedTiles.Add(_tiles[new Vector2(t.X, newY)]);
         }
 
-        crossedTiles = crossedTiles.OrderByDescending(tile => tile.GetDistance(t)).ToList();
-        crossedTiles.Reverse();
-
         return crossedTiles;
+    }
+
+    public List<Tile> PathDiagonalPattern(Tile t)
+    {
+        List<Tile> diagonalTiles = new List<Tile>();
+
+        int x = 0;
+        int y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                _tiles[new Vector2(t.X + x, t.Y + y)].Pathed = true;
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x += 2;
+            y += 2;
+        }
+
+        x = 0;
+        y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                _tiles[new Vector2(t.X + x, t.Y + y)].Pathed = true;
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x -= 2;
+            y -= 2;
+        }
+
+        x = 0;
+        y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                _tiles[new Vector2(t.X + x, t.Y + y)].Pathed = true;
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x += 2;
+            y -= 2;
+        }
+
+        x = 0;
+        y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                _tiles[new Vector2(t.X + x, t.Y + y)].Pathed = true;
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x -= 2;
+            y += 2;
+        }
+
+        return diagonalTiles;
+    }
+
+    public List<Tile> BurnDiagonalPattern(Tile t)
+    {
+        List<Tile> diagonalTiles = new List<Tile>();
+
+        int x = 0;
+        int y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x += 2;
+            y += 2;
+        }
+
+        x = 0;
+        y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x -= 2;
+            y -= 2;
+        }
+
+        x = 0;
+        y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x += 2;
+            y -= 2;
+        }
+
+        x = 0;
+        y = 0;
+        while (_tiles.ContainsKey(new Vector2(t.X + x, t.Y + y)))
+        {
+            if (!diagonalTiles.Contains(_tiles[new Vector2(t.X + x, t.Y + y)]))
+            {
+                diagonalTiles.Add(_tiles[new Vector2(t.X + x, t.Y + y)]);
+            }
+
+            x -= 2;
+            y += 2;
+        }
+
+        return diagonalTiles;
     }
 
     public List<Tile> BurnCheckerBoard(Tile bossTile, bool black)
@@ -425,8 +544,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        checkerTiles = checkerTiles.OrderByDescending(tile => tile.GetDistance(bossTile)).ToList();
-        checkerTiles.Reverse();
+        checkerTiles = checkerTiles.OrderBy(tile => tile.GetDistance(bossTile)).ToList();
 
         return checkerTiles;
     }
