@@ -131,6 +131,11 @@ public class PlayerController : MonoBehaviour
         HandleLevel();
         HandleAnimations();
         AssignTarget();
+
+        if (Input.GetKeyDown(KeyCode.Space) && Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            AddExp(ExpToNextLevel);
+        }
     }
 
     private void OnDrawGizmos()
@@ -560,6 +565,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleLevel()
     {
+        if (CurrentLevel == 99) return;
+
         if(CurrentExp >= ExpToNextLevel)
         {
             CurrentLevel++;

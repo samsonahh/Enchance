@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d82fb523a1260a44a8403ebb6a1222b, type: 3}
+  m_Name: CastTimeReduction
+  m_EditorClassIdentifier: 
+  <RewardType>k__BackingField: 4
+  <Name>k__BackingField: Fast Chanter
+  <Sprite>k__BackingField: {fileID: 1918031029, guid: a454af4fcd2d7be4eb5192429ab13c6d,
+    type: 3}
+  Description: Permanently decrease your cast time by 20%

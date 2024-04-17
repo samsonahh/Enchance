@@ -21,36 +21,29 @@ public class LevelUpCanvasManager : MonoBehaviour
 
     private void GenerateThreeRandomCards()
     {
-        for(int i = 0; i < 3; i++)
+        LevelUpReward[] randomRewards = LevelUpManager.Instance.GenerateThreeRandomAvailableRewards();
+
+        int noRewardCounter = 0;
+
+        for (int i = 0; i < 3; i++)
         {
-            while (true)
+            if (randomRewards[i] == LevelUpReward.NoMoreRewards)
             {
-                LevelUpReward generatedReward = LevelUpManager.Instance.GenerateRandomAvailableReward();
-
-                if (generatedReward == LevelUpReward.NoMoreRewards)
-                {
-                    continue;
-                }
-
-                for (int j = 0; j < 3; j++)
-                {
-                    if(_cards[j] != null)
-                    {
-                        if(_cards[j].Reward == generatedReward)
-                        {
-                            continue;
-                        }
-                    }
-                }
-
-                _cards[i] = Instantiate(_cardPrefab, _cardPositions[i]);
-
-                _cards[i].CardName.text = LevelUpManager.Instance.RewardDetailsArray[(int)generatedReward].Name;
-                _cards[i].CardImage.sprite = LevelUpManager.Instance.RewardDetailsArray[(int)generatedReward].Sprite;
-                _cards[i].CardDescription.text = LevelUpManager.Instance.RewardDetailsArray[(int)generatedReward].Description;
-                _cards[i].Reward = generatedReward;
-                break;
+                noRewardCounter++;
+                continue;
             }
+
+            _cards[i] = Instantiate(_cardPrefab, _cardPositions[i]);
+
+            _cards[i].CardName.text = LevelUpManager.Instance.Rewards[(int)randomRewards[i]].Name;
+            _cards[i].CardImage.sprite = LevelUpManager.Instance.Rewards[(int)randomRewards[i]].Sprite;
+            _cards[i].CardDescription.text = LevelUpManager.Instance.Rewards[(int)randomRewards[i]].Description;
+            _cards[i].Reward = LevelUpManager.Instance.Rewards[(int)randomRewards[i]].RewardType;
+        }
+
+        if(noRewardCounter == 3)
+        {
+            GameManager.Instance.UpdateGameState(GameState.Playing);
         }
     }
 
@@ -58,6 +51,8 @@ public class LevelUpCanvasManager : MonoBehaviour
     {
         for(int i = 0; i < 3; i++)
         {
+            if (_cards[i] == null) continue;
+
             Destroy(_cards[i].gameObject);
             _cards[i] = null;
         }

@@ -13274,6 +13274,8 @@ MonoBehaviour:
   - 0.75
   - 0.2
   - 0.05
+  CooldownReductionMultiplier: 1
+  CastTimeReductionMultiplier: 1
 --- !u!95 &1999210802
 Animator:
   serializedVersion: 5
@@ -13357,22 +13359,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486fc7134fecef84899817e3b75dc2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RewardPool: 
+  RewardPool: 0000000000000000000000000000000000000000
+  Rewards:
+  - {fileID: 11400000, guid: 3a916b8b81a7f5843aa4bfa389f9cfa2, type: 2}
+  - {fileID: 11400000, guid: 22f07b91fa8c1fd46bb8215c11e4db32, type: 2}
+  - {fileID: 11400000, guid: 388b5fd20238b734885fee4363ac7987, type: 2}
+  - {fileID: 11400000, guid: e9025e0797a08254fac36120d87be426, type: 2}
+  - {fileID: 11400000, guid: da2856d09c3f28e4b8ebdc9b21b8123c, type: 2}
   _hpIncreaseAmount: 2
-  MoreHPName: Tanky Body
-  MoreHPSprite: {fileID: 0}
-  MoreHPDescription: 
-  _speedIncreaseAmount: 1
-  SpeedName: Quickfeet
-  SpeedSprite: {fileID: 0}
-  SpeedDescription: 
+  _speedIncreaseAmount: 0.5
   _cooldownReduceFraction: 0.9
-  CooldownReductionName: Fast Chanter
-  CooldownReductionSprite: {fileID: 0}
-  CooldownReductionDescription: 
-  HigherChancesName: Lucky Roller
-  HigherChancesSprite: {fileID: 0}
-  HigherChancesDescription: 
+  _castTimeReduceFraction: 0.8
 --- !u!1 &2038840250
 GameObject:
   m_ObjectHideFlags: 0

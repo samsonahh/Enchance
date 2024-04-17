@@ -27,6 +27,9 @@ public class AbilityCaster : MonoBehaviour
     [Header("Chances")]
     public float[] StarChances = { 0.75f, 0.2f, 0.05f };
 
+    [HideInInspector] public float CooldownReductionMultiplier = 1f;
+    [HideInInspector] public float CastTimeReductionMultiplier = 1f;
+
     public static event Action<int, int> OnAbilityCast; // 0 - casting, 1 - finished cast
 
     private void Awake()
@@ -233,13 +236,13 @@ public class AbilityCaster : MonoBehaviour
     {
         CurrentAbilities[index].OnCooldown = true;
 
-        CurrentAbilities[index].Timer = CurrentAbilities[index].Cooldown;
+        CurrentAbilities[index].Timer = CurrentAbilities[index].Cooldown * CooldownReductionMultiplier;
 
         while(CurrentAbilities[index].Timer > 0)
         {
             CurrentAbilities[index].Timer -= Time.deltaTime;
 
-            _abilityCanvas.SetRectHeight(_abilityCanvas.CoolDownOverlays[index], (CurrentAbilities[index].Timer / CurrentAbilities[index].Cooldown) * _abilityCanvas.AbilityImages[index].rectTransform.rect.height);
+            _abilityCanvas.SetRectHeight(_abilityCanvas.CoolDownOverlays[index], (CurrentAbilities[index].Timer / (CurrentAbilities[index].Cooldown * CooldownReductionMultiplier)) * _abilityCanvas.AbilityImages[index].rectTransform.rect.height);
 
             yield return null;
         }
@@ -264,7 +267,7 @@ public class AbilityCaster : MonoBehaviour
         }
         OnAbilityCast?.Invoke(0, index);
 
-        yield return new WaitForSeconds(CurrentAbilities[index].CastTime);
+        yield return new WaitForSeconds(CurrentAbilities[index].CastTime * CastTimeReductionMultiplier);
 
         PlayerController.Instance.IsCasting = false;
 
