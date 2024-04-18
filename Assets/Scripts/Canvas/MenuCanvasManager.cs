@@ -52,8 +52,8 @@ public class MenuCanvasManager : MonoBehaviour
             desc.AbilityName.text = a.Name;
             desc.AbilityDesc.text = a.Description;
 
-            desc.AbilityName.color = Color.green;
-            desc.AbilityDesc.color = Color.green;
+            desc.AbilityName.color = GameManager.Instance.StarColors[0];
+            desc.AbilityDesc.color = GameManager.Instance.StarColors[0];
         }
 
         foreach (Ability a in two)
@@ -63,8 +63,8 @@ public class MenuCanvasManager : MonoBehaviour
             desc.AbilityName.text = a.Name;
             desc.AbilityDesc.text = a.Description;
 
-            desc.AbilityName.color = Color.cyan;
-            desc.AbilityDesc.color = Color.cyan;
+            desc.AbilityName.color = GameManager.Instance.StarColors[1];
+            desc.AbilityDesc.color = GameManager.Instance.StarColors[1];
         }
 
         foreach (Ability a in three)
@@ -74,8 +74,8 @@ public class MenuCanvasManager : MonoBehaviour
             desc.AbilityName.text = a.Name;
             desc.AbilityDesc.text = a.Description;
 
-            desc.AbilityName.color = Color.yellow;
-            desc.AbilityDesc.color = Color.yellow;
+            desc.AbilityName.color = GameManager.Instance.StarColors[2];
+            desc.AbilityDesc.color = GameManager.Instance.StarColors[2];
         }
     }
 

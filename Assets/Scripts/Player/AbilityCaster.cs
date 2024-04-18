@@ -25,7 +25,7 @@ public class AbilityCaster : MonoBehaviour
     public Transform CircleCastTransform;
 
     [Header("Chances")]
-    public float[] StarChances = { 0.75f, 0.2f, 0.05f };
+    public float[] StarChances = { 0.75f, 0.2f };
 
     [HideInInspector] public float CooldownReductionMultiplier = 1f;
     [HideInInspector] public float CastTimeReductionMultiplier = 1f;
@@ -136,6 +136,7 @@ public class AbilityCaster : MonoBehaviour
             foreach (Ability ability in Abilities.StarSortedAbilities[randomStar])
             {
                 availableAbilities.Add(ability);
+
                 if (CurrentAbilities[0] != null)
                 {
                     if (CurrentAbilities[0].Name.Equals(ability.Name))
@@ -168,6 +169,9 @@ public class AbilityCaster : MonoBehaviour
             Ability randomAbility = availableAbilities[randomIndex];
 
             _abilityCanvas.AbilityImages[index].sprite = randomAbility.IconSprite;
+
+            Color starColor = GameManager.Instance.StarColors[randomAbility.Star - 1];
+            _abilityCanvas.AbilityBackgrounds[index].color = new Color(starColor.r, starColor.g, starColor.b, 0.2f);
 
             CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
             break;
@@ -217,6 +221,9 @@ public class AbilityCaster : MonoBehaviour
                 Ability randomAbility = availableAbilities[randomIndex];
 
                 _abilityCanvas.AbilityImages[index].sprite = randomAbility.IconSprite;
+
+                Color starColor = GameManager.Instance.StarColors[randomAbility.Star - 1];
+                _abilityCanvas.AbilityBackgrounds[index].color = new Color(starColor.r, starColor.g, starColor.b, 0.2f);
 
                 CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
                 break;
@@ -416,7 +423,7 @@ public class AbilityCaster : MonoBehaviour
 
     private void HandleCastRadius()
     {
-        _castRadiusTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle || CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Self || CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Closest) && IsSelectingAbility);
+        _castRadiusTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle || CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Closest) && IsSelectingAbility);
     }
 
     private void HandleProjectileArrowPivot()
@@ -431,5 +438,5 @@ public enum AbilityType
     Circle,
     Self,
     Closest,
-    Beam,
+    Cone
 }

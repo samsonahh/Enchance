@@ -10,12 +10,5 @@ public class EarthShieldScript : MonoBehaviour
     private void Start()
     {
         PlayerController.Instance.ShieldPlayer(_shieldAmount, _duration);
-
-        Destroy(gameObject, _duration);
-    }
-
-    private void Update()
-    {
-        transform.position = PlayerController.Instance.transform.position;
     }
 }

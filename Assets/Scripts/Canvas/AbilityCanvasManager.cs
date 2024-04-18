@@ -7,6 +7,7 @@ using TMPro;
 public class AbilityCanvasManager : MonoBehaviour
 {
     public Image[] AbilityImages;
+    public Image[] AbilityBackgrounds;
     public RectTransform SelectedOverlay;
     public TMP_Text AbilityNameText;
     public TMP_Text[] AbilityStarChanceTexts;
@@ -45,9 +46,9 @@ public class AbilityCanvasManager : MonoBehaviour
 
         if (AbilityCaster.Instance.IsSelectingAbility)
         {
-            if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].Star == 1) AbilityNameText.color = Color.green;
-            if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].Star == 2) AbilityNameText.color = Color.cyan;
-            if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].Star == 3) AbilityNameText.color = Color.yellow;
+            if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].Star == 1) AbilityNameText.color = GameManager.Instance.StarColors[0];
+            if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].Star == 2) AbilityNameText.color = GameManager.Instance.StarColors[1];
+            if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].Star == 3) AbilityNameText.color = GameManager.Instance.StarColors[2];
 
             AbilityNameText.text = AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].Name;
         }
@@ -58,7 +59,7 @@ public class AbilityCanvasManager : MonoBehaviour
 
         AbilityStarChanceTexts[0].text = $"1*: {Mathf.Round(AbilityCaster.Instance.StarChances[0] * 100f)}%";
         AbilityStarChanceTexts[1].text = $"2*: {Mathf.Round(AbilityCaster.Instance.StarChances[1] * 100f)}%";
-        AbilityStarChanceTexts[2].text = $"3*: {Mathf.Round(AbilityCaster.Instance.StarChances[2] * 100f)}%";
+        AbilityStarChanceTexts[2].text = $"3*: {Mathf.Round((1 - AbilityCaster.Instance.StarChances[0] - AbilityCaster.Instance.StarChances[1]) * 100f)}%";
 
         if (AbilityDescriptionPanel.gameObject.activeSelf)
         {
@@ -70,21 +71,21 @@ public class AbilityCanvasManager : MonoBehaviour
 
             if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.HoveredAbility].Star == 1)
             {
-                AbilityDescriptionName.color = Color.green;
-                AbilityDescriptionStar.color = Color.green;
-                AbilityDescription.color = Color.green;
+                AbilityDescriptionName.color = GameManager.Instance.StarColors[0];
+                AbilityDescriptionStar.color = GameManager.Instance.StarColors[0];
+                AbilityDescription.color = GameManager.Instance.StarColors[0];
             }
             if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.HoveredAbility].Star == 2)
             {
-                AbilityDescriptionName.color = Color.cyan;
-                AbilityDescriptionStar.color = Color.cyan;
-                AbilityDescription.color = Color.cyan;
+                AbilityDescriptionName.color = GameManager.Instance.StarColors[1];
+                AbilityDescriptionStar.color = GameManager.Instance.StarColors[1];
+                AbilityDescription.color = GameManager.Instance.StarColors[1];
             }
             if (AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.HoveredAbility].Star == 3)
             {
-                AbilityDescriptionName.color = Color.yellow;
-                AbilityDescriptionStar.color = Color.yellow;
-                AbilityDescription.color = Color.yellow;
+                AbilityDescriptionName.color = GameManager.Instance.StarColors[2];
+                AbilityDescriptionStar.color = GameManager.Instance.StarColors[2];
+                AbilityDescription.color = GameManager.Instance.StarColors[2];
             }
         }
     }

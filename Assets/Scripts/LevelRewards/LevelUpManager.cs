@@ -30,11 +30,11 @@ public class LevelUpManager : MonoBehaviour
     #region HigherChances
     [Header("Higher Chances")]
     private float[][] _higherChanceLevels = {
-        new float[]{ 0.7f, 0.225f, 0.075f },
-        new float[]{ 0.65f, 0.25f, 0.1f },
-        new float[]{ 0.6f, 0.275f, 0.125f },
-        new float[]{ 0.55f, 0.3f, 0.15f },
-        new float[]{ 0.4f, 0.4f, 0.2f }
+        new float[]{ 0.7f, 0.225f },
+        new float[]{ 0.65f, 0.25f },
+        new float[]{ 0.6f, 0.275f },
+        new float[]{ 0.55f, 0.3f },
+        new float[]{ 0.4f, 0.4f }
     };
     #endregion
 

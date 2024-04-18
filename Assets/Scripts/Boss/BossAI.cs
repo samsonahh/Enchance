@@ -502,7 +502,7 @@ public class BossAI : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
+        Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f, 15f);
         Vector3 aboveRandTile = randTile.transform.position;
         dir = randTile.transform.position - transform.position;
         LookAtPlayer(dir);
@@ -532,23 +532,36 @@ public class BossAI : MonoBehaviour
             yield break;
         }
 
-        Tile[] dangerTiles = new Tile[13];
-        dangerTiles[0] = _gridManager.GetTileAtPosition(t.X + 2, t.Y + 2);
-        dangerTiles[1] = _gridManager.GetTileAtPosition(t.X + 2, t.Y);
-        dangerTiles[2] = _gridManager.GetTileAtPosition(t.X + 2, t.Y - 2);
-        dangerTiles[3] = _gridManager.GetTileAtPosition(t.X, t.Y - 2);
-        dangerTiles[4] = t;
-        dangerTiles[5] = _gridManager.GetTileAtPosition(t.X, t.Y + 2);
-        dangerTiles[6] = _gridManager.GetTileAtPosition(t.X - 2, t.Y + 2);
-        dangerTiles[7] = _gridManager.GetTileAtPosition(t.X - 2, t.Y);
-        dangerTiles[8] = _gridManager.GetTileAtPosition(t.X - 2, t.Y - 2);
-        if(_phase == 2)
+        Tile[] dangerBeforeCheckTiles = new Tile[13];
+        dangerBeforeCheckTiles[0] = _gridManager.GetTileAtPosition(t.X + 2, t.Y + 2);
+        dangerBeforeCheckTiles[1] = _gridManager.GetTileAtPosition(t.X + 2, t.Y);
+        dangerBeforeCheckTiles[2] = _gridManager.GetTileAtPosition(t.X + 2, t.Y - 2);
+        dangerBeforeCheckTiles[3] = _gridManager.GetTileAtPosition(t.X, t.Y - 2);
+        dangerBeforeCheckTiles[4] = t;
+        dangerBeforeCheckTiles[5] = _gridManager.GetTileAtPosition(t.X, t.Y + 2);
+        dangerBeforeCheckTiles[6] = _gridManager.GetTileAtPosition(t.X - 2, t.Y + 2);
+        dangerBeforeCheckTiles[7] = _gridManager.GetTileAtPosition(t.X - 2, t.Y);
+        dangerBeforeCheckTiles[8] = _gridManager.GetTileAtPosition(t.X - 2, t.Y - 2);
+        if (_phase == 2)
         {
-            dangerTiles[9] = _gridManager.GetTileAtPosition(t.X, t.Y - 4);
-            dangerTiles[10] = _gridManager.GetTileAtPosition(t.X, t.Y + 4);
-            dangerTiles[11] = _gridManager.GetTileAtPosition(t.X - 4, t.Y);
-            dangerTiles[12] = _gridManager.GetTileAtPosition(t.X + 4, t.Y);
+            dangerBeforeCheckTiles[9] = _gridManager.GetTileAtPosition(t.X, t.Y - 4);
+            dangerBeforeCheckTiles[10] = _gridManager.GetTileAtPosition(t.X, t.Y + 4);
+            dangerBeforeCheckTiles[11] = _gridManager.GetTileAtPosition(t.X - 4, t.Y);
+            dangerBeforeCheckTiles[12] = _gridManager.GetTileAtPosition(t.X + 4, t.Y);
         }
+
+        List<Tile> dangerTiles = new List<Tile>();
+
+        foreach (Tile dangerTile in dangerBeforeCheckTiles)
+        {
+            if (dangerTile != null)
+            {
+                dangerTiles.Add(dangerTile);
+                dangerTile.Pathed = true;
+            }
+        }
+
+        dangerTiles = dangerTiles.OrderBy(t => t.GetDistance(t)).ToList();
 
         foreach(Tile dangerTile in dangerTiles)
         {
@@ -577,6 +590,11 @@ public class BossAI : MonoBehaviour
         }
         transform.position = t.transform.position;
 
+        if(_phase == 2)
+        {
+            _bossStateCoroutines.Add(StartCoroutine(CheckPlayerBurning(2f)));
+        }
+
         CameraShake.Instance.Shake(0.25f, 0.25f);
         AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
         _animator.Play("BossSquish");
@@ -590,16 +608,38 @@ public class BossAI : MonoBehaviour
                 continue;
             }
 
-            if (_playerTile == dangerTile)
+            if(_phase == 1)
             {
-                _playerController.TakeDamage(_slamDamage);
-                _playerController.StunPlayer(_slamDuration + 0.5f);
-                break;
+                if (_playerTile == dangerTile)
+                {
+                    _playerController.TakeDamage(_slamDamage);
+                    _playerController.StunPlayer(_slamDuration + 0.5f);
+                    break;
+                }
+            }
+            else
+            {
+                dangerTile.Burning = true;
+                Instantiate(_lavaBlastParticlePrefab, dangerTile.transform.position, Quaternion.Euler(-90, 0, 0));
+
+                if (_playerTile == dangerTile)
+                {
+                    _playerController.TakeDamage(_slamDamage);
+                    _playerController.StunPlayer(_slamDuration + 0.5f);
+                }
             }
         }
 
-        _gridManager.ClearPath();
-        yield return new WaitForSeconds(0.5f);
+        if(_phase == 1)
+        {
+            _gridManager.ClearPath();
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+            _gridManager.ClearPath();
+        }
 
         ChangeBossState(BossState.FollowPlayer);
     }
@@ -675,7 +715,7 @@ public class BossAI : MonoBehaviour
                 yield return new WaitForSeconds(0.005f);
             }
 
-            Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f);
+            Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f, 15f);
 
             _gridManager.PathCrossPattern(randTile);
             _gridManager.PathDiagonalPattern(randTile);
@@ -814,7 +854,7 @@ public class BossAI : MonoBehaviour
 
             if (_playerTile == null)
             {
-                yield return new WaitForSeconds(0.0005f);
+                yield return null;
                 continue;
             }
 
@@ -824,7 +864,7 @@ public class BossAI : MonoBehaviour
                 _playerController.StunPlayer(_floorIsLavaStunDuration);
             }
 
-            yield return new WaitForSeconds(0.0015f);
+            yield return null;
         }
 
         yield return new WaitForSeconds(_floorIsLavaDuration);

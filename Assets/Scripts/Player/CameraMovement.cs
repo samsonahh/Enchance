@@ -52,21 +52,14 @@ public class CameraMovement : MonoBehaviour
         {
             if (_lastObstructingObjects.Count != 0)
             {
-                foreach (var thing in _lastObstructingObjects.Keys)
+                foreach (var o in _lastObstructingObjects.Keys)
                 {
-                    if (thing == null) continue;
-                    if (thing.TryGetComponent(out Renderer renderer))
+                    if (o == null) continue;
+                    if (o.TryGetComponent(out Renderer renderer))
                     {
-                        if (thing.tag == "Environment")
-                        {
-                            renderer.material = _lastObstructingObjects[thing];
-                        }
-                        else
-                        {
-                            renderer.material = _lastObstructingObjects[thing];
-                        }
+                        renderer.material = _lastObstructingObjects[o];
                     }
-                    if (thing.TryGetComponent(out SpriteRenderer sRenderer))
+                    if (o.TryGetComponent(out SpriteRenderer sRenderer))
                     {
                         sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, 1f);
                     }
@@ -93,14 +86,11 @@ public class CameraMovement : MonoBehaviour
                             _lastObstructingObjects.Add(hitObject, renderer.material);
                             renderer.material = _transparent3DMaterial;
                         }
-                        else
-                        {
-                            _lastObstructingObjects.Add(hitObject, renderer.material);
-                            renderer.material = _transparentSpriteMaterial;
-                        }
                     }
                     if (hitObject.TryGetComponent(out SpriteRenderer sRenderer))
                     {
+                        _lastObstructingObjects.Add(hitObject, renderer.material);
+                        renderer.material = _transparentSpriteMaterial;
                         sRenderer.color = new Color(sRenderer.color.r, sRenderer.color.g, sRenderer.color.b, 0.35f);
                     }
                 }

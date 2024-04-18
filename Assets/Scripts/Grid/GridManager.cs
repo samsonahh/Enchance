@@ -270,13 +270,14 @@ public class GridManager : MonoBehaviour
         return _tiles.Values.ToList()[randIndex];
     }
 
-    public Tile GetRandomTileAwayFromPlayer(float distance)
+    public Tile GetRandomTileAwayFromPlayer(float minDistance, float maxDistance)
     {
         List<Tile> validTiles = new List<Tile>();
 
-        foreach(Tile t in _tiles.Values)
+        foreach (Tile t in _tiles.Values)
         {
-            if(Vector3.Distance(t.transform.position, PlayerController.Instance.transform.position) > distance)
+            float distanceFromPlayer = Vector3.Distance(t.transform.position, PlayerController.Instance.transform.position);
+            if(distanceFromPlayer > minDistance && distanceFromPlayer < maxDistance)
             {
                 validTiles.Add(t);
             }

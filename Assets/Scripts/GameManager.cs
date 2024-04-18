@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public Color RedHealthColor;
     public Color EntityBurningColor;
     public Color EntityPoisonedColor;
+    public Color[] StarColors;
     #endregion
 
     private void Awake()

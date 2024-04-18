@@ -350,12 +350,12 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator TakeDamageCoroutine()
     {
-        _shieldRenderer.material.color = new Color(_shieldRenderer.material.color.r, _shieldRenderer.material.color.g, _shieldRenderer.material.color.b, 1);
+        _shieldRenderer.material.color = new Color(_shieldRenderer.material.color.r, _shieldRenderer.material.color.g, _shieldRenderer.material.color.b, 150f/255f);
 
         yield return new WaitForSeconds(0.15f);
 
         _spriteRenderer.color = _currentColor;
-        _shieldRenderer.material.color = new Color(_shieldRenderer.material.color.r, _shieldRenderer.material.color.g, _shieldRenderer.material.color.b, 70f/255f);
+        _shieldRenderer.material.color = new Color(_shieldRenderer.material.color.r, _shieldRenderer.material.color.g, _shieldRenderer.material.color.b, 35f/255f);
     }
 
     public void Heal(int hp)
