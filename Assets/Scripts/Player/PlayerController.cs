@@ -239,6 +239,8 @@ public class PlayerController : MonoBehaviour
 
     private void AssignTarget()
     {
+        if (GameManager.Instance.State != GameState.Playing) return;
+
         _restrictedMouseWorldPosition = Vector3.ClampMagnitude(MouseWorldPosition - transform.position, _autoAttackRadius) + transform.position;
 
         Collider[] collisions = Physics.OverlapCapsule(_restrictedMouseWorldPosition, _restrictedMouseWorldPosition + 5f * Vector3.up, _targetFindRadiusOnCursor);

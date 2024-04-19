@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] protected private SpriteRenderer _spriteRenderer;
     [SerializeField] private SpriteRenderer _targettedIndicator;
+    protected private NavMeshAgent _navMeshAgent;
     protected private Animator _animator;
 
     protected virtual float _distanceToPlayer => Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
@@ -83,11 +84,14 @@ public class EnemyController : MonoBehaviour
     protected virtual void OnStart()
     {
         _animator = GetComponent<Animator>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
 
         CurrentHealth = MaxHealth;
         _enemyNameText.text = _enemyName;
 
         EnemyRegularMoveSpeed = EnemyCurrentMoveSpeed;
+        _navMeshAgent.speed = EnemyCurrentMoveSpeed;
+        _navMeshAgent.enabled = false;
     }
 
     private void Start()
@@ -161,7 +165,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-
+        _navMeshAgent.enabled = false;
     }
 
     public virtual void TakeDamage(int damage)

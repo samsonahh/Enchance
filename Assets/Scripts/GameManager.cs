@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
     public Color[] StarColors;
     #endregion
 
+    #region Keys
+    [Header("Keys")]
+    public int[] BossRoomKeys = { 0, 0, 0 };
+    #endregion
+
     private void Awake()
     {
         Instance = this;

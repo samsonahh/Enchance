@@ -6072,6 +6072,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402176469}
   m_CullTransparentMesh: 1
+--- !u!1 &1421185546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1421185548}
+  - component: {fileID: 1421185547}
+  m_Layer: 0
+  m_Name: LevelRewardsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1421185547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421185546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486fc7134fecef84899817e3b75dc2c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RewardPool: 0000000000000000000000000000000000000000
+  Rewards:
+  - {fileID: 11400000, guid: 3a916b8b81a7f5843aa4bfa389f9cfa2, type: 2}
+  - {fileID: 11400000, guid: 22f07b91fa8c1fd46bb8215c11e4db32, type: 2}
+  - {fileID: 11400000, guid: 388b5fd20238b734885fee4363ac7987, type: 2}
+  - {fileID: 11400000, guid: e9025e0797a08254fac36120d87be426, type: 2}
+  - {fileID: 11400000, guid: da2856d09c3f28e4b8ebdc9b21b8123c, type: 2}
+  _hpIncreaseAmount: 2
+  _speedIncreaseAmount: 0.5
+  _cooldownReduceFraction: 0.9
+  _castTimeReduceFraction: 0.8
+--- !u!4 &1421185548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421185546}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 204, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1428094222
 GameObject:
   m_ObjectHideFlags: 0
@@ -13151,12 +13206,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940802966}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.22213206, z: 0.21213204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2038840251}
+  m_Father: {fileID: 1999210796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1967113072
 GameObject:
@@ -13433,7 +13488,6 @@ GameObject:
   - component: {fileID: 1999210796}
   - component: {fileID: 1999210797}
   - component: {fileID: 1999210798}
-  - component: {fileID: 1999210805}
   - component: {fileID: 1999210802}
   - component: {fileID: 1999210803}
   - component: {fileID: 1999210804}
@@ -13460,6 +13514,7 @@ Transform:
   - {fileID: 1428094223}
   - {fileID: 320405957}
   - {fileID: 744252217}
+  - {fileID: 1940802967}
   - {fileID: 2038840251}
   - {fileID: 700118495}
   m_Father: {fileID: 0}
@@ -13613,29 +13668,6 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
---- !u!114 &1999210805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999210795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 486fc7134fecef84899817e3b75dc2c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RewardPool: 0000000000000000000000000000000000000000
-  Rewards:
-  - {fileID: 11400000, guid: 3a916b8b81a7f5843aa4bfa389f9cfa2, type: 2}
-  - {fileID: 11400000, guid: 22f07b91fa8c1fd46bb8215c11e4db32, type: 2}
-  - {fileID: 11400000, guid: 388b5fd20238b734885fee4363ac7987, type: 2}
-  - {fileID: 11400000, guid: e9025e0797a08254fac36120d87be426, type: 2}
-  - {fileID: 11400000, guid: da2856d09c3f28e4b8ebdc9b21b8123c, type: 2}
-  _hpIncreaseAmount: 2
-  _speedIncreaseAmount: 0.5
-  _cooldownReduceFraction: 0.9
-  _castTimeReduceFraction: 0.8
 --- !u!1 &2038840250
 GameObject:
   m_ObjectHideFlags: 0
@@ -13667,7 +13699,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1479570349}
-  - {fileID: 1940802967}
   m_Father: {fileID: 1999210796}
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!212 &2038840252
@@ -13945,6 +13976,7 @@ SceneRoots:
   - {fileID: 1999210796}
   - {fileID: 1107746855}
   - {fileID: 1981988618}
+  - {fileID: 1421185548}
   - {fileID: 761431171}
   - {fileID: 341472965}
   - {fileID: 1452704174}

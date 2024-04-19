@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BossOpener : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _requiredEnemies;
     [SerializeField] private GameObject _bossDoor;
+    [SerializeField] private Transform _enemiesParent;
 
     private void Start()
     {
@@ -14,9 +14,9 @@ public class BossOpener : MonoBehaviour
 
     private void Update()
     {
-        foreach(GameObject enemy in _requiredEnemies)
+        foreach(Transform enemy in _enemiesParent)
         {
-            if(enemy != null)
+            if(enemy.gameObject != null)
             {
                 _bossDoor.SetActive(false);
                 return;

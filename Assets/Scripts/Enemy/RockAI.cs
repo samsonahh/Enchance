@@ -63,6 +63,8 @@ public class RockAI : EnemyController
 
     protected override void OnDeath()
     {
+        base.OnDeath();
+
         Destroy(gameObject);
     }
 
@@ -71,10 +73,12 @@ public class RockAI : EnemyController
         if (IsStunned)
         {
             _spriteRenderer.transform.parent.localRotation = Quaternion.Lerp(_spriteRenderer.transform.parent.localRotation, Quaternion.Euler(90f, 0, 0), 20f * Time.deltaTime);
+            _spriteRenderer.transform.parent.localPosition = Vector3.Lerp(_spriteRenderer.transform.parent.localPosition, new Vector3(0, 0.01f, 0), 20f * Time.deltaTime);
         }
         else
         {
             _spriteRenderer.transform.parent.localRotation = Quaternion.Lerp(_spriteRenderer.transform.parent.localRotation, Quaternion.Euler(45f, 0, 0), 20f * Time.deltaTime);
+            _spriteRenderer.transform.parent.localPosition = Vector3.Lerp(_spriteRenderer.transform.parent.localPosition, Vector3.zero, 20f * Time.deltaTime);
         }
     }
 
@@ -129,7 +133,8 @@ public class RockAI : EnemyController
 
                 _followTimer += Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(transform.position, PlayerController.Instance.transform.position, EnemyCurrentMoveSpeed * Time.deltaTime);
+                _navMeshAgent.speed = EnemyCurrentMoveSpeed;
+                _navMeshAgent.SetDestination(PlayerController.Instance.transform.position);
 
                 if(_followTimer >= _followPatienceDuration)
                 {
@@ -159,6 +164,8 @@ public class RockAI : EnemyController
 
         _followTimer = 0f;
 
+        _navMeshAgent.enabled = false;
+
         switch (state)
         {
             case RockState.Idle:
@@ -169,6 +176,7 @@ public class RockAI : EnemyController
                 _stateCoroutines.Add(StartCoroutine(StartledCoroutine()));
                 break;
             case RockState.FollowPlayer:
+                _navMeshAgent.enabled = true;
                 break;
             case RockState.RollToPlayer:
                 _animator.Play("RockRollFast");
