@@ -2469,6 +2469,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -3037,6 +3040,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -3214,6 +3220,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -4420,6 +4429,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -7970,6 +7982,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -8254,6 +8269,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -8467,6 +8485,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -8889,6 +8910,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -9470,6 +9494,9 @@ MonoBehaviour:
   _pushStartVelocity: 10
   _activateRange: 6
   _deactivateRange: 20
+  _wanderRange: 5
+  _wanderInterval: {x: 1, y: 3}
+  _wanderPauseTime: 1
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8

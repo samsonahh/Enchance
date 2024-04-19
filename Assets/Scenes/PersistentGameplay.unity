@@ -13386,6 +13386,7 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 0, a: 1}
+  BossRoomKeys: 000000000000000000000000
 --- !u!4 &1981988618
 Transform:
   m_ObjectHideFlags: 0

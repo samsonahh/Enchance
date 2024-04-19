@@ -10,6 +10,7 @@ public class RockAI : EnemyController
     private enum RockState
     {
         Idle,
+        Wander,
         Startled,
         FollowPlayer,
         RollToPlayer,
@@ -24,6 +25,13 @@ public class RockAI : EnemyController
     [Header("Idle Variables")]
     [SerializeField] private float _activateRange = 7.5f;
     [SerializeField] private float _deactivateRange = 20f;
+    #endregion
+
+    #region Wander
+    [Header("Wander Variables")]
+    [SerializeField] private float _wanderRange = 5f;
+    [SerializeField] private Vector2 _wanderInterval;
+    [SerializeField] private float _wanderPauseTime = 1f;
     #endregion
 
     #region Startled
@@ -51,7 +59,7 @@ public class RockAI : EnemyController
     {
         base.OnStart();
 
-        ChangeState(RockState.Idle);
+        ChangeState(RockState.Wander);
     }
 
     protected override void OnUpdate()
@@ -84,17 +92,14 @@ public class RockAI : EnemyController
 
     private void OnDrawGizmos()
     {
-        CustomGizmos.DrawWireDisk(transform.position, _activateRange, Color.red);
-        CustomGizmos.DrawDisk(transform.position, _activateRange, Color.red);
+        CustomGizmos.DrawWireDisk(transform.position, _activateRange, Color.green);
+
+        CustomGizmos.DrawWireDisk(_startPosition, _wanderRange, Color.red);
+        CustomGizmos.DrawDisk(_startPosition, _wanderRange, Color.red);
     }
 
     private void RockStateStateMachine()
     {
-        if(_distanceToPlayer > _deactivateRange)
-        {
-            ChangeState(RockState.Idle);
-        }
-
         if (IsStunned)
         {
             _animator.Play("RockIdle");
@@ -111,6 +116,19 @@ public class RockAI : EnemyController
                     ChangeState(RockState.Startled);
                 }
                 
+                if (CurrentHealth < MaxHealth)
+                {
+                    ChangeState(RockState.Startled);
+                }
+
+                break;
+            case RockState.Wander:
+
+                if (_distanceToPlayer < _activateRange)
+                {
+                    ChangeState(RockState.Startled);
+                }
+
                 if (CurrentHealth < MaxHealth)
                 {
                     ChangeState(RockState.Startled);
@@ -139,6 +157,11 @@ public class RockAI : EnemyController
                 if(_followTimer >= _followPatienceDuration)
                 {
                     ChangeState(RockState.RollToPlayer);
+                }
+
+                if (_distanceToPlayer > _deactivateRange)
+                {
+                    ChangeState(RockState.Wander);
                 }
 
                 break;
@@ -170,6 +193,10 @@ public class RockAI : EnemyController
         {
             case RockState.Idle:
                 _animator.Play("RockIdle");
+                break;
+            case RockState.Wander:
+                _navMeshAgent.enabled = true;
+                _stateCoroutines.Add(StartCoroutine(WanderCoroutine()));
                 break;
             case RockState.Startled:
                 _animator.Play("RockIdle");
@@ -224,6 +251,39 @@ public class RockAI : EnemyController
             {
                 ChangeState(RockState.RecoverFromRoll);
             }
+        }
+    }
+
+    IEnumerator WanderCoroutine()
+    {
+        while (true)
+        {
+            _navMeshAgent.enabled = true;
+
+            Vector2 randomCoords = _wanderRange * Random.insideUnitCircle;
+            Vector3 randomDest = new Vector3(randomCoords.x, 0, randomCoords.y) + _startPosition;
+
+            _animator.Play("RockRoll");
+            _navMeshAgent.speed = EnemyCurrentMoveSpeed;
+            _navMeshAgent.SetDestination(randomDest);
+            LookAt(randomDest);
+
+            float timer = 0f;
+            while(timer < Random.Range(_wanderInterval.x, _wanderInterval.y))
+            {
+                if(Vector3.Distance(randomDest, transform.position) <= 0.1f)
+                {
+                    break;
+                }
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            _animator.Play("RockIdle");
+            _navMeshAgent.enabled = false;
+
+            yield return new WaitForSeconds(_wanderPauseTime);
         }
     }
 

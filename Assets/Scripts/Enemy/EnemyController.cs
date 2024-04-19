@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     protected private Animator _animator;
 
     protected virtual float _distanceToPlayer => Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
+    protected private Vector3 _startPosition;
 
     [Header("Enemy UI")]
     [SerializeField] private Slider _healthSlider;
@@ -92,6 +93,8 @@ public class EnemyController : MonoBehaviour
         EnemyRegularMoveSpeed = EnemyCurrentMoveSpeed;
         _navMeshAgent.speed = EnemyCurrentMoveSpeed;
         _navMeshAgent.enabled = false;
+
+        _startPosition = transform.position;
     }
 
     private void Start()
@@ -158,6 +161,16 @@ public class EnemyController : MonoBehaviour
         Vector3 dir = PlayerController.Instance.transform.position - transform.position;
         if (Mathf.Abs(dir.x) > 0) 
         { 
+            _spriteRenderer.flipX = dir.x > 0;
+            _targettedIndicator.flipX = dir.x > 0;
+        }
+    }
+
+    protected virtual void LookAt(Vector3 target)
+    {
+        Vector3 dir = target - transform.position;
+        if (Mathf.Abs(dir.x) > 0)
+        {
             _spriteRenderer.flipX = dir.x > 0;
             _targettedIndicator.flipX = dir.x > 0;
         }
