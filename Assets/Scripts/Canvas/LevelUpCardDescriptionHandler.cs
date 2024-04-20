@@ -15,8 +15,6 @@ public class LevelUpCardDescriptionHandler : MonoBehaviour
     public void OnSelectButtonPressed()
     {
         LevelUpManager.Instance.ApplyReward(Reward);
-
-        GameManager.Instance.UpdateGameState(GameState.Playing);
     }
 
 

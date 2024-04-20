@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _expRequirementGrowth = 1.1f;
     [SerializeField] private int _expRequirementGrowthOffset = 10;
     [HideInInspector] public int ExpToNextLevel = 10;
+    [HideInInspector] public int QueuedLevels = 0;
 
     [SerializeField] private float _autoAttackRadius = 15f;
     [SerializeField] private float _targetFindRadiusOnCursor = 2f;
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour
         HandleTileChange();
         ManagePlayerHealth();
         HandleLevel();
+        HandleOverfillLevels();
         HandleAnimations();
         AssignTarget();
 
@@ -581,7 +583,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnPlayerLevelUp()
     {
+        QueuedLevels++;
+
         GameManager.Instance.UpdateGameState(GameState.LevelUpSelect);
+    }
+
+    private void HandleOverfillLevels()
+    {
+        if (GameManager.Instance.State != GameState.Playing) return;
+
+        if(QueuedLevels > 0)
+        {
+            GameManager.Instance.UpdateGameState(GameState.LevelUpSelect);
+        }
     }
 
     public void Cleanse()

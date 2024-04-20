@@ -130,6 +130,9 @@ public class LevelUpManager : MonoBehaviour
         }
 
         RewardPool[(int)reward]--;
+
+        PlayerController.Instance.QueuedLevels--;
+        GameManager.Instance.UpdateGameState(GameState.Playing);
     }
 }
 

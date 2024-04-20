@@ -178,7 +178,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-        _navMeshAgent.enabled = false;
+        
     }
 
     public virtual void TakeDamage(int damage)

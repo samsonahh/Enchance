@@ -95,7 +95,6 @@ public class RockAI : EnemyController
         CustomGizmos.DrawWireDisk(transform.position, _activateRange, Color.green);
 
         CustomGizmos.DrawWireDisk(_startPosition, _wanderRange, Color.red);
-        CustomGizmos.DrawDisk(_startPosition, _wanderRange, Color.red);
     }
 
     private void RockStateStateMachine()
@@ -151,8 +150,11 @@ public class RockAI : EnemyController
 
                 _followTimer += Time.deltaTime;
 
-                _navMeshAgent.speed = EnemyCurrentMoveSpeed;
-                _navMeshAgent.SetDestination(PlayerController.Instance.transform.position);
+                if (_navMeshAgent.enabled)
+                {
+                    _navMeshAgent.speed = EnemyCurrentMoveSpeed;
+                    _navMeshAgent.SetDestination(PlayerController.Instance.transform.position);
+                }
 
                 if(_followTimer >= _followPatienceDuration)
                 {
@@ -264,8 +266,11 @@ public class RockAI : EnemyController
             Vector3 randomDest = new Vector3(randomCoords.x, 0, randomCoords.y) + _startPosition;
 
             _animator.Play("RockRoll");
-            _navMeshAgent.speed = EnemyCurrentMoveSpeed;
-            _navMeshAgent.SetDestination(randomDest);
+            if (_navMeshAgent.enabled)
+            {
+                _navMeshAgent.speed = EnemyCurrentMoveSpeed;
+                _navMeshAgent.SetDestination(randomDest);
+            }
             LookAt(randomDest);
 
             float timer = 0f;
