@@ -138,7 +138,7 @@ public class RockAI : EnemyController
                 break;
             case RockState.FollowPlayer:
 
-                if (PlayerController.Instance.IsInvincible)
+                if (GameManager.Instance.PlayerControllerInstance.IsInvincible)
                 {
                     _animator.Play("RockIdle");
                     return;
@@ -153,7 +153,7 @@ public class RockAI : EnemyController
                 if (_navMeshAgent.enabled)
                 {
                     _navMeshAgent.speed = EnemyCurrentMoveSpeed;
-                    _navMeshAgent.SetDestination(PlayerController.Instance.transform.position);
+                    _navMeshAgent.SetDestination(GameManager.Instance.PlayerControllerInstance.transform.position);
                 }
 
                 if(_followTimer >= _followPatienceDuration)
@@ -305,7 +305,7 @@ public class RockAI : EnemyController
     {
         LookAtPlayer();
 
-        Vector3 dirToPlayer = PlayerController.Instance.transform.position - transform.position;
+        Vector3 dirToPlayer = GameManager.Instance.PlayerControllerInstance.transform.position - transform.position;
         Vector3 destToRoll = (dirToPlayer + 4.5f * dirToPlayer.normalized) + transform.position;
 
         while(Vector3.Distance(transform.position, destToRoll) > 0.05f)

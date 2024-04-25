@@ -1,19 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class CameraMovement : MonoBehaviour
+public class CameraMovement : NetworkBehaviour
 {
+    public static CameraMovement Instance;
     [SerializeField] private float _cameraSmoothTime;
 
     private Vector3 _offsetPosition;
-    [SerializeField] private Transform _target;
+    public Transform Target;
     private float _zoom = 10f;
 
     [SerializeField] private LayerMask _cameraCullLayer;
     [SerializeField] private Material _transparentSpriteMaterial;
     [SerializeField] private Material _transparent3DMaterial;
     private Dictionary<GameObject, Material> _lastObstructingObjects;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -23,6 +30,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Target == null) return;
+
         FollowPlayer();
         HandleZoom();
         MakeCoveringObjectsOpaque();
@@ -30,7 +39,7 @@ public class CameraMovement : MonoBehaviour
 
     private void FollowPlayer()
     {
-        transform.position = Vector3.Lerp(transform.position, _target.position + _offsetPosition, _cameraSmoothTime * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, Target.position + _offsetPosition, _cameraSmoothTime * Time.deltaTime);
     }
 
     private void HandleZoom()
@@ -44,7 +53,7 @@ public class CameraMovement : MonoBehaviour
 
     private void MakeCoveringObjectsOpaque()
     {
-        Vector3 dirToPlayer = _target.position - transform.position;
+        Vector3 dirToPlayer = Target.position - transform.position;
         Ray ray = new Ray(transform.position, dirToPlayer);
         RaycastHit[] hits;
 
@@ -75,7 +84,7 @@ public class CameraMovement : MonoBehaviour
             foreach(var hit in hits)
             {
                 if (hit.collider.gameObject == null) continue;
-                if (hit.collider.gameObject != _target.gameObject)
+                if (hit.collider.gameObject != Target.gameObject)
                 {
                     GameObject hitObject = hit.collider.gameObject;
 

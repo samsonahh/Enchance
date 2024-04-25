@@ -9,6 +9,6 @@ public class EarthShieldScript : MonoBehaviour
 
     private void Start()
     {
-        PlayerController.Instance.ShieldPlayer(_shieldAmount, _duration);
+        GameManager.Instance.PlayerControllerInstance.ShieldPlayer(_shieldAmount, _duration);
     }
 }

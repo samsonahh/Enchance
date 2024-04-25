@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -25,14 +26,30 @@ public class MainMenuManager : MonoBehaviour
         _loadingBarObject.SetActive(false);
     }
 
+    public void HostGame()
+    {
+        NetworkManager.Singleton.StartHost();
+
+        StartGame();
+    }
+
+    public void ClientJoinGame()
+    {
+        NetworkManager.Singleton.StartClient();
+
+        StartGame();
+    }
+
     public void StartGame()
     {
         HideMenu();
 
         _loadingBarObject.SetActive(true);
 
-        _scenesToLoad.Add(SceneManager.LoadSceneAsync(_persistentGameplay));
-        _scenesToLoad.Add(SceneManager.LoadSceneAsync(_practiceRange, LoadSceneMode.Additive));
+        _scenesToLoad.Add(SceneManager.LoadSceneAsync(_practiceRange));
+
+/*        _scenesToLoad.Add(SceneManager.LoadSceneAsync(_persistentGameplay));
+        _scenesToLoad.Add(SceneManager.LoadSceneAsync(_practiceRange, LoadSceneMode.Additive));*/
 
         StartCoroutine(ProgressLoadingBar());
     }

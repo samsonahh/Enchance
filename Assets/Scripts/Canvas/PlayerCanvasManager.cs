@@ -23,6 +23,8 @@ public class PlayerCanvasManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.PlayerControllerInstance == null) return;
+
         HandleHealthBar();
         HandleLevelBar();
         HandleShieldBar();
@@ -30,10 +32,10 @@ public class PlayerCanvasManager : MonoBehaviour
 
     private void HandleHealthBar()
     {
-        float playerHealthPercentage = (float)PlayerController.Instance.CurrentHealth/PlayerController.Instance.MaxHealth;
+        float playerHealthPercentage = (float)GameManager.Instance.PlayerControllerInstance.CurrentHealth/GameManager.Instance.PlayerControllerInstance.MaxHealth;
 
-        _playerHealthText.text = $"{PlayerController.Instance.CurrentHealth}/{PlayerController.Instance.MaxHealth}";
-        _playerHealthSlider.value = Mathf.Lerp(_playerHealthSlider.value, (float)PlayerController.Instance.CurrentHealth / PlayerController.Instance.MaxHealth, 5f * Time.deltaTime);
+        _playerHealthText.text = $"{GameManager.Instance.PlayerControllerInstance.CurrentHealth}/{GameManager.Instance.PlayerControllerInstance.MaxHealth}";
+        _playerHealthSlider.value = Mathf.Lerp(_playerHealthSlider.value, (float)GameManager.Instance.PlayerControllerInstance.CurrentHealth / GameManager.Instance.PlayerControllerInstance.MaxHealth, 5f * Time.deltaTime);
 
         // COLORS!!!
         if(playerHealthPercentage <= 1f && playerHealthPercentage > _yellowThreshold)
@@ -50,7 +52,7 @@ public class PlayerCanvasManager : MonoBehaviour
         {
             if (_canPlayLowHpDangerSfx)
             {
-                AudioSource.PlayClipAtPoint(_lowHpDangerSfx, PlayerController.Instance.transform.position);
+                AudioSource.PlayClipAtPoint(_lowHpDangerSfx, GameManager.Instance.PlayerControllerInstance.transform.position);
             }
             _canPlayLowHpDangerSfx = false;
             _playerHealthFill.color = Color.Lerp(_playerHealthFill.color, GameManager.Instance.RedHealthColor, 5f * Time.deltaTime);
@@ -59,16 +61,16 @@ public class PlayerCanvasManager : MonoBehaviour
 
     private void HandleLevelBar()
     {
-        _playerLevelText.text = $"{PlayerController.Instance.CurrentLevel}";
+        _playerLevelText.text = $"{GameManager.Instance.PlayerControllerInstance.CurrentLevel}";
 
-        float playerLevelPercentage = (float)PlayerController.Instance.CurrentExp / PlayerController.Instance.ExpToNextLevel;
+        float playerLevelPercentage = (float)GameManager.Instance.PlayerControllerInstance.CurrentExp / GameManager.Instance.PlayerControllerInstance.ExpToNextLevel;
 
         _playerExpSlider.value = Mathf.Lerp(_playerExpSlider.value, playerLevelPercentage, 5f * Time.deltaTime);
     }
 
     private void HandleShieldBar()
     {
-        float playerShieldPercentage = (float)PlayerController.Instance.CurrentShieldHealth / PlayerController.Instance.MaxHealth;
+        float playerShieldPercentage = (float)GameManager.Instance.PlayerControllerInstance.CurrentShieldHealth / GameManager.Instance.PlayerControllerInstance.MaxHealth;
 
         _playerShieldSlider.value = Mathf.Lerp(_playerShieldSlider.value, playerShieldPercentage, 5f * Time.deltaTime);
     }

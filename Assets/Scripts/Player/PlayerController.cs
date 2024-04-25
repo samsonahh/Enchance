@@ -1,18 +1,18 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Unity.Netcode;
 using System.Linq;
 using System.Collections.Generic;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _arrowPivot;
     [SerializeField] private Transform _staffGlowEffect;
     [SerializeField] private Renderer _shieldRenderer;
     private Animator _animator;
-
-    [HideInInspector] public static PlayerController Instance { get; private set; }
+    private PlayerNetworkManager _playerNetworkManager;
 
     [HideInInspector] public Vector3 ForwardDirection { get; private set; } = Vector3.right;
     [HideInInspector] public Vector3 LastForwardDirection { get; private set; }
@@ -102,7 +102,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        if(GameManager.Instance.PlayerControllerInstance == null)
+        {
+            GameManager.Instance.PlayerControllerInstance = this;
+        }
 
         AbilityCaster.OnAbilityCast += AbilityCaster_OnAbilityCast;
     }
@@ -115,6 +120,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _playerNetworkManager = GetComponent<PlayerNetworkManager>();
 
         CurrentHealth = MaxHealth;
         StartCoroutine(RegenHealth());
@@ -124,14 +130,29 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner)
+        {
+            transform.position = Vector3.Lerp(transform.position, _playerNetworkManager.NetworkPosition.Value, 200f * Time.deltaTime);
+
+            _spriteRenderer.flipX = _playerNetworkManager.NetworkFlipped.Value;
+
+            return;
+        }
+        else
+        {
+            CameraMovement.Instance.Target = transform;
+            _playerNetworkManager.NetworkPosition.Value = transform.position;
+            _playerNetworkManager.NetworkFlipped.Value = _spriteRenderer.flipX;
+        }
+
         GetMouseWorldPosition();
         HandlePlayerMoving();
         HandlePlayerFacingDirection();
         HandleTileChange();
+        HandleAnimations();
         ManagePlayerHealth();
         HandleLevel();
         HandleOverfillLevels();
-        HandleAnimations();
         AssignTarget();
 
         if (Input.GetKeyDown(KeyCode.Space) && Input.GetKeyDown(KeyCode.LeftShift))
@@ -160,7 +181,8 @@ public class PlayerController : MonoBehaviour
             MouseWorldPosition = ray.GetPoint(distance);
         }
     }
-    
+   
+
     private void HandleAnimations()
     {
         _animator.SetBool("IsMoving", IsMoving);
@@ -228,7 +250,7 @@ public class PlayerController : MonoBehaviour
     {
         LastForwardDirection = ForwardDirection;
         LastMouseWorldPosition = MouseWorldPosition;
-        LastCircleWorldPosition = AbilityCaster.Instance.CircleCastTransform.position;
+        LastCircleWorldPosition = GameManager.Instance.AbilityCasterInstance.CircleCastTransform.position;
         LastTarget = Target;
     }
 

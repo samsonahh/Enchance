@@ -32,9 +32,9 @@ public class CircleOfFireScript : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerController.Instance == null) return;
+        if (GameManager.Instance.PlayerControllerInstance == null) return;
 
-        transform.position = PlayerController.Instance.transform.position;
+        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
     }
 
     IEnumerator RingCoroutine()

@@ -20,10 +20,10 @@ public class PoisonMistScript : MonoBehaviour
 
     void Start()
     {
-        transform.position = PlayerController.Instance.transform.position;
-        _radius = AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].CircleCastRadius;
-        _maxRadius = AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].CastRadius;
-        _destination = PlayerController.Instance.LastCircleWorldPosition;
+        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
+        _radius = GameManager.Instance.AbilityCasterInstance.CurrentAbilities[GameManager.Instance.AbilityCasterInstance.SelectedAbility].CircleCastRadius;
+        _maxRadius = GameManager.Instance.AbilityCasterInstance.CurrentAbilities[GameManager.Instance.AbilityCasterInstance.SelectedAbility].CastRadius;
+        _destination = GameManager.Instance.PlayerControllerInstance.LastCircleWorldPosition;
 
         _poisonCircleParticle.gameObject.SetActive(false);
 

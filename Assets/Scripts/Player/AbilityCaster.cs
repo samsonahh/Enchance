@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class AbilityCaster : MonoBehaviour
+public class AbilityCaster : NetworkBehaviour
 {
-    [HideInInspector] public static AbilityCaster Instance;
-
     [Header("Global Abilities")]
     public Abilities Abilities;
     [SerializeField] private Ability _autoAttackAbility;
@@ -16,7 +15,6 @@ public class AbilityCaster : MonoBehaviour
     [HideInInspector] public Ability[] CurrentAbilities;
 
     [Header("Canvas")]
-    [SerializeField] private AbilityCanvasManager _abilityCanvas;
     [HideInInspector] public int HoveredAbility;
 
     [Header("Indicators")]
@@ -34,7 +32,10 @@ public class AbilityCaster : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if(GameManager.Instance.AbilityCasterInstance == null)
+        {
+            GameManager.Instance.AbilityCasterInstance = this;
+        }
 
         OnAbilityCast += HandleOnAbilityCast;
         SortAbilitiesByStar();
@@ -84,14 +85,14 @@ public class AbilityCaster : MonoBehaviour
     private void UseAbility(int index)
     {
         if (CurrentAbilities[index].OnCooldown) return;
-        if (PlayerController.Instance.IsCasting) return;
-        if (PlayerController.Instance.IsStunned) return;
-        if (!PlayerController.Instance.CanCast) return;
-        if (_abilityCanvas.AbilityDescriptionPanel.gameObject.activeSelf) return;
+        if (GameManager.Instance.PlayerControllerInstance.IsCasting) return;
+        if (GameManager.Instance.PlayerControllerInstance.IsStunned) return;
+        if (!GameManager.Instance.PlayerControllerInstance.CanCast) return;
+        if (AbilityCanvasManager.Instance.AbilityDescriptionPanel.gameObject.activeSelf) return;
 
         if (CurrentAbilities[index].AbilityType == AbilityType.Closest)
         {
-            if (PlayerController.Instance.Target == null)
+            if (GameManager.Instance.PlayerControllerInstance.Target == null)
             {
                 return;
             }
@@ -114,7 +115,7 @@ public class AbilityCaster : MonoBehaviour
     {
         if(index == 3)
         {
-            _abilityCanvas.AbilityImages[index].sprite = _autoAttackAbility.IconSprite;
+            AbilityCanvasManager.Instance.AbilityImages[index].sprite = _autoAttackAbility.IconSprite;
             CurrentAbilities[index] = Ability.CopyAbility(_autoAttackAbility);
             return;
         }
@@ -168,10 +169,10 @@ public class AbilityCaster : MonoBehaviour
             int randomIndex = UnityEngine.Random.Range(0, availableAbilities.Count);
             Ability randomAbility = availableAbilities[randomIndex];
 
-            _abilityCanvas.AbilityImages[index].sprite = randomAbility.IconSprite;
+            AbilityCanvasManager.Instance.AbilityImages[index].sprite = randomAbility.IconSprite;
 
             Color starColor = GameManager.Instance.StarColors[randomAbility.Star - 1];
-            _abilityCanvas.AbilityBackgrounds[index].color = new Color(starColor.r, starColor.g, starColor.b, 0.2f);
+            AbilityCanvasManager.Instance.AbilityBackgrounds[index].color = new Color(starColor.r, starColor.g, starColor.b, 0.2f);
 
             CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
             break;
@@ -220,10 +221,10 @@ public class AbilityCaster : MonoBehaviour
                 int randomIndex = UnityEngine.Random.Range(0, availableAbilities.Count);
                 Ability randomAbility = availableAbilities[randomIndex];
 
-                _abilityCanvas.AbilityImages[index].sprite = randomAbility.IconSprite;
+                AbilityCanvasManager.Instance.AbilityImages[index].sprite = randomAbility.IconSprite;
 
                 Color starColor = GameManager.Instance.StarColors[randomAbility.Star - 1];
-                _abilityCanvas.AbilityBackgrounds[index].color = new Color(starColor.r, starColor.g, starColor.b, 0.2f);
+                AbilityCanvasManager.Instance.AbilityBackgrounds[index].color = new Color(starColor.r, starColor.g, starColor.b, 0.2f);
 
                 CurrentAbilities[index] = Ability.CopyAbility(randomAbility);
                 break;
@@ -249,12 +250,12 @@ public class AbilityCaster : MonoBehaviour
         {
             CurrentAbilities[index].Timer -= Time.deltaTime;
 
-            _abilityCanvas.SetRectHeight(_abilityCanvas.CoolDownOverlays[index], (CurrentAbilities[index].Timer / (CurrentAbilities[index].Cooldown * CooldownReductionMultiplier)) * _abilityCanvas.AbilityImages[index].rectTransform.rect.height);
+            AbilityCanvasManager.Instance.SetRectHeight(AbilityCanvasManager.Instance.CoolDownOverlays[index], (CurrentAbilities[index].Timer / (CurrentAbilities[index].Cooldown * CooldownReductionMultiplier)) * AbilityCanvasManager.Instance.AbilityImages[index].rectTransform.rect.height);
 
             yield return null;
         }
 
-        _abilityCanvas.SetRectHeight(_abilityCanvas.CoolDownOverlays[index], 0);
+        AbilityCanvasManager.Instance.SetRectHeight(AbilityCanvasManager.Instance.CoolDownOverlays[index], 0);
 
         if(index != 3)
         {
@@ -270,13 +271,13 @@ public class AbilityCaster : MonoBehaviour
     {
         if(CurrentAbilities[index].CastTime != 0)
         {
-            PlayerController.Instance.IsCasting = true;
+            GameManager.Instance.PlayerControllerInstance.IsCasting = true;
         }
         OnAbilityCast?.Invoke(0, index);
 
         yield return new WaitForSeconds(CurrentAbilities[index].CastTime * CastTimeReductionMultiplier);
 
-        PlayerController.Instance.IsCasting = false;
+        GameManager.Instance.PlayerControllerInstance.IsCasting = false;
 
         OnAbilityCast?.Invoke(1, index);
 
@@ -285,11 +286,11 @@ public class AbilityCaster : MonoBehaviour
 
     private void SelectAbility()
     {
-        if (PlayerController.Instance.IsCasting) return;
+        if (GameManager.Instance.PlayerControllerInstance.IsCasting) return;
 
         if (!IsSelectingAbility)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) && PlayerController.Instance.Target != null)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && GameManager.Instance.PlayerControllerInstance.Target != null)
             {
                 UseAbility(3);
                 return;
@@ -326,9 +327,9 @@ public class AbilityCaster : MonoBehaviour
         _projectileArrowPivotTransform.localScale = new Vector3(_projectileArrowPivotTransform.localScale.x, _projectileArrowPivotTransform.localScale.y, CurrentAbilities[SelectedAbility].CastRadius);
         _castRadiusTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CastRadius, _castRadiusTransform.localScale.y, CurrentAbilities[SelectedAbility].CastRadius);
         CircleCastTransform.localScale = new Vector3(CurrentAbilities[SelectedAbility].CircleCastRadius, CircleCastTransform.localScale.y, CurrentAbilities[SelectedAbility].CircleCastRadius);
-        _abilityCanvas.SelectedOverlay.position = _abilityCanvas.CoolDownOverlays[SelectedAbility].transform.parent.position;
+        AbilityCanvasManager.Instance.SelectedOverlay.position = AbilityCanvasManager.Instance.CoolDownOverlays[SelectedAbility].transform.parent.position;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !_abilityCanvas.AbilityDescriptionPanel.gameObject.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !AbilityCanvasManager.Instance.AbilityDescriptionPanel.gameObject.activeSelf)
         {
             IsSelectingAbility = false;
             UseAbility(SelectedAbility);
@@ -362,7 +363,7 @@ public class AbilityCaster : MonoBehaviour
 
     public void UISelectAbility(int index)
     {
-        if (PlayerController.Instance.IsCasting) return;
+        if (GameManager.Instance.PlayerControllerInstance.IsCasting) return;
 
         if (!IsSelectingAbility)
         {
@@ -417,7 +418,7 @@ public class AbilityCaster : MonoBehaviour
     {
         CircleCastTransform.gameObject.SetActive((CurrentAbilities[SelectedAbility].AbilityType == AbilityType.Circle) && IsSelectingAbility);
 
-        CircleCastTransform.position = PlayerController.Instance.MouseWorldPosition;
+        CircleCastTransform.position = GameManager.Instance.PlayerControllerInstance.MouseWorldPosition;
         CircleCastTransform.localPosition = Vector3.ClampMagnitude(CircleCastTransform.localPosition, CurrentAbilities[SelectedAbility].CastRadius);
     }
 

@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     protected private NavMeshAgent _navMeshAgent;
     protected private Animator _animator;
 
-    protected virtual float _distanceToPlayer => Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
+    protected virtual float _distanceToPlayer => Vector3.Distance(GameManager.Instance.PlayerControllerInstance.transform.position, transform.position);
     protected private Vector3 _startPosition;
 
     [Header("Enemy UI")]
@@ -120,7 +120,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void HandleTargetting()
     {
-        IsTargetted = PlayerController.Instance.Target == gameObject;
+        IsTargetted = GameManager.Instance.PlayerControllerInstance.Target == gameObject;
         _targettedIndicator.gameObject.SetActive(IsTargetted);
     }
 
@@ -131,7 +131,7 @@ public class EnemyController : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            PlayerController.Instance.OnKillEnemy(_expDrop);
+            GameManager.Instance.PlayerControllerInstance.OnKillEnemy(_expDrop);
             OnDeath();
         }
     }
@@ -158,7 +158,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void LookAtPlayer()
     {
-        Vector3 dir = PlayerController.Instance.transform.position - transform.position;
+        Vector3 dir = GameManager.Instance.PlayerControllerInstance.transform.position - transform.position;
         if (Mathf.Abs(dir.x) > 0) 
         { 
             _spriteRenderer.flipX = dir.x > 0;

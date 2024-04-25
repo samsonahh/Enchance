@@ -41,9 +41,9 @@ public class MenuCanvasManager : MonoBehaviour
 
     private void PopulateAbilityScrolls()
     {
-        List<Ability> one = AbilityCaster.Instance.Abilities.StarSortedAbilities[0];
-        List<Ability> two = AbilityCaster.Instance.Abilities.StarSortedAbilities[1];
-        List<Ability> three = AbilityCaster.Instance.Abilities.StarSortedAbilities[2];
+        List<Ability> one = GameManager.Instance.AbilityCasterInstance.Abilities.StarSortedAbilities[0];
+        List<Ability> two = GameManager.Instance.AbilityCasterInstance.Abilities.StarSortedAbilities[1];
+        List<Ability> three = GameManager.Instance.AbilityCasterInstance.Abilities.StarSortedAbilities[2];
 
         foreach(Ability a in one)
         {

@@ -15,7 +15,7 @@ public class MagicBombScript : MonoBehaviour
 
     private void Start()
     {
-        transform.position = PlayerController.Instance.transform.position;
+        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
         _bombRadiusTransform.localScale = new Vector3(_explosionRadius * 2f, _explosionRadius * 2f, 1);
         _bombRadiusWarning.localScale = new Vector3(0, 0, 1);
 

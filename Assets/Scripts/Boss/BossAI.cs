@@ -134,7 +134,7 @@ public class BossAI : MonoBehaviour
 
     private void Start()
     {
-        _playerController = PlayerController.Instance;
+        _playerController = GameManager.Instance.PlayerControllerInstance;
         _gridManager = GridManager.Instance;
         _animator = GetComponent<Animator>();
 
@@ -179,7 +179,7 @@ public class BossAI : MonoBehaviour
 
                 _gridManager.ClearPath();
 
-                if (!PlayerController.Instance.IsVisible) return;
+                if (!GameManager.Instance.PlayerControllerInstance.IsVisible) return;
 
                 if (_gridManager.IsPathStraight(_path) || _gridManager.IsPathDiagonal(_path))
                 {
@@ -378,7 +378,7 @@ public class BossAI : MonoBehaviour
 
     protected virtual void HandleTargetting()
     {
-        _isTargetted = PlayerController.Instance.Target == gameObject;
+        _isTargetted = GameManager.Instance.PlayerControllerInstance.Target == gameObject;
         _targettedIndicator.gameObject.SetActive(_isTargetted);
     }
 
