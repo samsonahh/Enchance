@@ -110,7 +110,7 @@ public class RockAI : EnemyController
         {
             case RockState.Idle:
 
-                if(_distanceToPlayer < _activateRange)
+                if(DistanceToPlayer() < _activateRange)
                 {
                     ChangeState(RockState.Startled);
                 }
@@ -123,7 +123,7 @@ public class RockAI : EnemyController
                 break;
             case RockState.Wander:
 
-                if (_distanceToPlayer < _activateRange)
+                if (DistanceToPlayer() < _activateRange)
                 {
                     ChangeState(RockState.Startled);
                 }
@@ -161,7 +161,7 @@ public class RockAI : EnemyController
                     ChangeState(RockState.RollToPlayer);
                 }
 
-                if (_distanceToPlayer > _deactivateRange)
+                if (DistanceToPlayer() > _deactivateRange)
                 {
                     ChangeState(RockState.Wander);
                 }

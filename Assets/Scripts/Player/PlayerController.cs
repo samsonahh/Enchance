@@ -9,17 +9,17 @@ public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _arrowPivot;
-    [SerializeField] private Transform _staffGlowEffect;
+    public Transform StaffGlowEffect;
     [SerializeField] private Renderer _shieldRenderer;
     private Animator _animator;
     private PlayerNetworkManager _playerNetworkManager;
 
     [HideInInspector] public Vector3 ForwardDirection { get; private set; } = Vector3.right;
-    [HideInInspector] public Vector3 LastForwardDirection { get; private set; }
+    [HideInInspector] public Vector3 LastForwardDirection;
     [HideInInspector] public Vector3 MouseWorldPosition { get; private set; }
     private Vector3 _restrictedMouseWorldPosition;
-    [HideInInspector] public Vector3 LastMouseWorldPosition { get; private set; }
-    [HideInInspector] public Vector3 LastCircleWorldPosition { get; private set; }
+    [HideInInspector] public Vector3 LastMouseWorldPosition;
+    [HideInInspector] public Vector3 LastCircleWorldPosition;
     [HideInInspector] public GameObject Target { get; private set; }
     [HideInInspector] public GameObject LastTarget { get; private set; }
 
@@ -37,7 +37,7 @@ public class PlayerController : NetworkBehaviour
     #endregion
 
     #region Conditions
-    [HideInInspector] public bool IsMoving { get; private set; }
+    [HideInInspector] public bool IsMoving;
     [HideInInspector] public bool IsCasting;
     [HideInInspector] public bool IsStunned;
     [HideInInspector] public bool IsBurning;
@@ -112,8 +112,26 @@ public class PlayerController : NetworkBehaviour
         AbilityCaster.OnAbilityCast += AbilityCaster_OnAbilityCast;
     }
 
-    private void OnDestroy()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+
+        GameManager.Instance.Players.Add(this);
+
+        if (!IsOwner)
+        {
+            AbilityCaster.OnAbilityCast -= AbilityCaster_OnAbilityCast;
+            return;
+        }
+
+        GameManager.Instance.PlayerControllerInstance = this;
+        CameraMovement.Instance.Target = transform;
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+
         AbilityCaster.OnAbilityCast -= AbilityCaster_OnAbilityCast;
     }
 
@@ -132,17 +150,9 @@ public class PlayerController : NetworkBehaviour
     {
         if (!IsOwner)
         {
-            transform.position = Vector3.Lerp(transform.position, _playerNetworkManager.NetworkPosition.Value, 200f * Time.deltaTime);
-
-            _spriteRenderer.flipX = _playerNetworkManager.NetworkFlipped.Value;
-
+            HandleAnimations();
+            AssignTarget();
             return;
-        }
-        else
-        {
-            CameraMovement.Instance.Target = transform;
-            _playerNetworkManager.NetworkPosition.Value = transform.position;
-            _playerNetworkManager.NetworkFlipped.Value = _spriteRenderer.flipX;
         }
 
         GetMouseWorldPosition();
@@ -152,8 +162,8 @@ public class PlayerController : NetworkBehaviour
         HandleAnimations();
         ManagePlayerHealth();
         HandleLevel();
-        HandleOverfillLevels();
         AssignTarget();
+        HandleOverfillLevels();
 
         if (Input.GetKeyDown(KeyCode.Space) && Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -189,9 +199,9 @@ public class PlayerController : NetworkBehaviour
         _animator.SetBool("IsCasting", IsCasting);
         _animator.SetBool("IsStunned", IsStunned);
 
-        _staffGlowEffect.localPosition = _spriteRenderer.flipX ? new Vector3(-0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z) : new Vector3(0.508f, _staffGlowEffect.localPosition.y, _staffGlowEffect.localPosition.z);
+        StaffGlowEffect.localPosition = _spriteRenderer.flipX ? new Vector3(-0.508f, StaffGlowEffect.localPosition.y, StaffGlowEffect.localPosition.z) : new Vector3(0.508f, StaffGlowEffect.localPosition.y, StaffGlowEffect.localPosition.z);
         _spriteRenderer.enabled = IsVisible;
-        _staffGlowEffect.gameObject.SetActive(!IsInvincible && !AutoAttacking);
+        StaffGlowEffect.gameObject.SetActive(!IsInvincible && !AutoAttacking);
         _shieldRenderer.gameObject.SetActive(IsShielded);
     }
 

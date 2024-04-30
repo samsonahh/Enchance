@@ -2,25 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircleOfFireScript : MonoBehaviour
+public class CircleOfFireScript : AbilityComponent
 {
     [SerializeField] private ParticleSystem _particle;
     
     [SerializeField] private float _duration = 5f;
-    [SerializeField] private float _radius = 5f;
     [SerializeField] private float _rotationSpeed = 5f;
 
     private bool _detectingCollisions = true;
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, _radius);
+        Gizmos.DrawWireSphere(transform.position, _castRadius);
     }
 
     private void Start()
     {
         var shape = _particle.shape;
-        shape.radius = _radius;
+        shape.radius = _castRadius;
 
         var vel = _particle.velocityOverLifetime;
         vel.orbitalY = _rotationSpeed;
@@ -32,9 +31,9 @@ public class CircleOfFireScript : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.PlayerControllerInstance == null) return;
+        if (_playerController == null) return;
 
-        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
+        transform.position = _playerController.transform.position;
     }
 
     IEnumerator RingCoroutine()
@@ -59,7 +58,7 @@ public class CircleOfFireScript : MonoBehaviour
             SphereCollider collider = gameObject.AddComponent<SphereCollider>();
             collider.isTrigger = true;
             collider.radius = 1f;
-            collider.center = new Vector3(_radius * Mathf.Cos(i * (2 * Mathf.PI / spheres)), 0, _radius * Mathf.Sin(i * (2 * Mathf.PI / spheres)));
+            collider.center = new Vector3(_castRadius * Mathf.Cos(i * (2 * Mathf.PI / spheres)), 0, _castRadius * Mathf.Sin(i * (2 * Mathf.PI / spheres)));
         }
     }
 

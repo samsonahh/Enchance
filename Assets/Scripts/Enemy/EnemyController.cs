@@ -4,15 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
+using Unity.Netcode;
+using System.Linq;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : NetworkBehaviour
 {
     [SerializeField] protected private SpriteRenderer _spriteRenderer;
     [SerializeField] private SpriteRenderer _targettedIndicator;
     protected private NavMeshAgent _navMeshAgent;
     protected private Animator _animator;
+    protected private PlayerController _playerController;
 
-    protected virtual float _distanceToPlayer => Vector3.Distance(GameManager.Instance.PlayerControllerInstance.transform.position, transform.position);
+    protected virtual float DistanceToPlayer()
+    {
+        return Vector3.Distance(_playerController.transform.position, transform.position);
+    }
     protected private Vector3 _startPosition;
 
     [Header("Enemy UI")]
@@ -74,12 +80,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        
-    }
-
-    private void OnDestroy()
-    {
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     protected virtual void OnStart()
@@ -107,6 +108,7 @@ public class EnemyController : MonoBehaviour
         ManageEnemyHealth();
         HandleAnimations();
         HandleTargetting();
+        AssignPlayer();
     }
 
     private void Update()
@@ -156,9 +158,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    protected virtual void AssignPlayer()
+    {
+        PlayerController closestPlayer = GameManager.Instance.Players.OrderBy(player => Vector3.Distance(player.transform.position, transform.position)).ToList()[0];
+        _playerController = closestPlayer;
+    }
+
     protected virtual void LookAtPlayer()
     {
-        Vector3 dir = GameManager.Instance.PlayerControllerInstance.transform.position - transform.position;
+        Vector3 dir = _playerController.transform.position - transform.position;
         if (Mathf.Abs(dir.x) > 0) 
         { 
             _spriteRenderer.flipX = dir.x > 0;
@@ -178,7 +186,10 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-        
+        if (IsOwner)
+        {
+            GetComponent<NetworkObject>().Despawn();
+        }
     }
 
     public virtual void TakeDamage(int damage)

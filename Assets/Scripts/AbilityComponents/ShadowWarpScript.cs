@@ -2,30 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShadowWarpScript : MonoBehaviour
+public class ShadowWarpScript : AbilityComponent
 {
     [SerializeField] private GameObject _poofPrefab;
     [SerializeField] private float _duration;
 
     private void Start()
     {
-        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
+        transform.position = _playerController.transform.position;
         StartCoroutine(Poof());
     }
 
     IEnumerator Poof()
     {
-        GameManager.Instance.PlayerControllerInstance.IsInvincible = true;
-        GameManager.Instance.PlayerControllerInstance.IsVisible = false;
-        GameManager.Instance.PlayerControllerInstance.CanCast = false;
+        _playerController.IsInvincible = true;
+        _playerController.IsVisible = false;
+        _playerController.CanCast = false;
 
         yield return new WaitForSeconds(_duration);
 
-        Instantiate(_poofPrefab, GameManager.Instance.PlayerControllerInstance.transform.position, Quaternion.identity);
+        Instantiate(_poofPrefab, _playerController.transform.position, Quaternion.identity);
 
-        GameManager.Instance.PlayerControllerInstance.CanCast = true;
-        GameManager.Instance.PlayerControllerInstance.IsInvincible = false;
-        GameManager.Instance.PlayerControllerInstance.IsVisible = true;
+        _playerController.CanCast = true;
+        _playerController.IsInvincible = false;
+        _playerController.IsVisible = true;
 
         Destroy(gameObject);
         

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class AutoAttackScript : MonoBehaviour
+public class AutoAttackScript : AbilityComponent
 {
     [SerializeField] private ParticleSystem _particle;
     [SerializeField] private GameObject _wandSplashPrefab;
@@ -10,22 +11,20 @@ public class AutoAttackScript : MonoBehaviour
     [SerializeField] private int _damage = 1;
     [SerializeField] private float _speed = 10f;
 
-    private GameObject _target;
     private bool _detectingCollisions = true;
 
     private void Start()
     {
-        _target = GameManager.Instance.PlayerControllerInstance.LastTarget;
-        transform.position = GameObject.Find("StaffEffects").transform.localPosition + GameManager.Instance.PlayerControllerInstance.transform.position;
+        transform.position = _playerController.StaffGlowEffect.localPosition + _playerController.transform.position;
 
-        GameManager.Instance.PlayerControllerInstance.AutoAttacking = true;
+        _playerController.AutoAttacking = true;
     }
 
     private void Update()
     {
         if (_target == null)
         {
-            GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+            _playerController.AutoAttacking = false;
             Destroy(gameObject);
             return;
         }
@@ -38,26 +37,26 @@ public class AutoAttackScript : MonoBehaviour
         {
             if(_target.TryGetComponent(out EnemyController enemy))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (_playerController.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    _playerController.Heal(1);
                 }
 
                 enemy.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                _playerController.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (_playerController.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    _playerController.Heal(1);
                 }
 
                 boss.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                _playerController.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());
@@ -85,26 +84,26 @@ public class AutoAttackScript : MonoBehaviour
         {
             if (_target.TryGetComponent(out EnemyController enemy))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (_playerController.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    _playerController.Heal(1);
                 }
 
                 enemy.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                _playerController.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (_playerController.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    _playerController.Heal(1);
                 }
 
                 boss.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                _playerController.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());

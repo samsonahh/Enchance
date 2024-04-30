@@ -7,4 +7,19 @@ public class Abilities : ScriptableObject
 {
     [field: SerializeField] public Ability[] GameAbilities { get; private set; }
     [HideInInspector] public List<Ability>[] StarSortedAbilities { get; private set; } = { new List<Ability>(), new List<Ability>(), new List<Ability>() };
+
+    private void Awake()
+    {
+        IDAbilities();
+    }
+
+    private void IDAbilities()
+    {
+        if (GameAbilities.Length == 0) return;
+
+        for (int i = 0; i < GameAbilities.Length; i++)
+        {
+            GameAbilities[i].ID = i;
+        }
+    }
 }
