@@ -12,8 +12,8 @@ public class FireballScript : MonoBehaviour
 
     private void Start()
     {
-        transform.position = GameManager.Instance.AbilityCasterInstance.transform.position;
-        _target = transform.position + GameManager.Instance.AbilityCasterInstance.CurrentAbilities[GameManager.Instance.AbilityCasterInstance.SelectedAbility].CastRadius * GameManager.Instance.PlayerControllerInstance.LastForwardDirection;
+        transform.position = AbilityCaster.Instance.transform.position;
+        _target = transform.position + AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].CastRadius * PlayerController.Instance.LastForwardDirection;
     }
 
     private void Update()

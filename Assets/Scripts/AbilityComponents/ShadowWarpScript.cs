@@ -9,23 +9,23 @@ public class ShadowWarpScript : MonoBehaviour
 
     private void Start()
     {
-        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
+        transform.position = PlayerController.Instance.transform.position;
         StartCoroutine(Poof());
     }
 
     IEnumerator Poof()
     {
-        GameManager.Instance.PlayerControllerInstance.IsInvincible = true;
-        GameManager.Instance.PlayerControllerInstance.IsVisible = false;
-        GameManager.Instance.PlayerControllerInstance.CanCast = false;
+        PlayerController.Instance.IsInvincible = true;
+        PlayerController.Instance.IsVisible = false;
+        PlayerController.Instance.CanCast = false;
 
         yield return new WaitForSeconds(_duration);
 
-        Instantiate(_poofPrefab, GameManager.Instance.PlayerControllerInstance.transform.position, Quaternion.identity);
+        Instantiate(_poofPrefab, PlayerController.Instance.transform.position, Quaternion.identity);
 
-        GameManager.Instance.PlayerControllerInstance.CanCast = true;
-        GameManager.Instance.PlayerControllerInstance.IsInvincible = false;
-        GameManager.Instance.PlayerControllerInstance.IsVisible = true;
+        PlayerController.Instance.CanCast = true;
+        PlayerController.Instance.IsInvincible = false;
+        PlayerController.Instance.IsVisible = true;
 
         Destroy(gameObject);
         

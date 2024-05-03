@@ -9,12 +9,12 @@ public class TwinkleToesScript : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.PlayerControllerInstance.ChangeCurrentMoveSpeed(_additionalSpeed + GameManager.Instance.PlayerControllerInstance.PlayerRegularMoveSpeed, _duration);
+        PlayerController.Instance.ChangeCurrentMoveSpeed(_additionalSpeed + PlayerController.Instance.PlayerRegularMoveSpeed, _duration);
         Destroy(gameObject, _duration);
     }
 
     private void Update()
     {
-        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
+        transform.position = PlayerController.Instance.transform.position;
     }
 }

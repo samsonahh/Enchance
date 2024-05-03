@@ -8,13 +8,13 @@ public class VampireScript : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.PlayerControllerInstance.EnableLifeSteal(_duration);
+        PlayerController.Instance.EnableLifeSteal(_duration);
 
         Destroy(gameObject, _duration);
     }
 
     private void Update()
     {
-        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
+        transform.position = PlayerController.Instance.transform.position;
     }
 }

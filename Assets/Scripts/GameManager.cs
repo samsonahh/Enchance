@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public PlayerController PlayerControllerInstance;
-    public AbilityCaster AbilityCasterInstance;
 
     public GameState State;
 
@@ -32,8 +30,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
     private void Start()

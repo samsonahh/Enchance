@@ -28,7 +28,7 @@ public class SeparateSceneLoadTrigger : MonoBehaviour
 
     IEnumerator SwitchSceneCoroutine(float fadeDuration, float fadeInDelay)
     {
-        GameManager.Instance.PlayerControllerInstance.CanMove = false;
+        PlayerController.Instance.CanMove = false;
 
         _fadeCanvasObject.SetActive(true);
         for(float timer = 0; timer < fadeDuration; timer += Time.unscaledDeltaTime)
@@ -50,7 +50,7 @@ public class SeparateSceneLoadTrigger : MonoBehaviour
         _fadePanelImage.color = Color.clear;
         _fadeCanvasObject.SetActive(false);
 
-        GameManager.Instance.PlayerControllerInstance.CanMove = true;
+        PlayerController.Instance.CanMove = true;
 
         Destroy(gameObject);
     }

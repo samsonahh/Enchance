@@ -11,13 +11,13 @@ public class SlowpokeScript : MonoBehaviour
 
     void Start()
     {
-        if(GameManager.Instance.PlayerControllerInstance.Target == null)
+        if(PlayerController.Instance.Target == null)
         {
             Destroy(gameObject);
             return;
         }
 
-        if (GameManager.Instance.PlayerControllerInstance.Target.TryGetComponent(out BossAI boss))
+        if (PlayerController.Instance.Target.TryGetComponent(out BossAI boss))
         {
             _targetTransform = boss.transform;
             boss.ChangeCurrentMoveSpeed(0.5f, _duration);
@@ -25,7 +25,7 @@ public class SlowpokeScript : MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance.PlayerControllerInstance.Target.TryGetComponent(out EnemyController enemy))
+        if (PlayerController.Instance.Target.TryGetComponent(out EnemyController enemy))
         {
             _targetTransform = enemy.transform;
             enemy.ChangeCurrentMoveSpeed(_newSpeed, _duration);

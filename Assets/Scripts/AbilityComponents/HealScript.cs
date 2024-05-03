@@ -11,12 +11,12 @@ public class HealScript : MonoBehaviour
 
     private void Start()
     {
-        AudioSource.PlayClipAtPoint(_sfx, GameManager.Instance.PlayerControllerInstance.transform.position);
-        GameManager.Instance.PlayerControllerInstance.Heal(_healAmount);
-/*        GameManager.Instance.PlayerControllerInstance.BurnTicks = 0;
-        if(GameManager.Instance.PlayerControllerInstance.PlayerRegularMoveSpeed > GameManager.Instance.PlayerControllerInstance.PlayerCurrentMoveSpeed)
+        AudioSource.PlayClipAtPoint(_sfx, PlayerController.Instance.transform.position);
+        PlayerController.Instance.Heal(_healAmount);
+/*        PlayerController.Instance.BurnTicks = 0;
+        if(PlayerController.Instance.PlayerRegularMoveSpeed > PlayerController.Instance.PlayerCurrentMoveSpeed)
         {
-            GameManager.Instance.PlayerControllerInstance.ChangeCurrentMoveSpeed(GameManager.Instance.PlayerControllerInstance.PlayerRegularMoveSpeed, 0.1f);
+            PlayerController.Instance.ChangeCurrentMoveSpeed(PlayerController.Instance.PlayerRegularMoveSpeed, 0.1f);
         }*/
 
         Destroy(gameObject, _duration);
@@ -24,6 +24,6 @@ public class HealScript : MonoBehaviour
 
     private void Update()
     {
-        transform.position = GameManager.Instance.PlayerControllerInstance.transform.position;
+        transform.position = PlayerController.Instance.transform.position;
     }
 }

@@ -16,8 +16,8 @@ public class LightningScript : MonoBehaviour
 
     private void Start()
     {
-        transform.position = GameManager.Instance.PlayerControllerInstance.LastCircleWorldPosition;
-        _strikeRadius = GameManager.Instance.AbilityCasterInstance.CurrentAbilities[GameManager.Instance.AbilityCasterInstance.SelectedAbility].CircleCastRadius;
+        transform.position = PlayerController.Instance.LastCircleWorldPosition;
+        _strikeRadius = AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].CircleCastRadius;
         _collider = GetComponent<SphereCollider>();
 
         _collider.radius = _strikeRadius;

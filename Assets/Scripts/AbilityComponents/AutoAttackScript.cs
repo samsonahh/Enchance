@@ -15,17 +15,17 @@ public class AutoAttackScript : MonoBehaviour
 
     private void Start()
     {
-        _target = GameManager.Instance.PlayerControllerInstance.LastTarget;
-        transform.position = GameObject.Find("StaffEffects").transform.localPosition + GameManager.Instance.PlayerControllerInstance.transform.position;
+        _target = PlayerController.Instance.LastTarget;
+        transform.position = GameObject.Find("StaffEffects").transform.localPosition + PlayerController.Instance.transform.position;
 
-        GameManager.Instance.PlayerControllerInstance.AutoAttacking = true;
+        PlayerController.Instance.AutoAttacking = true;
     }
 
     private void Update()
     {
         if (_target == null)
         {
-            GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+            PlayerController.Instance.AutoAttacking = false;
             Destroy(gameObject);
             return;
         }
@@ -38,26 +38,26 @@ public class AutoAttackScript : MonoBehaviour
         {
             if(_target.TryGetComponent(out EnemyController enemy))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (PlayerController.Instance.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    PlayerController.Instance.Heal(1);
                 }
 
                 enemy.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (PlayerController.Instance.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    PlayerController.Instance.Heal(1);
                 }
 
                 boss.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());
@@ -85,26 +85,26 @@ public class AutoAttackScript : MonoBehaviour
         {
             if (_target.TryGetComponent(out EnemyController enemy))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (PlayerController.Instance.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    PlayerController.Instance.Heal(1);
                 }
 
                 enemy.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());
             }
             if (_target.TryGetComponent(out BossAI boss))
             {
-                if (GameManager.Instance.PlayerControllerInstance.LifeSteal)
+                if (PlayerController.Instance.LifeSteal)
                 {
-                    GameManager.Instance.PlayerControllerInstance.Heal(1);
+                    PlayerController.Instance.Heal(1);
                 }
 
                 boss.TakeDamage(_damage);
-                GameManager.Instance.PlayerControllerInstance.AutoAttacking = false;
+                PlayerController.Instance.AutoAttacking = false;
                 Instantiate(_wandSplashPrefab, transform.position, Quaternion.identity);
                 _detectingCollisions = false;
                 StartCoroutine(DestroySelfCoroutine());

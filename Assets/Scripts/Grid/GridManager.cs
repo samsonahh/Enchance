@@ -276,7 +276,7 @@ public class GridManager : MonoBehaviour
 
         foreach (Tile t in _tiles.Values)
         {
-            float distanceFromPlayer = Vector3.Distance(t.transform.position, GameManager.Instance.PlayerControllerInstance.transform.position);
+            float distanceFromPlayer = Vector3.Distance(t.transform.position, PlayerController.Instance.transform.position);
             if(distanceFromPlayer > minDistance && distanceFromPlayer < maxDistance)
             {
                 validTiles.Add(t);

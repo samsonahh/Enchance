@@ -110,20 +110,20 @@ public class LevelUpManager : MonoBehaviour
         switch (reward)
         {
             case LevelUpReward.MoreHP:
-                GameManager.Instance.PlayerControllerInstance.MaxHealth += _hpIncreaseAmount;
+                PlayerController.Instance.MaxHealth += _hpIncreaseAmount;
                 break;
             case LevelUpReward.Speed:
-                GameManager.Instance.PlayerControllerInstance.PlayerRegularMoveSpeed += _speedIncreaseAmount;
-                GameManager.Instance.PlayerControllerInstance.ChangeCurrentMoveSpeed(GameManager.Instance.PlayerControllerInstance.PlayerRegularMoveSpeed, 0f);
+                PlayerController.Instance.PlayerRegularMoveSpeed += _speedIncreaseAmount;
+                PlayerController.Instance.ChangeCurrentMoveSpeed(PlayerController.Instance.PlayerRegularMoveSpeed, 0f);
                 break;
             case LevelUpReward.CooldownReduction:
-                GameManager.Instance.AbilityCasterInstance.CooldownReductionMultiplier *= _cooldownReduceFraction;
+                AbilityCaster.Instance.CooldownReductionMultiplier *= _cooldownReduceFraction;
                 break;
             case LevelUpReward.HigherChances:
-                GameManager.Instance.AbilityCasterInstance.StarChances = _higherChanceLevels[5 - RewardPool[(int)LevelUpReward.HigherChances]];
+                AbilityCaster.Instance.StarChances = _higherChanceLevels[5 - RewardPool[(int)LevelUpReward.HigherChances]];
                 break;
             case LevelUpReward.CastTimeReduction:
-                GameManager.Instance.AbilityCasterInstance.CastTimeReductionMultiplier *= _castTimeReduceFraction;
+                AbilityCaster.Instance.CastTimeReductionMultiplier *= _castTimeReduceFraction;
                 break;
             default:
                 break;
@@ -131,7 +131,7 @@ public class LevelUpManager : MonoBehaviour
 
         RewardPool[(int)reward]--;
 
-        GameManager.Instance.PlayerControllerInstance.QueuedLevels--;
+        PlayerController.Instance.QueuedLevels--;
         GameManager.Instance.UpdateGameState(GameState.Playing);
     }
 }
