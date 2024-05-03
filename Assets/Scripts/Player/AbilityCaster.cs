@@ -6,8 +6,6 @@ using Unity.Netcode;
 
 public class AbilityCaster : NetworkBehaviour
 {
-    private PlayerController _playerController;
-
     [Header("Global Abilities")]
     public Abilities Abilities;
     [SerializeField] private Ability _autoAttackAbility;
@@ -34,31 +32,22 @@ public class AbilityCaster : NetworkBehaviour
 
     private void Awake()
     {
-        _playerController = GetComponent<PlayerController>();
+        if(GameManager.Instance.AbilityCasterInstance == null)
+        {
+            GameManager.Instance.AbilityCasterInstance = this;
+        }
+
+        OnAbilityCast += HandleOnAbilityCast;
         SortAbilitiesByStar();
     }
 
-    public override void OnNetworkSpawn()
+    private void OnDestroy()
     {
-        base.OnNetworkSpawn();
-
-        if (!IsOwner)
-        {
-            return;
-        }
-
-        GameManager.Instance.AbilityCasterInstance = this;
-    }
-
-    public override void OnDestroy()
-    {
-        base.OnDestroy();
+        OnAbilityCast -= HandleOnAbilityCast;
     }
 
     private void Start()
     {
-        if (!IsOwner) return;
-
         CurrentAbilities = new Ability[4];
         SelectedAbility = 3;
 
@@ -68,8 +57,6 @@ public class AbilityCaster : NetworkBehaviour
     private void Update()
     {
         if (GameManager.Instance.State != GameState.Playing) return;
-
-        if (!IsOwner) return;
 
         HandleCircleCast();
         HandleCastRadius();
@@ -117,7 +104,6 @@ public class AbilityCaster : NetworkBehaviour
     private void SortAbilitiesByStar()
     {
         if (Abilities.GameAbilities.Length == 0) return;
-        if (Abilities.StarSortedAbilities[0].Count != 0) return;
 
         foreach(Ability a in Abilities.GameAbilities)
         {
@@ -294,7 +280,6 @@ public class AbilityCaster : NetworkBehaviour
         GameManager.Instance.PlayerControllerInstance.IsCasting = false;
 
         OnAbilityCast?.Invoke(1, index);
-        HandleOnAbilityCast(index);
 
         StartCoroutine(AbilityCooldown(index));
     }
@@ -400,53 +385,17 @@ public class AbilityCaster : NetworkBehaviour
             SelectedAbility = index;
         }
     }
-
-    private void HandleOnAbilityCast(int index)
+    private void HandleOnAbilityCast(int i, int index)
     {
-        if (CurrentAbilities[index].AbilityPrefab != null)
+        if (i == 0) return;
+
+        if(i == 1)
         {
-            if(index == 3)
+            if(CurrentAbilities[index].AbilityPrefab != null)
             {
-                RequestAbilityCastServerRpc(-1);
-
-                FireAbility(-1);
-
-                return;
+                Instantiate(CurrentAbilities[index].AbilityPrefab, transform.position, Quaternion.identity);
             }
-
-            RequestAbilityCastServerRpc(CurrentAbilities[index].ID);
-
-            FireAbility(CurrentAbilities[index].ID);
-        }
-    }
-
-    [ServerRpc]
-    private void RequestAbilityCastServerRpc(int ID)
-    {
-        AbilityCastClientRpc(ID);
-    }
-
-    [ClientRpc]
-    private void AbilityCastClientRpc(int ID)
-    {
-        if (!IsOwner) FireAbility(ID);
-    }
-
-    private void FireAbility(int ID)
-    {
-        if(ID == -1)
-        {
-            var auto = Instantiate(_autoAttackAbility.AbilityPrefab, transform.position, Quaternion.identity);
-
-            auto.GetComponent<AbilityComponent>().Init(_playerController, _playerController.LastForwardDirection, _playerController.LastMouseWorldPosition,
-                _playerController.LastCircleWorldPosition, _playerController.LastTarget, _autoAttackAbility.CastRadius, _autoAttackAbility.CircleCastRadius);
-            return;
-        }
-
-        var ability = Instantiate(Abilities.GameAbilities[ID].AbilityPrefab, transform.position, Quaternion.identity);
-
-        ability.GetComponent<AbilityComponent>().Init(_playerController, _playerController.LastForwardDirection, _playerController.LastMouseWorldPosition,
-            _playerController.LastCircleWorldPosition, _playerController.LastTarget, Abilities.GameAbilities[ID].CastRadius, Abilities.GameAbilities[ID].CircleCastRadius);
+        }  
     }
 
     public void AssignHoveredAbility(int index)

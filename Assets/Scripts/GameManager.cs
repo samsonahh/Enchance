@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
     public int[] BossRoomKeys = { 0, 0, 0 };
     #endregion
 
-    public List<PlayerController> Players;
-
     private void Awake()
     {
         Instance = this;

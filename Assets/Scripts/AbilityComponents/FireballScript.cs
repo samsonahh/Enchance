@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireballScript : AbilityComponent
+public class FireballScript : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
     [SerializeField] private int _damage = 5;
     [SerializeField] private GameObject _splashPrefab;
 
-    private Vector3 _targetPos;
+    private Vector3 _target;
 
     private void Start()
     {
-        transform.position = _playerController.transform.position;
-        _targetPos = transform.position + _castRadius * _lastForwardDir;
+        transform.position = GameManager.Instance.AbilityCasterInstance.transform.position;
+        _target = transform.position + GameManager.Instance.AbilityCasterInstance.CurrentAbilities[GameManager.Instance.AbilityCasterInstance.SelectedAbility].CastRadius * GameManager.Instance.PlayerControllerInstance.LastForwardDirection;
     }
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _targetPos, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position, _targetPos) <= 0.01f)
+        if(Vector3.Distance(transform.position, _target) <= 0.01f)
         {
             DoAreaDamage(_damage);
 

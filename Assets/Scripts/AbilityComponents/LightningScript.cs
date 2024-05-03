@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightningScript : AbilityComponent
+public class LightningScript : MonoBehaviour
 {
     [SerializeField] private AudioClip _sfx;
 
@@ -16,8 +16,8 @@ public class LightningScript : AbilityComponent
 
     private void Start()
     {
-        transform.position = _lastCircleWorldPos;
-        _strikeRadius = _circleCastRadius;
+        transform.position = GameManager.Instance.PlayerControllerInstance.LastCircleWorldPosition;
+        _strikeRadius = GameManager.Instance.AbilityCasterInstance.CurrentAbilities[GameManager.Instance.AbilityCasterInstance.SelectedAbility].CircleCastRadius;
         _collider = GetComponent<SphereCollider>();
 
         _collider.radius = _strikeRadius;

@@ -5411,14 +5411,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8163158342262923227}
-  - component: {fileID: 3078717275853675657}
   - component: {fileID: -7756988477897086292}
   - component: {fileID: 8252869827490328132}
   - component: {fileID: 238497117052652149}
   - component: {fileID: 2579105109342390438}
   - component: {fileID: 2455017689651807228}
   - component: {fileID: 550787117687969049}
-  - component: {fileID: 8780247149716169981}
+  - component: {fileID: 3078717275853675657}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5447,27 +5446,6 @@ Transform:
   - {fileID: 5011754695568350958}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3078717275853675657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6908683733213295642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 559480745
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &-7756988477897086292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5480,17 +5458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f45f0e21d565249b976327e05f1032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NetworkPosition:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  NetworkFlipped:
-    m_InternalValue: 0
-  NetworkLastMouseWorldPos:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  NetworkLastCircleWorldPos:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  NetworkLastForwardDirection:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  _spriteRenderer: {fileID: 8397552757582005574}
 --- !u!114 &8252869827490328132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5505,11 +5472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 8397552757582005574}
   _arrowPivot: {fileID: 8257965975623395232}
-  StaffGlowEffect: {fileID: 1169058550502685632}
+  _staffGlowEffect: {fileID: 1169058550502685632}
   _shieldRenderer: {fileID: 7060795860034090070}
-  LastForwardDirection: {x: 0, y: 0, z: 0}
-  LastMouseWorldPosition: {x: 0, y: 0, z: 0}
-  LastCircleWorldPosition: {x: 0, y: 0, z: 0}
   CurrentLevel: 1
   CurrentExp: 0
   _expRequirementGrowth: 1.1
@@ -5643,7 +5607,7 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
---- !u!114 &8780247149716169981
+--- !u!114 &3078717275853675657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5652,8 +5616,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6908683733213295642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 2579105109342390438}
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
