@@ -30,19 +30,16 @@ public class AbilityCaster : MonoBehaviour
     [HideInInspector] public float CooldownReductionMultiplier = 1f;
     [HideInInspector] public float CastTimeReductionMultiplier = 1f;
 
-    public static event Action<int, int> OnAbilityCast; // 0 - casting, 1 - finished cast
-
     private void Awake()
     {
         Instance = this;
 
-        OnAbilityCast += HandleOnAbilityCast;
         SortAbilitiesByStar();
     }
 
     private void OnDestroy()
     {
-        OnAbilityCast -= HandleOnAbilityCast;
+
     }
 
     private void Start()
@@ -272,13 +269,12 @@ public class AbilityCaster : MonoBehaviour
         {
             PlayerController.Instance.IsCasting = true;
         }
-        OnAbilityCast?.Invoke(0, index);
 
         yield return new WaitForSeconds(CurrentAbilities[index].CastTime * CastTimeReductionMultiplier);
 
         PlayerController.Instance.IsCasting = false;
 
-        OnAbilityCast?.Invoke(1, index);
+        HandleOnAbilityCast(index);
 
         StartCoroutine(AbilityCooldown(index));
     }
@@ -384,17 +380,13 @@ public class AbilityCaster : MonoBehaviour
             SelectedAbility = index;
         }
     }
-    private void HandleOnAbilityCast(int i, int index)
+    private void HandleOnAbilityCast(int index)
     {
-        if (i == 0) return;
-
-        if(i == 1)
+        PlayerController.Instance.AssignLastVariables();
+        if (CurrentAbilities[index].AbilityPrefab != null)
         {
-            if(CurrentAbilities[index].AbilityPrefab != null)
-            {
-                Instantiate(CurrentAbilities[index].AbilityPrefab, transform.position, Quaternion.identity);
-            }
-        }  
+            Instantiate(CurrentAbilities[index].AbilityPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     public void AssignHoveredAbility(int index)

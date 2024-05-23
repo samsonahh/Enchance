@@ -103,13 +103,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        AbilityCaster.OnAbilityCast += AbilityCaster_OnAbilityCast;
     }
 
     private void OnDestroy()
     {
-        AbilityCaster.OnAbilityCast -= AbilityCaster_OnAbilityCast;
+        
     }
 
     private void Start()
@@ -224,20 +222,13 @@ public class PlayerController : MonoBehaviour
         _arrowPivot.localRotation = Quaternion.Lerp(_arrowPivot.localRotation, Quaternion.AngleAxis(targetAngle, Vector3.up), 50f * Time.deltaTime);
     }
 
-    private void AssignLastVariables()
+    public void AssignLastVariables()
     {
         LastForwardDirection = ForwardDirection;
         LastMouseWorldPosition = MouseWorldPosition;
         LastCircleWorldPosition = AbilityCaster.Instance.CircleCastTransform.position;
         LastTarget = Target;
-    }
-
-    private void AbilityCaster_OnAbilityCast(int i, int index)
-    {
-        if (i == 1) return;
-
-        AssignLastVariables();
-    }
+    } 
 
     private void AssignTarget()
     {
