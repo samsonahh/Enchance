@@ -325,4 +325,9 @@ public class EnemyController : MonoBehaviour
             ChangeCurrentMoveSpeed(EnemyRegularMoveSpeed, 0f);
         }
     }
+
+    public virtual void Aggro()
+    {
+
+    }
 }

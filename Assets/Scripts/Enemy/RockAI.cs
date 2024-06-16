@@ -90,6 +90,18 @@ public class RockAI : EnemyController
         }
     }
 
+    public override void Aggro()
+    {
+        StartCoroutine(DelayedAggro(0.25f));
+    }
+
+    private IEnumerator DelayedAggro(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _deactivateRange = Mathf.Infinity;
+        ChangeState(RockState.Startled);
+    }
+
     private void OnDrawGizmos()
     {
         CustomGizmos.DrawWireDisk(transform.position, _activateRange, Color.green);
