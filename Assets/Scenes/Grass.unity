@@ -2331,7 +2331,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 245211438}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 1456046781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &512921515
 NavMeshAgent:
@@ -2470,8 +2470,8 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -2897,12 +2897,12 @@ Transform:
   m_GameObject: {fileID: 630111916}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.79, y: -3.8392344, z: 3.66}
+  m_LocalPosition: {x: 31.79, y: -3.8392344, z: 3.6600003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 926943216}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 2011331670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &630111918
 NavMeshAgent:
@@ -3041,8 +3041,8 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -3082,7 +3082,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 434547246}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 2011331670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &635621362
 NavMeshAgent:
@@ -3221,8 +3221,8 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -4430,8 +4430,8 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -4450,7 +4450,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2034886949}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 1456046781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &895418378
 SphereCollider:
@@ -5190,15 +5190,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 895418377}
-  - {fileID: 630111917}
-  - {fileID: 1866130749}
-  - {fileID: 1771584367}
-  - {fileID: 1812901011}
-  - {fileID: 1982367104}
-  - {fileID: 512921514}
-  - {fileID: 635621361}
-  - {fileID: 1758924566}
+  - {fileID: 1456046781}
+  - {fileID: 2011331670}
+  - {fileID: 1825759906}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1146815480
@@ -6675,12 +6669,53 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
---- !u!1 &1447765947 stripped
+--- !u!1 &1456046780
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6339868804620013375, guid: 385f7ff5fd8ccf04182211cd5bf3926f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1381210424}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1456046781}
+  - component: {fileID: 1456046782}
+  m_Layer: 0
+  m_Name: RockSpawn1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1456046781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456046780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 895418377}
+  - {fileID: 1771584367}
+  - {fileID: 512921514}
+  m_Father: {fileID: 1074134527}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1456046782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456046780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bdceff5df715442b724a64fd28ba07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1491961321
 GameObject:
   m_ObjectHideFlags: 0
@@ -7844,7 +7879,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 860837173}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 1825759906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1758924567
 NavMeshAgent:
@@ -7983,8 +8018,8 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -8131,7 +8166,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1859523280}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 1456046781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1771584368
 NavMeshAgent:
@@ -8270,8 +8305,8 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -8347,7 +8382,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1363970845}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 2011331670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1812901012
 NavMeshAgent:
@@ -8486,12 +8521,46 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
   _recoverDuration: 1
+--- !u!1 &1825759905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1825759906}
+  m_Layer: 0
+  m_Name: RockSpawn3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1825759906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825759905}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1866130749}
+  - {fileID: 1982367104}
+  - {fileID: 1758924566}
+  m_Father: {fileID: 1074134527}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1833229792
 GameObject:
   m_ObjectHideFlags: 0
@@ -8522,52 +8591,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 448958869}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1853074164
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1853074166}
-  - component: {fileID: 1853074165}
-  m_Layer: 0
-  m_Name: BossOpener
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1853074165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853074164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdcc0f149d0896740a09c6b5f3a8831d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bossDoor: {fileID: 1447765947}
-  _enemiesParent: {fileID: 1074134527}
---- !u!4 &1853074166
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853074164}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.77654, y: 30.168793, z: -22.83593}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1856069069
@@ -8772,7 +8795,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 759904600}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 1825759906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1866130750
 NavMeshAgent:
@@ -8911,8 +8934,8 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
@@ -9356,7 +9379,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1721872794}
-  m_Father: {fileID: 1074134527}
+  m_Father: {fileID: 1825759906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1982367105
 NavMeshAgent:
@@ -9495,12 +9518,46 @@ MonoBehaviour:
   _activateRange: 6
   _deactivateRange: 20
   _wanderRange: 5
-  _wanderInterval: {x: 1, y: 3}
-  _wanderPauseTime: 1
+  _wanderInterval: {x: 0.25, y: 4}
+  _wanderPauseTime: {x: 0.25, y: 1.5}
   _startledDuration: 0.5
   _followPatienceDuration: 4
   _rollSpeed: 8
   _recoverDuration: 1
+--- !u!1 &2011331669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2011331670}
+  m_Layer: 0
+  m_Name: RockSpawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2011331670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011331669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 630111917}
+  - {fileID: 1812901011}
+  - {fileID: 635621361}
+  m_Father: {fileID: 1074134527}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2014414116
 GameObject:
   m_ObjectHideFlags: 0
@@ -10126,5 +10183,4 @@ SceneRoots:
   - {fileID: 242710847}
   - {fileID: 442370614}
   - {fileID: 1277271146}
-  - {fileID: 1853074166}
   - {fileID: 1381210424}

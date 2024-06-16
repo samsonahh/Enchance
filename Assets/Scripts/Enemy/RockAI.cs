@@ -31,7 +31,7 @@ public class RockAI : EnemyController
     [Header("Wander Variables")]
     [SerializeField] private float _wanderRange = 5f;
     [SerializeField] private Vector2 _wanderInterval;
-    [SerializeField] private float _wanderPauseTime = 1f;
+    [SerializeField] private Vector2 _wanderPauseTime;
     #endregion
 
     #region Startled
@@ -140,7 +140,7 @@ public class RockAI : EnemyController
 
                 if (PlayerController.Instance.IsInvincible)
                 {
-                    _animator.Play("RockIdle");
+                    ChangeState(RockState.Idle);
                     return;
                 }
 
@@ -260,6 +260,8 @@ public class RockAI : EnemyController
     {
         while (true)
         {
+            yield return new WaitForSeconds(Random.Range(_wanderPauseTime.x, _wanderPauseTime.y));
+
             _navMeshAgent.enabled = true;
 
             Vector2 randomCoords = _wanderRange * Random.insideUnitCircle;
@@ -274,9 +276,9 @@ public class RockAI : EnemyController
             LookAt(randomDest);
 
             float timer = 0f;
-            while(timer < Random.Range(_wanderInterval.x, _wanderInterval.y))
+            while (timer < Random.Range(_wanderInterval.x, _wanderInterval.y))
             {
-                if(Vector3.Distance(randomDest, transform.position) <= 0.1f)
+                if (Vector3.Distance(randomDest, transform.position) <= 0.1f)
                 {
                     break;
                 }
@@ -287,8 +289,6 @@ public class RockAI : EnemyController
 
             _animator.Play("RockIdle");
             _navMeshAgent.enabled = false;
-
-            yield return new WaitForSeconds(_wanderPauseTime);
         }
     }
 

@@ -50,10 +50,10 @@ public class LevelUpManager : MonoBehaviour
 
     private void Start()
     {
-        ResetRewardPool();
+        
     }
 
-    private void ResetRewardPool()
+    public void ResetRewardPool()
     {
         RewardPool = new int[Enum.GetNames(typeof(LevelUpReward)).Length-1];
 
@@ -133,6 +133,19 @@ public class LevelUpManager : MonoBehaviour
 
         PlayerController.Instance.QueuedLevels--;
         GameManager.Instance.UpdateGameState(GameState.Playing);
+    }
+
+    public void LoadRewards(int[] pool)
+    {
+        for(int i = 0; i < RewardPool.Length; i++)
+        {
+            int appliedCount = 5 - pool[i];
+
+            for(int j = 0; j < appliedCount; j++) // apply the reward appliedCount times
+            {
+                ApplyReward((LevelUpReward)i);
+            }
+        }
     }
 }
 

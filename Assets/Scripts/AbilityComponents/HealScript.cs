@@ -19,6 +19,8 @@ public class HealScript : AbilityComponent
 
     private void Update()
     {
+        if (_playerController == null) return;
+
         transform.position = _playerController.transform.position;
     }
 }

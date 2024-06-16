@@ -23,7 +23,7 @@ MonoBehaviour:
   OnCooldown: 0
   <CastRadius>k__BackingField: 0.5
   <CircleCastRadius>k__BackingField: 0
-  <AbilityPrefab>k__BackingField: {fileID: 3177697320865603248, guid: c9dda407d4570bd49b8cdb273af85ce6,
+  <AbilityPrefab>k__BackingField: {fileID: -519115552719895139, guid: c9dda407d4570bd49b8cdb273af85ce6,
     type: 3}
   <AbilityType>k__BackingField: 2
   <CastTime>k__BackingField: 0.1

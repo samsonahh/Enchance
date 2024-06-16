@@ -13541,6 +13541,7 @@ MonoBehaviour:
   _expRequirementGrowth: 1.1
   _expRequirementGrowthOffset: 10
   ExpToNextLevel: 10
+  QueuedLevels: 0
   _autoAttackRadius: 7.5
   _targetFindRadiusOnCursor: 2
   IsCasting: 0

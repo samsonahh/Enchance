@@ -96,7 +96,7 @@ public class MenuCanvasManager : MonoBehaviour
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene("Menu");
+        GameManager.BackToMenu();
     }
 
     public void ScaleMenuButtonSize(float size)

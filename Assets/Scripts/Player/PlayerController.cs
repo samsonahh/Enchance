@@ -103,6 +103,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        _animator = GetComponent<Animator>();
+
+        CurrentHealth = MaxHealth;
+        StartCoroutine(RegenHealth());
+
+        PlayerRegularMoveSpeed = PlayerCurrentMoveSpeed;
     }
 
     private void OnDestroy()
@@ -112,12 +119,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
 
-        CurrentHealth = MaxHealth;
-        StartCoroutine(RegenHealth());
-
-        PlayerRegularMoveSpeed = PlayerCurrentMoveSpeed;
     }
 
     private void Update()
@@ -560,7 +562,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleLevel()
     {
-        if (CurrentLevel == 99) return;
+        if (CurrentLevel >= 99) return;
 
         if(CurrentExp >= ExpToNextLevel)
         {
