@@ -385,7 +385,10 @@ public class AbilityCaster : MonoBehaviour
         PlayerController.Instance.AssignLastVariables();
         if (CurrentAbilities[index].AbilityPrefab != null)
         {
-            Instantiate(CurrentAbilities[index].AbilityPrefab, transform.position, Quaternion.identity);
+            AbilityComponent ability = Instantiate(CurrentAbilities[index].AbilityPrefab, transform.position, Quaternion.identity);
+
+            PlayerController pc = PlayerController.Instance;
+            ability.Init(this, CurrentAbilities[index].CastRadius, CurrentAbilities[index].CircleCastRadius, pc.LastMouseWorldPosition, pc.LastCircleWorldPosition, pc.LastForwardDirection, pc.LastTarget);
         }
     }
 

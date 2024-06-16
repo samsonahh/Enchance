@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicBombScript : MonoBehaviour
+public class MagicBombScript : AbilityComponent
 {
     [SerializeField] private float _duration;
     [SerializeField] private int _damage = 7;
@@ -15,7 +15,7 @@ public class MagicBombScript : MonoBehaviour
 
     private void Start()
     {
-        transform.position = PlayerController.Instance.transform.position;
+        transform.position = _playerController.transform.position;
         _bombRadiusTransform.localScale = new Vector3(_explosionRadius * 2f, _explosionRadius * 2f, 1);
         _bombRadiusWarning.localScale = new Vector3(0, 0, 1);
 

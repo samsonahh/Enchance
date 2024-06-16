@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonMistScript : MonoBehaviour
+public class PoisonMistScript : AbilityComponent
 {
     [SerializeField] private int _poisonTicks = 3;
     [SerializeField] private float _poisonSlowFraction = 0.75f;
@@ -20,11 +20,11 @@ public class PoisonMistScript : MonoBehaviour
 
     void Start()
     {
-        transform.position = PlayerController.Instance.transform.position;
-        _radius = AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].CircleCastRadius;
-        _maxRadius = AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].CastRadius;
-        _destination = PlayerController.Instance.LastCircleWorldPosition;
-
+        transform.position = _playerController.transform.position;
+        _radius = _circleCastRadius;
+        _maxRadius = _castRadius;
+        _destination = _lastCircleWorldPosition;
+        
         _poisonCircleParticle.gameObject.SetActive(false);
 
         var shape = _poisonCircleParticle.shape;

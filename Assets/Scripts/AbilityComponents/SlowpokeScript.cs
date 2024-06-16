@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlowpokeScript : MonoBehaviour
+public class SlowpokeScript : AbilityComponent
 {
     [SerializeField] private float _newSpeed = 1f;
     [SerializeField] private float _duration = 3f;
@@ -11,13 +11,13 @@ public class SlowpokeScript : MonoBehaviour
 
     void Start()
     {
-        if(PlayerController.Instance.Target == null)
+        if(_lastTarget == null)
         {
             Destroy(gameObject);
             return;
         }
 
-        if (PlayerController.Instance.Target.TryGetComponent(out BossAI boss))
+        if (_lastTarget.TryGetComponent(out BossAI boss))
         {
             _targetTransform = boss.transform;
             boss.ChangeCurrentMoveSpeed(0.5f, _duration);
@@ -25,7 +25,7 @@ public class SlowpokeScript : MonoBehaviour
             return;
         }
 
-        if (PlayerController.Instance.Target.TryGetComponent(out EnemyController enemy))
+        if (_lastTarget.TryGetComponent(out EnemyController enemy))
         {
             _targetTransform = enemy.transform;
             enemy.ChangeCurrentMoveSpeed(_newSpeed, _duration);
@@ -35,7 +35,7 @@ public class SlowpokeScript : MonoBehaviour
 
     void Update()
     {
-        if (_targetTransform == null) return;
+        if (_targetTransform == null) return; 
 
         transform.position = _targetTransform.position;
     }

@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TwinkleToesScript : MonoBehaviour
+public class TwinkleToesScript : AbilityComponent
 {
     [SerializeField] private float _additionalSpeed = 4f;
     [SerializeField] private float _duration = 3f;
 
     private void Start()
     {
-        PlayerController.Instance.ChangeCurrentMoveSpeed(_additionalSpeed + PlayerController.Instance.PlayerRegularMoveSpeed, _duration);
+        _playerController.ChangeCurrentMoveSpeed(_additionalSpeed + _playerController.PlayerRegularMoveSpeed, _duration);
         Destroy(gameObject, _duration);
     }
 
     private void Update()
     {
-        transform.position = PlayerController.Instance.transform.position;
+        transform.position = _playerController.transform.position;
     }
 }

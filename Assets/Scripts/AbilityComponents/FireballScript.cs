@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireballScript : MonoBehaviour
+public class FireballScript : AbilityComponent
 {
     [SerializeField] private float _speed = 5f;
     [SerializeField] private int _damage = 5;
@@ -12,8 +12,8 @@ public class FireballScript : MonoBehaviour
 
     private void Start()
     {
-        transform.position = AbilityCaster.Instance.transform.position;
-        _target = transform.position + AbilityCaster.Instance.CurrentAbilities[AbilityCaster.Instance.SelectedAbility].CastRadius * PlayerController.Instance.LastForwardDirection;
+        transform.position = _abilityCaster.transform.position;
+        _target = transform.position + _castRadius * _lastForwardDirection;
     }
 
     private void Update()
