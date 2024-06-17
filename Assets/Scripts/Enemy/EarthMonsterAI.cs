@@ -156,7 +156,7 @@ public class EarthMonsterAI : EnemyController
                     _navMeshAgent.SetDestination(_startPosition);
                 }
 
-                if(_distanceFromStart < 0.01f)
+                if(CheckNavMeshPathFinished())
                 {
                     transform.position = _startPosition;
                     ChangeState(EarthMonsterState.Idle);

@@ -198,6 +198,22 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    protected virtual bool CheckNavMeshPathFinished()
+    {
+        if (!_navMeshAgent.pathPending)
+        {
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            {
+                if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public virtual void TakeDamage(int damage)
     {
         if (IsInvincible) return;
@@ -348,4 +364,6 @@ public class EnemyController : MonoBehaviour
     {
 
     }
+
+    
 }
