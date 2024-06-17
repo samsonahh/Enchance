@@ -270,6 +270,8 @@ public class AbilityCaster : MonoBehaviour
             PlayerController.Instance.IsCasting = true;
         }
 
+        PlayerController.Instance.AssignLastVariables();
+
         yield return new WaitForSeconds(CurrentAbilities[index].CastTime * CastTimeReductionMultiplier);
 
         PlayerController.Instance.IsCasting = false;
@@ -382,7 +384,6 @@ public class AbilityCaster : MonoBehaviour
     }
     private void HandleOnAbilityCast(int index)
     {
-        PlayerController.Instance.AssignLastVariables();
         if (CurrentAbilities[index].AbilityPrefab != null)
         {
             AbilityComponent ability = Instantiate(CurrentAbilities[index].AbilityPrefab, transform.position, Quaternion.identity);

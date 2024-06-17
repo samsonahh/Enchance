@@ -15,7 +15,7 @@ public class AbilityComponent : MonoBehaviour
 
     protected private GameObject _lastTarget;
     
-    public void Init(AbilityCaster ac, float cr, float ccr, Vector3 lmwp, Vector3 lcwp, Vector3 lfd, GameObject lt)
+    public void Init(AbilityCaster ac, float cr, float ccr, Vector3 lmwp, Vector3 lcwp, Vector3 lfd, GameObject t)
     {
         _playerController = ac.GetComponent<PlayerController>();
         _abilityCaster = ac;
@@ -27,6 +27,6 @@ public class AbilityComponent : MonoBehaviour
         _lastCircleWorldPosition = lcwp;
         _lastForwardDirection = lfd;
 
-        _lastTarget = lt;
+        _lastTarget = t;
     }
 }
