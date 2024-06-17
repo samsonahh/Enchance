@@ -455,8 +455,8 @@ MonoBehaviour:
   _poisonTickDuration: 1
   _poisonDamage: 1
   PoisonTicks: 0
-  CurrentHealth: 20
-  MaxHealth: 20
+  CurrentHealth: 15
+  MaxHealth: 15
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0
@@ -475,6 +475,7 @@ MonoBehaviour:
   _slamMaxRadius: 10
   _slamPrefab: {fileID: 6338805449657069496, guid: 21296f8308484304ba977c96e2fd731b,
     type: 3}
+  _slamSFX: {fileID: 8300000, guid: 237b649ec31792d41bb5951b0208cec2, type: 3}
 --- !u!95 &5681464045503488590
 Animator:
   serializedVersion: 5

@@ -9,6 +9,7 @@ public class LavaSpawnerTotem : MonoBehaviour
     [SerializeField] private GameObject _lavaSpawnerPrefab;
     [SerializeField] private GameObject _fireKeyPrefab;
     [SerializeField] private GameObject _wallsObject;
+    [SerializeField] private GameObject _flameObject;
 
     [SerializeField] private Button _startButton;
     [SerializeField] private TMP_Text _timerText;
@@ -29,13 +30,14 @@ public class LavaSpawnerTotem : MonoBehaviour
 
     private void Start()
     {
-        LoadObjective();
-
-        _timer = _duration;
-
         _startButton.gameObject.SetActive(false);
         _timerText.gameObject.SetActive(false);
         _wallsObject.SetActive(false);
+        _flameObject.SetActive(false);
+
+        _timer = _duration;
+
+        LoadObjective();
     }
 
     private void Update()
@@ -55,7 +57,7 @@ public class LavaSpawnerTotem : MonoBehaviour
                 _timer = 0f;
                 _started = false;
 
-                Instantiate(_fireKeyPrefab, transform.position, Quaternion.identity);
+                Instantiate(_fireKeyPrefab, transform.position - Vector3.forward, Quaternion.identity);
 
                 Destroy(_lavaSpawnerObject);
 
@@ -92,7 +94,7 @@ public class LavaSpawnerTotem : MonoBehaviour
 
         if(PlayerPrefs.GetInt("FireKey") == 0)
         {
-            Instantiate(_fireKeyPrefab, transform.position, Quaternion.identity);
+            Instantiate(_fireKeyPrefab, transform.position - Vector3.forward, Quaternion.identity);
         }
 
         DisableObjective();
@@ -102,6 +104,9 @@ public class LavaSpawnerTotem : MonoBehaviour
     {
         Destroy(_startButton.transform.parent.gameObject);
         Destroy(_wallsObject);
+
+        _flameObject.SetActive(true);
+
         Destroy(this);
     }
 

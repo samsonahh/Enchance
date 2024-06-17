@@ -11,6 +11,8 @@ public class CameraMovement : MonoBehaviour
     private Vector3 _offsetPosition;
     [SerializeField] private Transform _target;
     private float _zoom = 10f;
+    private float _maxZoom = 10f;
+    private float _minZoom = 3f;
 
     [SerializeField] private LayerMask _cameraCullLayer;
     [SerializeField] private Material _transparentSpriteMaterial;
@@ -49,9 +51,23 @@ public class CameraMovement : MonoBehaviour
     {
         if (GameManager.Instance.State != GameState.Playing) return;
         _zoom -= Input.mouseScrollDelta.y;
-        _zoom = Mathf.Clamp(_zoom, 3f, 10f);
+        _zoom = Mathf.Clamp(_zoom, _minZoom, _maxZoom);
 
         _offsetPosition = Vector3.Lerp(_offsetPosition, new Vector3(0, _zoom, -_zoom), 2f * _cameraSmoothTime * Time.deltaTime);
+    }
+
+    public void SetZoom(float zoom)
+    {
+        if (zoom > _maxZoom) _maxZoom = zoom;
+
+        _zoom = zoom;
+    }
+
+    public void ResetMaxZoom()
+    {
+        _maxZoom = 10f;
+
+        if(_zoom > _maxZoom) _zoom = _maxZoom;
     }
 
     private void MakeCoveringObjectsOpaque()

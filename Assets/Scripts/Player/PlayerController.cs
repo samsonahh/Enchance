@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _arrowPivot;
     [SerializeField] private Transform _staffGlowEffect;
+    [SerializeField] private Transform _autoRadiusTransform;
     [SerializeField] private Renderer _shieldRenderer;
     private Animator _animator;
 
@@ -121,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-
+        _autoRadiusTransform.localScale = new Vector3(_autoAttackRadius + _targetFindRadiusOnCursor, 1, _autoAttackRadius + _targetFindRadiusOnCursor);
     }
 
     private void Update()

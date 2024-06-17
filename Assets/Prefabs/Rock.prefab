@@ -830,8 +830,8 @@ MonoBehaviour:
   _poisonTickDuration: 1
   _poisonDamage: 1
   PoisonTicks: 0
-  CurrentHealth: 10
-  MaxHealth: 10
+  CurrentHealth: 6
+  MaxHealth: 6
   _yellowThreshold: 0.5
   _redThreshold: 0.25
   _currentState: 0

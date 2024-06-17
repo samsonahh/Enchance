@@ -25,6 +25,8 @@ public class BossAI : MonoBehaviour
 
     private bool _isTargetted;
 
+    [SerializeField] private float _bossStartZoom = 15f;
+
     [Header("Boss UI")]
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private TMP_Text _healthText;
@@ -151,6 +153,8 @@ public class BossAI : MonoBehaviour
 
         _originalFollowPlayerWaitTime = _followPlayerWaitTime;
         _originalFollowPlayerSpeedInterval = _followPlayerSpeedInterval;
+
+        CameraMovement.Instance.SetZoom(_bossStartZoom);
     }
 
     private void Update()
@@ -160,6 +164,7 @@ public class BossAI : MonoBehaviour
         HandleBossHealth();
         HandleBossIndicator();
         HandleTargetting();
+        _targettedIndicator.sprite = _spriteRenderer.sprite;
 
         switch (_currentState)
         {
@@ -841,7 +846,7 @@ public class BossAI : MonoBehaviour
         transform.position = _currentTile.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
-        AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
+        AudioSource.PlayClipAtPoint(_bombingRunSFX, transform.position);
         _animator.Play("BossSquish");
 
         List<Tile> burnedTiles = _gridManager.BurnCheckerBoard(_currentTile, _currentTile.Black);

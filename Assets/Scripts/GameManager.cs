@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
     public void LoadGame()
     {
         LevelUpManager.Instance.ResetRewardPool();
+        CameraMovement.Instance.ResetMaxZoom();
 
         if (!PlayerPrefs.HasKey("MoreHPUpgrades"))
         {

@@ -11058,6 +11058,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 1573650920}
   _targettedIndicator: {fileID: 1158212656}
   _currentState: 0
+  _bossStartZoom: 15
   _healthSlider: {fileID: 1504503675}
   _healthText: {fileID: 1896785722}
   _bossIndicator: {fileID: 1553139516}
@@ -61142,8 +61143,8 @@ Transform:
   m_GameObject: {fileID: 1158212653}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.39, z: 0.010000095}
-  m_LocalScale: {x: 1.15, y: 1.15, z: 1}
+  m_LocalPosition: {x: 0, y: 0.08, z: 0.010000095}
+  m_LocalScale: {x: 1.1, y: 1.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1573650919}
@@ -61210,7 +61211,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -1489924848, guid: 8289419ddd237b947be01f20ee8d38b0, type: 3}
+  m_Sprite: {fileID: -1984023770, guid: 631373eb67ab7fc4c9a12c69001ce755, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84073,7 +84074,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -1489924848, guid: 8289419ddd237b947be01f20ee8d38b0, type: 3}
+  m_Sprite: {fileID: -1984023770, guid: 631373eb67ab7fc4c9a12c69001ce755, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

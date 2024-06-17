@@ -51,6 +51,7 @@ public class EarthMonsterAI : EnemyController
     [SerializeField] private float _triggerSlamRadius = 4f;
     [SerializeField] private float _slamMaxRadius = 7.5f;
     [SerializeField] private GameObject _slamPrefab;
+    [SerializeField] private AudioClip _slamSFX;
     #endregion
 
     protected override void OnStart()
@@ -280,10 +281,13 @@ public class EarthMonsterAI : EnemyController
     IEnumerator SlamCoroutine()
     {
         CameraShake.Instance.Shake(0.3f, 0.15f);
+        AudioSource.PlayClipAtPoint(_slamSFX, transform.position);
         _animator.Play("Slam");
 
         GameObject slam = Instantiate(_slamPrefab, transform.position, Quaternion.identity);
         slam.GetComponent<EarthMonsterSlamEffect>().Init(_slamMaxRadius * 2f, _slamDuration);
+
+        bool wasHit = false;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, _slamMaxRadius);
         if (hits != null)
@@ -294,11 +298,33 @@ public class EarthMonsterAI : EnemyController
                 {
                     player.TakeDamage(_slamDamage);
                     player.StunPlayer(_readyingSlamDuration);
+
+                    wasHit = true;
+                    break;
                 }
             }
         }
 
         yield return new WaitForSeconds(_slamDuration);
+
+        if (!wasHit)
+        {
+            hits = Physics.OverlapSphere(transform.position, _slamMaxRadius);
+            if (hits != null)
+            {
+                foreach (Collider hit in hits)
+                {
+                    if (hit.TryGetComponent(out PlayerController player))
+                    {
+                        player.TakeDamage(_slamDamage);
+                        player.StunPlayer(_readyingSlamDuration);
+
+                        wasHit = true;
+                        break;
+                    }
+                }
+            }
+        }
 
         yield return new WaitForSeconds(_readyingSlamDuration);
 
