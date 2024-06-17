@@ -13550,6 +13550,7 @@ MonoBehaviour:
   IsPoisoned: 0
   IsInvincible: 0
   IsShielded: 0
+  IsTrapped: 0
   IsVisible: 1
   CanCast: 1
   LifeSteal: 0
@@ -13567,6 +13568,7 @@ MonoBehaviour:
   MaxHealth: 5
   _startRegenTreshold: 5
   _regenRate: 3
+  _hurtSFX: {fileID: 8300000, guid: eb5e10ea2cab997419f8e44038091b68, type: 3}
   CurrentShieldHealth: 0
   CurrentTile: {fileID: 0}
 --- !u!114 &1999210798

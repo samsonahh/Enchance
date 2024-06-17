@@ -116,6 +116,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void HandleAnimations()
     {
+        _targettedIndicator.sprite = _spriteRenderer.sprite;
     }
 
     protected virtual void HandleTargetting()
@@ -181,11 +182,17 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    protected virtual void OnDamaged()
+    {
+
+    }
+
     public virtual void TakeDamage(int damage)
     {
         if (IsInvincible) return;
 
         CurrentHealth -= damage;
+        OnDamaged();
 
         _spriteRenderer.color = Color.red;
         StartCoroutine(TakeDamageCoroutine());

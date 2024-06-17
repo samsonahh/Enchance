@@ -78,6 +78,8 @@ public class RockAI : EnemyController
 
     protected override void HandleAnimations()
     {
+        base.HandleAnimations();
+
         if (IsStunned)
         {
             _spriteRenderer.transform.parent.localRotation = Quaternion.Lerp(_spriteRenderer.transform.parent.localRotation, Quaternion.Euler(90f, 0, 0), 20f * Time.deltaTime);

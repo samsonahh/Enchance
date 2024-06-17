@@ -8,12 +8,17 @@ public class FireballScript : AbilityComponent
     [SerializeField] private int _damage = 5;
     [SerializeField] private GameObject _splashPrefab;
 
+    [SerializeField] private AudioClip _fireballStartSFX;
+    [SerializeField] private AudioClip _fireballExplodeSFX;
+
     private Vector3 _target;
 
     private void Start()
     {
-        transform.position = _abilityCaster.transform.position;
+        transform.position = _playerController.transform.position;
         _target = transform.position + _castRadius * _lastForwardDirection;
+
+        AudioSource.PlayClipAtPoint(_fireballStartSFX, transform.position, 2);
     }
 
     private void Update()

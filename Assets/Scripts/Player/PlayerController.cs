@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool IsPoisoned;
     [HideInInspector] public bool IsInvincible;
     [HideInInspector] public bool IsShielded;
+    [HideInInspector] public bool IsTrapped;
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
     [HideInInspector] public bool LifeSteal;
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
     private float _lastDamagedTimer;
     [SerializeField] private float _startRegenTreshold = 5f;
     [SerializeField] private float _regenRate = 3f;
+    [SerializeField] private AudioClip _hurtSFX;
     #endregion
 
     #region Shield
@@ -343,6 +345,8 @@ public class PlayerController : MonoBehaviour
 
         _spriteRenderer.color = Color.red;
         StartCoroutine(TakeDamageCoroutine());
+
+        AudioSource.PlayClipAtPoint(_hurtSFX, transform.position);
     }
 
     public IEnumerator TakeDamageCoroutine()

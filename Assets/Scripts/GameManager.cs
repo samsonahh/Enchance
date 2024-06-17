@@ -80,11 +80,13 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Dead:
                 Time.timeScale = 0f;
-                SceneManager.LoadScene("Menu");
+                PlayerController.Instance.transform.position = Vector3.zero;
+                BackToMenu();
                 break;
             case GameState.Win:
                 Time.timeScale = 0f;
-                SceneManager.LoadScene("Menu");
+                PlayerController.Instance.transform.position = Vector3.zero;
+                BackToMenu();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);

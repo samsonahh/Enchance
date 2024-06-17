@@ -15,6 +15,7 @@ public class LavaSpawnerTotem : MonoBehaviour
 
     private float _timer;
     private bool _started;
+    private bool _onTrigger;
     private GameObject _lavaSpawnerObject;
 
     private void Awake()
@@ -54,6 +55,14 @@ public class LavaSpawnerTotem : MonoBehaviour
         else
         {
             _timerText.gameObject.SetActive(false);
+
+            if (_onTrigger)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    StartSpawner();
+                }
+            }
         }
     }
 
@@ -74,20 +83,7 @@ public class LavaSpawnerTotem : MonoBehaviour
         if(other.tag == "Player")
         {
             _startButton.gameObject.SetActive(true);
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (_started) return;
-
-        if(other.tag == "Player")
-        {
-            _startButton.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                StartSpawner();
-            }
+            _onTrigger = true;
         }
     }
 
@@ -96,6 +92,7 @@ public class LavaSpawnerTotem : MonoBehaviour
         if (other.tag == "Player")
         {
             _startButton.gameObject.SetActive(false);
+            _onTrigger = false;
         }
     }
 }

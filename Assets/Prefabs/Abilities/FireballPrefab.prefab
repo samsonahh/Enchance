@@ -4888,6 +4888,8 @@ MonoBehaviour:
   _damage: 3
   _splashPrefab: {fileID: 417761080263594737, guid: ffdeb1adf5170084cb00be4b368b6ed7,
     type: 3}
+  _fireballStartSFX: {fileID: 8300000, guid: 3c4540a07c22a684d9cc6f7040c6821f, type: 3}
+  _fireballExplodeSFX: {fileID: 0}
 --- !u!135 &2469194953076859401
 SphereCollider:
   m_ObjectHideFlags: 0

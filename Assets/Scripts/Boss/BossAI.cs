@@ -104,6 +104,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] private float _bombingRunJumpCount = 3f;
     [SerializeField] private float _bombingRunStunDuration = 1f;
     [SerializeField] private int _bombingRunDamage = 3;
+    [SerializeField] private AudioClip _bombingRunSFX;
     #endregion
 
     #region FloorIsLavaVariables
@@ -687,7 +688,7 @@ public class BossAI : MonoBehaviour
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
             _animator.Play("BossSquish");
-            AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
+            AudioSource.PlayClipAtPoint(_bombingRunSFX, transform.position);
             List<Tile> dangerTiles1 = _gridManager.BurnCrossPattern(t);
             dangerTiles1.AddRange(_gridManager.BurnDiagonalPattern(t));
 
@@ -741,7 +742,7 @@ public class BossAI : MonoBehaviour
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
             _animator.Play("BossSquish");
-            AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
+            AudioSource.PlayClipAtPoint(_bombingRunSFX, transform.position);
             List<Tile> dangerTiles2 = _gridManager.BurnCrossPattern(randTile);
             dangerTiles2.AddRange(_gridManager.BurnDiagonalPattern(randTile));
 
