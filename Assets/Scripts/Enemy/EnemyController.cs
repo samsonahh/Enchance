@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual float _distanceToPlayer => Vector3.Distance(PlayerController.Instance.transform.position, transform.position);
     protected private Vector3 _startPosition;
+    protected virtual float _distanceFromStart => Vector3.Distance(_startPosition, transform.position);
 
     [Header("Enemy UI")]
     [SerializeField] private Slider _healthSlider;
@@ -175,6 +176,16 @@ public class EnemyController : MonoBehaviour
             _spriteRenderer.flipX = dir.x > 0;
             _targettedIndicator.flipX = dir.x > 0;
         }
+    }
+
+    protected virtual void HideHealth()
+    {
+        _healthSlider.transform.parent.gameObject.SetActive(false);
+    }
+
+    protected virtual void ShowHealth()
+    {
+        _healthSlider.transform.parent.gameObject.SetActive(true);
     }
 
     protected virtual void OnDeath()

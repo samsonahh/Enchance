@@ -112,6 +112,11 @@ public class GameManager : MonoBehaviour
         // pos
         PlayerPrefs.SetFloat("PlayerPosX", PlayerController.Instance.transform.position.x);
         PlayerPrefs.SetFloat("PlayerPosZ", PlayerController.Instance.transform.position.z);
+
+        // keys
+        PlayerPrefs.SetInt("GrassKey", BossRoomKeys[0]);
+        PlayerPrefs.SetInt("FireKey", BossRoomKeys[1]);
+        PlayerPrefs.SetInt("IceKey", BossRoomKeys[2]);
     }
 
     public void LoadGame()
@@ -142,6 +147,12 @@ public class GameManager : MonoBehaviour
 
         // position
         PlayerController.Instance.transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerPosX"), 0, PlayerPrefs.GetFloat("PlayerPosZ"));
+        CameraMovement.Instance.InstantlyFixPosition();
+
+        // keys
+        BossRoomKeys[0] = PlayerPrefs.GetInt("GrassKey");
+        BossRoomKeys[1] = PlayerPrefs.GetInt("FireKey");
+        BossRoomKeys[2] = PlayerPrefs.GetInt("IceKey");
     }
 
     public void ResetGame()

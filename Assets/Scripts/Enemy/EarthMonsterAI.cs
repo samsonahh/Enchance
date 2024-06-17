@@ -47,6 +47,7 @@ public class EarthMonsterAI : EnemyController
     [Header("Slam Variables")]
     [SerializeField] private int _slamDamage = 4;
     [SerializeField] private float _slamDuration = 1f;
+    [SerializeField] private float _slamCooldown = 1.5f;
     [SerializeField] private float _triggerSlamRadius = 4f;
     [SerializeField] private float _slamMaxRadius = 7.5f;
     [SerializeField] private GameObject _slamPrefab;
@@ -81,6 +82,11 @@ public class EarthMonsterAI : EnemyController
         {
             ChangeState(EarthMonsterState.GettingUp);
         }
+
+        if (_currentState == EarthMonsterState.WalkBack)
+        {
+            ChangeState(EarthMonsterState.FollowPlayer);
+        }
     }
 
     protected override void HandleAnimations()
@@ -111,7 +117,7 @@ public class EarthMonsterAI : EnemyController
     {
         if (IsStunned)
         {
-            ChangeState(EarthMonsterState.ReadyingSlam);
+            ChangeState(EarthMonsterState.FollowPlayer);
             return;
         }
 
@@ -121,7 +127,9 @@ public class EarthMonsterAI : EnemyController
 
                 _animator.Play("Idle");
 
-                if(_distanceToPlayer < _activateRange)
+                HideHealth();
+
+                if (_distanceToPlayer < _activateRange)
                 {
                     ChangeState(EarthMonsterState.GettingUp);
                 }
@@ -148,7 +156,7 @@ public class EarthMonsterAI : EnemyController
                     _navMeshAgent.SetDestination(_startPosition);
                 }
 
-                if(Vector3.SqrMagnitude(_startPosition - transform.position) < 0.01f)
+                if(_distanceFromStart < 0.01f)
                 {
                     transform.position = _startPosition;
                     ChangeState(EarthMonsterState.Idle);
@@ -166,6 +174,7 @@ public class EarthMonsterAI : EnemyController
 
                 if (PlayerController.Instance.IsInvincible)
                 {
+                    _navMeshAgent.speed = 0;
                     _animator.Play("Still");
                     return;
                 }
@@ -188,7 +197,7 @@ public class EarthMonsterAI : EnemyController
                     ChangeState(EarthMonsterState.WalkBack);
                 }
 
-                if(_distanceToPlayer < _triggerSlamRadius)
+                if(_distanceToPlayer < _triggerSlamRadius && _followTimer > _slamCooldown)
                 {
                     ChangeState(EarthMonsterState.ReadyingSlam);
                 }
@@ -212,6 +221,8 @@ public class EarthMonsterAI : EnemyController
 
         _followTimer = 0f;
 
+        ShowHealth();
+
         switch (state)
         {
             case EarthMonsterState.Idle:
@@ -228,6 +239,7 @@ public class EarthMonsterAI : EnemyController
                 break;
             case EarthMonsterState.GettingUp:
                 _animator.Play("GettingUp");
+                LookAtPlayer();
                 _stateCoroutines.Add(StartCoroutine(GettingUpCouroutine()));
                 break;
             case EarthMonsterState.ReadyingSlam:

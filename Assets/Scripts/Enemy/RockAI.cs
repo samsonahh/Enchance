@@ -14,7 +14,8 @@ public class RockAI : EnemyController
         Startled,
         FollowPlayer,
         RollToPlayer,
-        RecoverFromRoll
+        RecoverFromRoll,
+        WalkBack
     }
 
     [SerializeField] private int _contactDamage = 1;
@@ -104,6 +105,26 @@ public class RockAI : EnemyController
         ChangeState(RockState.Startled);
     }
 
+    protected override void OnDamaged()
+    {
+        base.OnDamaged();
+
+        if(_currentState == RockState.WalkBack)
+        {
+            ChangeState(RockState.FollowPlayer);
+        }
+
+        if (_currentState == RockState.Wander)
+        {
+            ChangeState(RockState.Startled);
+        }
+
+        if (_currentState == RockState.Idle)
+        {
+            ChangeState(RockState.Startled);
+        }
+    }
+
     private void OnDrawGizmos()
     {
         CustomGizmos.DrawWireDisk(transform.position, _activateRange, Color.green);
@@ -128,21 +149,11 @@ public class RockAI : EnemyController
                 {
                     ChangeState(RockState.Startled);
                 }
-                
-                if (CurrentHealth < MaxHealth)
-                {
-                    ChangeState(RockState.Startled);
-                }
 
                 break;
             case RockState.Wander:
 
                 if (_distanceToPlayer < _activateRange)
-                {
-                    ChangeState(RockState.Startled);
-                }
-
-                if (CurrentHealth < MaxHealth)
                 {
                     ChangeState(RockState.Startled);
                 }
@@ -154,7 +165,8 @@ public class RockAI : EnemyController
 
                 if (PlayerController.Instance.IsInvincible)
                 {
-                    ChangeState(RockState.Idle);
+                    _navMeshAgent.speed = 0;
+                    _animator.Play("RockIdle");
                     return;
                 }
 
@@ -177,13 +189,41 @@ public class RockAI : EnemyController
 
                 if (_distanceToPlayer > _deactivateRange)
                 {
-                    ChangeState(RockState.Wander);
+                    ChangeState(RockState.WalkBack);
+                }
+
+                if (_distanceFromStart > 4f * _deactivateRange)
+                {
+                    ChangeState(RockState.WalkBack);
                 }
 
                 break;
             case RockState.RollToPlayer:
                 break;
             case RockState.RecoverFromRoll:
+                break;
+            case RockState.WalkBack:
+
+                _animator.Play("RockRoll");
+
+                LookAt(_startPosition);
+
+                if (_navMeshAgent.enabled)
+                {
+                    _navMeshAgent.speed = EnemyCurrentMoveSpeed;
+                    _navMeshAgent.SetDestination(_startPosition);
+                }
+
+                if (_distanceToPlayer < _activateRange)
+                {
+                    ChangeState(RockState.FollowPlayer);
+                }
+
+                if (_distanceFromStart < _wanderRange)
+                {
+                    ChangeState(RockState.Wander);
+                }
+
                 break;
             default:
                 break;
@@ -228,6 +268,9 @@ public class RockAI : EnemyController
             case RockState.RecoverFromRoll:
                 _animator.Play("RockIdle");
                 _stateCoroutines.Add(StartCoroutine(RecoverFromRollCoroutine()));
+                break;
+            case RockState.WalkBack:
+                _navMeshAgent.enabled = true;
                 break;
             default:
                 break;

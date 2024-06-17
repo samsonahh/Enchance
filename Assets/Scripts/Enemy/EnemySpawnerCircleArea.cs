@@ -42,6 +42,11 @@ public class EnemySpawnerCircleArea : MonoBehaviour
             Vector2 randomCoords = _spawnRadius * Random.insideUnitCircle;
             Vector3 randomDest = new Vector3(randomCoords.x, 0, randomCoords.y) + transform.position;
 
+            if(Vector3.Distance(randomDest, PlayerController.Instance.transform.position) < 2f)
+            {
+                continue;
+            }
+
             GameObject enemy = Instantiate(randomEnemyPrefab, randomDest, Quaternion.identity);
             enemy.GetComponent<EnemyController>().Aggro();
             enemy.transform.SetParent(transform);

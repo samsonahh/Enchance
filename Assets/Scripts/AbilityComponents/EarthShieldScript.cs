@@ -10,5 +10,7 @@ public class EarthShieldScript : AbilityComponent
     private void Start()
     {
         _playerController.ShieldPlayer(_shieldAmount, _duration);
+
+        Destroy(gameObject, _duration);
     }
 }

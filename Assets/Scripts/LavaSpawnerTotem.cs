@@ -7,6 +7,8 @@ using TMPro;
 public class LavaSpawnerTotem : MonoBehaviour
 {
     [SerializeField] private GameObject _lavaSpawnerPrefab;
+    [SerializeField] private GameObject _fireKeyPrefab;
+    [SerializeField] private GameObject _wallsObject;
 
     [SerializeField] private Button _startButton;
     [SerializeField] private TMP_Text _timerText;
@@ -27,16 +29,20 @@ public class LavaSpawnerTotem : MonoBehaviour
 
     private void Start()
     {
+        LoadObjective();
+
         _timer = _duration;
 
         _startButton.gameObject.SetActive(false);
         _timerText.gameObject.SetActive(false);
+        _wallsObject.SetActive(false);
     }
 
     private void Update()
     {
         if (_started)
         {
+            _wallsObject.SetActive(true);
             _startButton.gameObject.SetActive(false);
             _timerText.gameObject.SetActive(true);
 
@@ -44,16 +50,22 @@ public class LavaSpawnerTotem : MonoBehaviour
 
             _timer -= Time.deltaTime;
 
-            if(_timer <= 0f)
+            if(_timer <= 0f) // win
             {
                 _timer = 0f;
                 _started = false;
 
+                Instantiate(_fireKeyPrefab, transform.position, Quaternion.identity);
+
                 Destroy(_lavaSpawnerObject);
+
+                SaveObjective();
+                DisableObjective();
             }
         }
         else
         {
+            _wallsObject.SetActive(false);
             _timerText.gameObject.SetActive(false);
 
             if (_onTrigger)
@@ -64,6 +76,33 @@ public class LavaSpawnerTotem : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SaveObjective()
+    {
+        PlayerPrefs.SetInt("LavaChallenge", 1);
+    }
+
+    public void LoadObjective()
+    {
+        if (!PlayerPrefs.HasKey("LavaChallenge"))
+        {
+            return;
+        }
+
+        if(PlayerPrefs.GetInt("FireKey") == 0)
+        {
+            Instantiate(_fireKeyPrefab, transform.position, Quaternion.identity);
+        }
+
+        DisableObjective();
+    }
+
+    private void DisableObjective()
+    {
+        Destroy(_startButton.transform.parent.gameObject);
+        Destroy(_wallsObject);
+        Destroy(this);
     }
 
     private void StartSpawner()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public static CameraMovement Instance;
+
     [SerializeField] private float _cameraSmoothTime;
 
     private Vector3 _offsetPosition;
@@ -14,6 +16,11 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Material _transparentSpriteMaterial;
     [SerializeField] private Material _transparent3DMaterial;
     private Dictionary<GameObject, Material> _lastObstructingObjects;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -31,6 +38,11 @@ public class CameraMovement : MonoBehaviour
     private void FollowPlayer()
     {
         transform.position = Vector3.Lerp(transform.position, _target.position + _offsetPosition, _cameraSmoothTime * Time.deltaTime);
+    }
+
+    public void InstantlyFixPosition()
+    {
+        transform.position = _target.position + _offsetPosition;
     }
 
     private void HandleZoom()
