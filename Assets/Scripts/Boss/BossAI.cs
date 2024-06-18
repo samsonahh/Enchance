@@ -185,7 +185,11 @@ public class BossAI : MonoBehaviour
 
                 _gridManager.ClearPath();
 
-                if (!PlayerController.Instance.IsVisible) return;
+                if (!PlayerController.Instance.IsVisible)
+                {
+                    _animator.Play("Idle");
+                    return;
+                }
 
                 if (_gridManager.IsPathStraight(_path) || _gridManager.IsPathDiagonal(_path))
                 {
@@ -302,13 +306,11 @@ public class BossAI : MonoBehaviour
 
                 if (_suckTimer > _suckDuration)
                 {
-                    _animator.SetBool("IsSucking", false);
                     ChangeBossState(BossState.FollowPlayer);
                 }
 
                 if (IsPlayerOnBossTiles(_currentTile))
                 {
-                    _animator.SetBool("IsSucking", false);
                     ChangeBossState(BossState.PushAway);
                 }
 
@@ -339,12 +341,11 @@ public class BossAI : MonoBehaviour
         Destroy(_suckEffect);
         _suckEffect = null;
 
-        //Debug.Log(state.ToString());
+        _animator.Play("Idle");
 
         switch (state)
         {
             case BossState.Idle:
-
                 break;
             case BossState.FollowPlayer:
                 _followPlayerTimer = 0f;
@@ -352,6 +353,7 @@ public class BossAI : MonoBehaviour
                 _playerStraightPathTimer = 0f;
                 break;
             case BossState.PushAway:
+                _animator.Play("PushAway");
                 _bossStateCoroutines.Add(StartCoroutine(PushPlayer()));
                 break;
             case BossState.SlamOntoPlayer:
@@ -361,14 +363,15 @@ public class BossAI : MonoBehaviour
                 _bossStateCoroutines.Add(StartCoroutine(FloorIsLava()));
                 break;
             case BossState.Suck:
+                _animator.Play("Sucking");
                 _suckTimer = 0f;
-                _animator.SetBool("IsSucking", true);
                 AudioSource.PlayClipAtPoint(_suckSfx, transform.position);
                 break;
             case BossState.BombingRun:
                 _bossStateCoroutines.Add(StartCoroutine(BombingRun()));
                 break;
             case BossState.GetAngry:
+                _animator.Play("Angry");
                 _bossStateCoroutines.Add(StartCoroutine(GetAngry()));
                 _phase = 2;
                 break;
@@ -437,8 +440,6 @@ public class BossAI : MonoBehaviour
             OnBossStepOnNewTile?.Invoke(_currentTile);
         }
     }
-
-
     private void PlayerController_OnPlayerStepOnNewTile(Tile t)
     {
         _playerTile = t;
@@ -499,7 +500,6 @@ public class BossAI : MonoBehaviour
     IEnumerator PushPlayer()
     {
         CameraShake.Instance.Shake(0.25f, 0.25f);
-        _animator.Play("BossPushAway");
 
         Vector3 dir = (_playerController.transform.position - transform.position).normalized;
 
@@ -507,6 +507,8 @@ public class BossAI : MonoBehaviour
         _playerController.PushPlayer(dir, _pushStunDuration, _pushStartVelocity);
 
         yield return new WaitForSeconds(1f);
+
+        _animator.Play("Idle");
 
         Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f, 15f);
         Vector3 aboveRandTile = randTile.transform.position;
@@ -594,16 +596,17 @@ public class BossAI : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, t.transform.position, timer / 0.2f);
             yield return null;
         }
+
+        CameraShake.Instance.Shake(0.25f, 0.25f);
+        AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
+        _animator.Play("Squish");
+
         transform.position = t.transform.position;
 
         if(_phase == 2)
         {
             _bossStateCoroutines.Add(StartCoroutine(CheckPlayerBurning(2f)));
         }
-
-        CameraShake.Instance.Shake(0.25f, 0.25f);
-        AudioSource.PlayClipAtPoint(_slamSfx, transform.position);
-        _animator.Play("BossSquish");
 
         foreach (Tile dangerTile in dangerTiles)
         {
@@ -689,11 +692,13 @@ public class BossAI : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, t.transform.position, timer / 0.2f);
                 yield return null;
             }
-            transform.position = t.transform.position;
 
             CameraShake.Instance.Shake(0.25f, 0.25f);
-            _animator.Play("BossSquish");
+            _animator.Play("Squish");
             AudioSource.PlayClipAtPoint(_bombingRunSFX, transform.position);
+
+            transform.position = t.transform.position;
+
             List<Tile> dangerTiles1 = _gridManager.BurnCrossPattern(t);
             dangerTiles1.AddRange(_gridManager.BurnDiagonalPattern(t));
 
@@ -721,6 +726,8 @@ public class BossAI : MonoBehaviour
                 yield return new WaitForSeconds(0.005f);
             }
 
+            _animator.Play("Idle");
+
             Tile randTile = _gridManager.GetRandomTileAwayFromPlayer(7.5f, 15f);
 
             _gridManager.PathCrossPattern(randTile);
@@ -742,12 +749,12 @@ public class BossAI : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, randTile.transform.position, timer / 0.2f);
                 yield return null;
             }
+            CameraShake.Instance.Shake(0.25f, 0.25f);
+            _animator.Play("Squish");
+            AudioSource.PlayClipAtPoint(_bombingRunSFX, transform.position);
 
             transform.position = randTile.transform.position;
 
-            CameraShake.Instance.Shake(0.25f, 0.25f);
-            _animator.Play("BossSquish");
-            AudioSource.PlayClipAtPoint(_bombingRunSFX, transform.position);
             List<Tile> dangerTiles2 = _gridManager.BurnCrossPattern(randTile);
             dangerTiles2.AddRange(_gridManager.BurnDiagonalPattern(randTile));
 
@@ -774,6 +781,8 @@ public class BossAI : MonoBehaviour
 
                 yield return new WaitForSeconds(0.005f);
             }
+
+            _animator.Play("Idle");
         }
 
         yield return new WaitForSeconds(0.5f);
@@ -843,11 +852,12 @@ public class BossAI : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, _currentTile.transform.position, timer / 0.2f);
             yield return null;
         }
-        transform.position = _currentTile.transform.position;
 
         CameraShake.Instance.Shake(0.25f, 0.25f);
         AudioSource.PlayClipAtPoint(_bombingRunSFX, transform.position);
-        _animator.Play("BossSquish");
+        _animator.Play("Squish");
+
+        transform.position = _currentTile.transform.position;
 
         List<Tile> burnedTiles = _gridManager.BurnCheckerBoard(_currentTile, _currentTile.Black);
 
@@ -880,9 +890,9 @@ public class BossAI : MonoBehaviour
 
     IEnumerator GetAngry()
     {
-        _animator.SetBool("IsAngry", true);
+        _animator.Play("Angry");
         yield return new WaitForSeconds(_getAngryDuration);
-        _animator.SetBool("IsAngry", false);
+        _animator.Play("Idle");
 
         yield return new WaitForSeconds(0.5f);
         ChangeBossState(BossState.BombingRun);

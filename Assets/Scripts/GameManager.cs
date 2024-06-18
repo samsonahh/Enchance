@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
             case GameState.Win:
                 Time.timeScale = 0f;
                 PlayerController.Instance.transform.position = Vector3.zero;
-                BackToMenu();
+                ResetGame();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -154,6 +154,16 @@ public class GameManager : MonoBehaviour
         BossRoomKeys[0] = PlayerPrefs.GetInt("GrassKey");
         BossRoomKeys[1] = PlayerPrefs.GetInt("FireKey");
         BossRoomKeys[2] = PlayerPrefs.GetInt("IceKey");
+
+        // boss scene
+        if (PlayerPrefs.HasKey("AtBoss"))
+        {
+            if (PlayerPrefs.GetInt("AtBoss") == 1)
+            {
+                SceneManager.LoadSceneAsync("Boss", LoadSceneMode.Additive);
+                StartCoroutine(TryUnloadScene("Grass"));
+            }
+        }
     }
 
     public void ResetGame()
@@ -167,6 +177,28 @@ public class GameManager : MonoBehaviour
     {
         Instance.SaveGame();
         SceneManager.LoadScene("Menu");
+    }
+
+    IEnumerator TryUnloadScene(string sceneName)
+    {
+        while (true)
+        {
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene loadedScene = SceneManager.GetSceneAt(i);
+                if (loadedScene.name != "PersistentGameplay" && loadedScene.name == sceneName)
+                {
+                    SceneManager.UnloadSceneAsync(loadedScene);
+                }
+            }
+
+            if(SceneManager.sceneCount == 2)
+            {
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 }
 

@@ -52,6 +52,8 @@ public class SeparateSceneLoadTrigger : MonoBehaviour
 
         PlayerController.Instance.CanMove = true;
 
+        PlayerPrefs.SetInt("AtBoss", 1);
+
         Destroy(gameObject);
     }
 

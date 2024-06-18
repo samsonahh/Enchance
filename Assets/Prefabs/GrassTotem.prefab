@@ -340,11 +340,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8161033171779228543}
-  - component: {fileID: 900149564083062778}
+  - component: {fileID: -2849872698994476059}
   - component: {fileID: 3491506164932954648}
   - component: {fileID: 4001757397554889435}
   m_Layer: 9
-  m_Name: FireSpawnerTotem
+  m_Name: GrassTotem
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -368,7 +368,7 @@ Transform:
   - {fileID: 5018944527084377858}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &900149564083062778
+--- !u!114 &-2849872698994476059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -377,18 +377,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3042375238806198891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e891c226ec350c140a156bf46d2e083e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2eb82889d9d97f247996ceee58f1be42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lavaSpawnerPrefab: {fileID: 7490562644820457088, guid: 9f70653deda6f3044bf6ef9d09ed8021,
+  _emSpawn1: {fileID: 0}
+  _emSpawn2: {fileID: 0}
+  _emSpawn3: {fileID: 0}
+  _grassKeyPrefab: {fileID: 7400869350129114651, guid: b93e3beda2068cf479429b511ae4f34b,
     type: 3}
-  _fireKeyPrefab: {fileID: 7400869350129114651, guid: e0b21d3941cc647498be010f547ad754,
-    type: 3}
-  _wallsObject: {fileID: 4628100539476652232}
   _flameObject: {fileID: 2660558613706135520}
-  _startButton: {fileID: 3600092753129999994}
-  _timerText: {fileID: 9189212241341315043}
-  _duration: 5
 --- !u!135 &3491506164932954648
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -508,7 +505,7 @@ SpriteRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4741255196166652074}
   m_Enabled: 1
-  m_CastShadows: 0
+  m_CastShadows: 1
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -541,7 +538,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c9506f7ffebd88443920ba848c2b40b5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 68bb7efd14b1f274eb13230712970f45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1236,6 +1233,21 @@ PrefabInstance:
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146845129364157171, guid: dc41e0a048768a84f84f2162246129ac,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146845129364157171, guid: dc41e0a048768a84f84f2162246129ac,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146845129364157171, guid: dc41e0a048768a84f84f2162246129ac,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: fdb1dd40dd71e46468447f1bc969cff3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a493e42bb3470d0488fb233cc986b5a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 9070787027241393157}
   - component: {fileID: 4161692156804139156}
   m_Layer: 8
-  m_Name: FireKey
+  m_Name: IceKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0ab270da8c2484cb1a17ed8e418b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _keyType: 1
+  _keyType: 2
   _collectButton: {fileID: 6835979856404541272}
 --- !u!135 &4161692156804139156
 SphereCollider:
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: E - Collect Fire Key
+  m_text: E - Collect Ice Key
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
