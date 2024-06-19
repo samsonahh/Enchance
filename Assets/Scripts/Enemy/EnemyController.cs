@@ -37,6 +37,7 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public bool IsVisible = true;
     [HideInInspector] public bool CanCast = true;
     [HideInInspector] public bool IsTargetted;
+    [HideInInspector] public bool CanBeTargetted = true;
     #endregion
 
     #region Speed

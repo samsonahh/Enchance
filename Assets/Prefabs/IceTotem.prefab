@@ -342,7 +342,8 @@ GameObject:
   - component: {fileID: 8161033171779228543}
   - component: {fileID: 7899162648065225995}
   - component: {fileID: 3491506164932954648}
-  - component: {fileID: 4001757397554889435}
+  - component: {fileID: -5351136630558489742}
+  - component: {fileID: -1174881762241930943}
   m_Layer: 9
   m_Name: IceTotem
   m_TagString: Wall
@@ -399,14 +400,30 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.5
+  m_Radius: 1.25
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &4001757397554889435
-BoxCollider:
+--- !u!208 &-5351136630558489742
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042375238806198891}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.5, y: 1, z: 1.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!135 &-1174881762241930943
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -420,12 +437,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.6192293, y: 1, z: 1}
-  m_Center: {x: 0.00085908175, y: 0, z: 0}
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4628100539476652232
 GameObject:
   m_ObjectHideFlags: 0

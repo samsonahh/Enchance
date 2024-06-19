@@ -48,6 +48,7 @@ MonoBehaviour:
   _poofPrefab: {fileID: 417761080263594737, guid: fac92d52a592d92479a68104c79602f5,
     type: 3}
   _duration: 2
+  _poofSFX: {fileID: 8300000, guid: f315848737463a74786a1a062f2f96b4, type: 3}
 --- !u!1001 &1207053946696091949
 PrefabInstance:
   m_ObjectHideFlags: 0

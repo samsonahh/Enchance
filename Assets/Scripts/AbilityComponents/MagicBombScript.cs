@@ -13,8 +13,13 @@ public class MagicBombScript : AbilityComponent
     [SerializeField] private Transform _bombRadiusTransform;
     [SerializeField] private Transform _bombRadiusWarning;
 
+    [SerializeField] private AudioClip _bombExplosionSFX;
+    private AudioSource _bombFizzingAudioSource;
+
     private void Start()
     {
+        _bombFizzingAudioSource = GetComponent<AudioSource>();
+
         transform.position = _playerController.transform.position;
         _bombRadiusTransform.localScale = new Vector3(_explosionRadius * 2f, _explosionRadius * 2f, 1);
         _bombRadiusWarning.localScale = new Vector3(0, 0, 1);
@@ -43,6 +48,8 @@ public class MagicBombScript : AbilityComponent
 
     public void Detonate()
     {
+        _bombFizzingAudioSource.Stop();
+
         Collider[] collisions = Physics.OverlapSphere(transform.position, _explosionRadius);
         if (collisions != null)
         {
@@ -66,6 +73,8 @@ public class MagicBombScript : AbilityComponent
 
         Instantiate(_explosionPrefab, transform.position + Vector3.up, Quaternion.identity);
         CameraShake.Instance.Shake(0.25f, 0.25f);
+
+        AudioSource.PlayClipAtPoint(_bombExplosionSFX, transform.position);
 
         Destroy(gameObject);
     }

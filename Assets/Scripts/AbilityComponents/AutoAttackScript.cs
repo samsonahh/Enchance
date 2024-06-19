@@ -28,6 +28,16 @@ public class AutoAttackScript : AbilityComponent
             return;
         }
 
+        if(_lastTarget.TryGetComponent(out EnemyController e))
+        {
+            if (e.IsInvincible)
+            {
+                _playerController.AutoAttacking = false;
+                Destroy(gameObject);
+                return;
+            }
+        }
+
         if (!_detectingCollisions) return;
 
         transform.position = Vector3.MoveTowards(transform.position, _lastTarget.transform.position + Vector3.up, _speed * Time.deltaTime);

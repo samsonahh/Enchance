@@ -14,6 +14,7 @@ public class EarthMonsterAI : EnemyController
         ReadyingSlam,
         Slam,
         FollowPlayer,
+        GettingDown,
         WalkBack
     }
 
@@ -145,6 +146,8 @@ public class EarthMonsterAI : EnemyController
                 break;
             case EarthMonsterState.Slam:
                 break;
+            case EarthMonsterState.GettingDown:
+                break;
             case EarthMonsterState.WalkBack:
 
                 _animator.Play("Follow");
@@ -160,7 +163,7 @@ public class EarthMonsterAI : EnemyController
                 if(CheckNavMeshPathFinished())
                 {
                     transform.position = _startPosition;
-                    ChangeState(EarthMonsterState.Idle);
+                    ChangeState(EarthMonsterState.GettingDown);
                 }
 
                 if (_distanceToPlayer < _triggerSlamRadius)
@@ -229,6 +232,7 @@ public class EarthMonsterAI : EnemyController
             case EarthMonsterState.Idle:
                 break;
             case EarthMonsterState.Slam:
+                _animator.SetFloat("SlamGettingUpMultiplier", 1 / (_readyingSlamDuration + _slamDuration));
                 _stateCoroutines.Add(StartCoroutine(SlamCoroutine()));
                 break;
             case EarthMonsterState.FollowPlayer:
@@ -239,13 +243,20 @@ public class EarthMonsterAI : EnemyController
                 _navMeshAgent.enabled = true;
                 break;
             case EarthMonsterState.GettingUp:
+                _animator.SetFloat("GettingUpMultiplier", 1 / (_gettingUpDuration));
                 _animator.Play("GettingUp");
                 LookAtPlayer();
                 _stateCoroutines.Add(StartCoroutine(GettingUpCouroutine()));
                 break;
             case EarthMonsterState.ReadyingSlam:
+                _animator.SetFloat("ReadyingSlamMultiplier", 1/_readyingSlamDuration);
                 _animator.Play("ReadyingSlam");
                 _stateCoroutines.Add(StartCoroutine(ReadyingSlamCouroutine()));
+                break;
+            case EarthMonsterState.GettingDown:
+                _animator.SetFloat("GettingUpMultiplier", 1 / (_gettingUpDuration));
+                _animator.Play("GettingDown");
+                _stateCoroutines.Add(StartCoroutine(GettingDownCouroutine()));
                 break;
             default:
                 break;
@@ -269,6 +280,13 @@ public class EarthMonsterAI : EnemyController
         yield return new WaitForSeconds(_gettingUpDuration);
 
         ChangeState(EarthMonsterState.ReadyingSlam);
+    }
+
+    IEnumerator GettingDownCouroutine()
+    {
+        yield return new WaitForSeconds(_gettingUpDuration);
+
+        ChangeState(EarthMonsterState.Idle);
     }
 
     IEnumerator ReadyingSlamCouroutine()

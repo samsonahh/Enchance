@@ -822,6 +822,7 @@ MonoBehaviour:
   IsVisible: 1
   CanCast: 1
   IsTargetted: 0
+  CanBeTargetted: 1
   EnemyCurrentMoveSpeed: 3
   EnemyRegularMoveSpeed: 3
   _burnTickDuration: 1
@@ -925,7 +926,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 9195625277227318069}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3
   m_Acceleration: 3.4028235e+38
   avoidancePriority: 50

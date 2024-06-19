@@ -65,6 +65,8 @@ public class IceWitchAI : EnemyController
     #region Teleport
     [Header("Teleport Variables")]
     [SerializeField] private float _teleportDuration = 1f;
+    [SerializeField] private GameObject _poofEffectPrefab;
+    [SerializeField] private AudioClip _poofSFX;
     #endregion
 
     protected override void OnStart()
@@ -120,6 +122,8 @@ public class IceWitchAI : EnemyController
             _spriteRenderer.transform.parent.localRotation = Quaternion.Lerp(_spriteRenderer.transform.parent.localRotation, Quaternion.Euler(45f, 0, 0), 20f * Time.deltaTime);
             _spriteRenderer.transform.parent.localPosition = Vector3.Lerp(_spriteRenderer.transform.parent.localPosition, Vector3.zero, 20f * Time.deltaTime);
         }
+
+        _spriteRenderer.transform.parent.gameObject.SetActive(!IsInvincible);
     }
 
     private void OnDrawGizmos()
@@ -173,7 +177,7 @@ public class IceWitchAI : EnemyController
                     }
 
                     _circleDestination = CalculateCircleDestination();
-                    _cwCircle = Random.Range(0, 25) == 0 ? !_cwCircle : _cwCircle;
+                    _cwCircle = Random.Range(0, 10) == 0 ? !_cwCircle : _cwCircle;
                     _moveTimer = 0f;
                 }
 
@@ -195,7 +199,7 @@ public class IceWitchAI : EnemyController
                     }
                 }
 
-                if(_distanceToPlayer > 2f * _viewDistance)
+                if(_distanceFromStart > 5f * _viewDistance)
                 {
                     ChangeState(State.RetreatToSpawn);
                 }
@@ -228,25 +232,6 @@ public class IceWitchAI : EnemyController
             case State.Teleport:
                 break;
             case State.RetreatToSpawn:
-
-                LookAt(_startPosition);
-
-                if (_navMeshAgent.enabled)
-                {
-                    _navMeshAgent.speed = EnemyCurrentMoveSpeed;
-                    _navMeshAgent.SetDestination(_startPosition);
-                }
-
-                if (_distanceToPlayer < 0.5f * _viewDistance)
-                {
-                    ChangeState(State.CastIceShard);
-                }
-
-                if (_distanceFromStart < _wanderRange)
-                {
-                    ChangeState(State.Wander);
-                }
-
                 break;
             default:
                 break;
@@ -297,7 +282,7 @@ public class IceWitchAI : EnemyController
                 _stateCoroutines.Add(StartCoroutine(TeleportCoroutine()));
                 break;
             case State.RetreatToSpawn:
-                _navMeshAgent.enabled = true;
+                _stateCoroutines.Add(StartCoroutine(RetreatToSpawnCoroutine()));
                 break;
             default:
                 break;
@@ -361,12 +346,53 @@ public class IceWitchAI : EnemyController
 
     IEnumerator TeleportCoroutine()
     {
+        yield return new WaitForSeconds(_teleportDuration/2);
+
+        Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
+        AudioSource.PlayClipAtPoint(_poofSFX, transform.position);
+
+        IsInvincible = true;
+        CanBeTargetted = false;
+
         yield return new WaitForSeconds(_teleportDuration);
 
-        float randomAngle = Random.Range(0, 2 * Mathf.PI);
-        transform.position = new Vector3(_circlePlayerRadius * Mathf.Cos(randomAngle), 0, _circlePlayerRadius * Mathf.Sin(randomAngle)) + PlayerController.Instance.transform.position;
+        float randomAngle = Random.Range(90, 270);
+        transform.position = CalculateCircumferenceOffset(PlayerController.Instance.transform.position, transform.position, _circlePlayerRadius, randomAngle);
+
+        Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
+        AudioSource.PlayClipAtPoint(_poofSFX, transform.position);
+
+        IsInvincible = false;
+        CanBeTargetted = true;
 
         ChangeState(State.CastIceShard);
+    }
+
+    IEnumerator RetreatToSpawnCoroutine()
+    {
+        LookAtPlayer();
+
+        yield return new WaitForSeconds(_castDuration);
+
+        CastCircleIceShard(_iceDaggerCountWhenMad);
+
+        Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
+        AudioSource.PlayClipAtPoint(_poofSFX, transform.position);
+
+        IsInvincible = true;
+        CanBeTargetted = false;
+
+        yield return new WaitForSeconds(_teleportDuration);
+
+        transform.position = _startPosition;
+
+        Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
+        AudioSource.PlayClipAtPoint(_poofSFX, transform.position);
+
+        IsInvincible = false;
+        CanBeTargetted = true;
+
+        ChangeState(State.Wander);
     }
 
     IEnumerator CastIceShardCoroutine()
@@ -375,25 +401,13 @@ public class IceWitchAI : EnemyController
 
         yield return new WaitForSeconds(_castDuration);
 
-
         if(CurrentHealth > MaxHealth / 2)
         {
-            AbilityComponent iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
-            iceShard.EnemyInit(transform, _castMaxRange, 0, PlayerController.Instance.transform.position, PlayerController.Instance.transform.position - transform.position);
-
-            iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
-            iceShard.EnemyInit(transform, _castMaxRange, 0, CalculateCircumferenceOffset(transform.position, PlayerController.Instance.transform.position, _castMaxRange, 45f), PlayerController.Instance.transform.position - transform.position);
-
-            iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
-            iceShard.EnemyInit(transform, _castMaxRange, 0, CalculateCircumferenceOffset(transform.position, PlayerController.Instance.transform.position, _castMaxRange, -45f), PlayerController.Instance.transform.position - transform.position);
+            CastTripleIceShard();
         }
         else
         {
-            for(int i = 0; i < _iceDaggerCountWhenMad; i++)
-            {
-                AbilityComponent iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
-                iceShard.EnemyInit(transform, _castMaxRange, 0, CalculateCircumferenceOffset(transform.position, PlayerController.Instance.transform.position, _castMaxRange, 360/_iceDaggerCountWhenMad * i), PlayerController.Instance.transform.position - transform.position);
-            }
+            CastCircleIceShard(_iceDaggerCountWhenMad);
         }
 
         yield return new WaitForSeconds(_castDuration);
@@ -414,5 +428,26 @@ public class IceWitchAI : EnemyController
         int dirMultiplier = _cwCircle ? -1 : 1;
 
         return CalculateCircumferenceOffset(PlayerController.Instance.transform.position, transform.position, _circlePlayerRadius, dirMultiplier * 0.1f * Mathf.Rad2Deg);
+    }
+
+    private void CastTripleIceShard()
+    {
+        AbilityComponent iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
+        iceShard.EnemyInit(transform, _castMaxRange, 0, PlayerController.Instance.transform.position, PlayerController.Instance.transform.position - transform.position);
+
+        iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
+        iceShard.EnemyInit(transform, _castMaxRange, 0, CalculateCircumferenceOffset(transform.position, PlayerController.Instance.transform.position, _castMaxRange, 45f), PlayerController.Instance.transform.position - transform.position);
+
+        iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
+        iceShard.EnemyInit(transform, _castMaxRange, 0, CalculateCircumferenceOffset(transform.position, PlayerController.Instance.transform.position, _castMaxRange, -45f), PlayerController.Instance.transform.position - transform.position);
+    }
+
+    private void CastCircleIceShard(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            AbilityComponent iceShard = Instantiate(_iceShardPrefab, transform.position, Quaternion.identity);
+            iceShard.EnemyInit(transform, _castMaxRange, 0, CalculateCircumferenceOffset(transform.position, PlayerController.Instance.transform.position, _castMaxRange, 360 / count * i), PlayerController.Instance.transform.position - transform.position);
+        }
     }
 }

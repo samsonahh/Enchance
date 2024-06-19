@@ -11,6 +11,7 @@ public class FireballScript : AbilityComponent
     [SerializeField] private AudioClip _fireballStartSFX;
     [SerializeField] private AudioClip _fireballExplodeSFX;
 
+    private AudioSource _fireballInAirAudioSource;
     private Vector3 _target;
 
     private void Start()
@@ -18,7 +19,7 @@ public class FireballScript : AbilityComponent
         transform.position = _playerController.transform.position;
         _target = transform.position + _castRadius * _lastForwardDirection;
 
-        AudioSource.PlayClipAtPoint(_fireballStartSFX, transform.position, 2);
+        AudioSource.PlayClipAtPoint(_fireballStartSFX, transform.position);
     }
 
     private void Update()
@@ -27,10 +28,7 @@ public class FireballScript : AbilityComponent
 
         if(Vector3.Distance(transform.position, _target) <= 0.01f)
         {
-            DoAreaDamage(_damage);
-
-            Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
-            Destroy(gameObject);
+            Explode();
         }
     }
 
@@ -62,22 +60,25 @@ public class FireballScript : AbilityComponent
     {
         if(other.TryGetComponent(out BossAI boss))
         {
-            DoAreaDamage(_damage);
-            Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
-            Destroy(gameObject);
+            Explode();
         }
         if (other.TryGetComponent(out EnemyController enemy))
         {
-            DoAreaDamage(_damage);
-            Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
-            Destroy(gameObject);
+            Explode();
         }
         if (other.TryGetComponent(out MagicBombScript bomb))
         {
-            DoAreaDamage(_damage);
-            Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
-            Destroy(gameObject);
+            Explode();
         }
+    }
+
+    private void Explode()
+    {
+        AudioSource.PlayClipAtPoint(_fireballExplodeSFX, transform.position + Vector3.up);
+
+        DoAreaDamage(_damage);
+        Instantiate(_splashPrefab, transform.position + Vector3.up, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
 

@@ -260,7 +260,10 @@ public class PlayerController : MonoBehaviour
         {
             if (collider.TryGetComponent(out EnemyController enemy))
             {
-                enemies.Add(enemy.gameObject);
+                if (enemy.CanBeTargetted)
+                {
+                    enemies.Add(enemy.gameObject);
+                }
             }
             if(collider.TryGetComponent(out BossAI boss))
             {
