@@ -101,7 +101,9 @@ public class AbilityCaster : MonoBehaviour
     {
         if (Abilities.GameAbilities.Length == 0) return;
 
-        foreach(Ability a in Abilities.GameAbilities)
+        Abilities.ClearStarSortedAbilities();
+
+        foreach (Ability a in Abilities.GameAbilities)
         {
             Abilities.StarSortedAbilities[a.Star - 1].Add(a);
         }
