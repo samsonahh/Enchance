@@ -142,9 +142,8 @@ public class IceWitchAI : EnemyController
         switch (_currentState)
         {
             case State.Wander:
-
-                Vector3 dir = PlayerController.Instance.transform.position - transform.position;
-                if (_distanceToPlayer < _viewDistance && _spriteRenderer.flipX == dir.x > 0)
+                
+                if (_distanceToPlayer < _viewDistance && IsFacingPlayer())
                 {
                     ChangeState(State.Startled);
                 }
@@ -184,6 +183,13 @@ public class IceWitchAI : EnemyController
                 if (_navMeshAgent.enabled)
                 {
                     _navMeshAgent.speed = EnemyCurrentMoveSpeed;
+
+                    if (!IsPointInsideNavMeshSurface(_circleDestination))
+                    {
+                        _cwCircle = !_cwCircle;
+                        _circleDestination = CalculateCircleDestination();
+                    }
+
                     _navMeshAgent.SetDestination(_circleDestination);
                 }
 
@@ -353,17 +359,32 @@ public class IceWitchAI : EnemyController
 
         IsInvincible = true;
         CanBeTargetted = false;
+        GetComponent<Collider>().enabled = false;
 
         yield return new WaitForSeconds(_teleportDuration);
 
-        float randomAngle = Random.Range(90, 270);
-        transform.position = CalculateCircumferenceOffset(PlayerController.Instance.transform.position, transform.position, _circlePlayerRadius, randomAngle);
+        int tpTryCounter = 0;
+
+        while (tpTryCounter < 100)
+        {
+            float randomAngle = Random.Range(90, 270);
+            Vector3 randomPos = CalculateCircumferenceOffset(PlayerController.Instance.transform.position, transform.position, _circlePlayerRadius, randomAngle);
+
+            if (IsPointInsideNavMeshSurface(randomPos))
+            {
+                transform.position = randomPos;
+                break;
+            }
+            
+            tpTryCounter++;
+        }
 
         Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
         AudioSource.PlayClipAtPoint(_poofSFX, transform.position);
 
         IsInvincible = false;
         CanBeTargetted = true;
+        GetComponent<Collider>().enabled = true;
 
         ChangeState(State.CastIceShard);
     }
@@ -427,7 +448,7 @@ public class IceWitchAI : EnemyController
     {
         int dirMultiplier = _cwCircle ? -1 : 1;
 
-        return CalculateCircumferenceOffset(PlayerController.Instance.transform.position, transform.position, _circlePlayerRadius, dirMultiplier * 0.1f * Mathf.Rad2Deg);
+        return CalculateCircumferenceOffset(PlayerController.Instance.transform.position, transform.position, _circlePlayerRadius, dirMultiplier * 15f);
     }
 
     private void CastTripleIceShard()

@@ -366,5 +366,16 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    
+    public virtual bool IsFacingPlayer()
+    {
+        Vector3 dir = PlayerController.Instance.transform.position - transform.position;
+        return _spriteRenderer.flipX == dir.x > 0;
+    }
+
+    public virtual bool IsPointInsideNavMeshSurface(Vector3 pos)
+    {
+        NavMeshHit hit;
+
+        return NavMesh.SamplePosition(pos, out hit, 0.1f, NavMesh.AllAreas);
+    }
 }
