@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
