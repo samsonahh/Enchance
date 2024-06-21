@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RewardType>k__BackingField: 4
   <Name>k__BackingField: Fast Chanter
-  <Sprite>k__BackingField: {fileID: 1918031029, guid: a454af4fcd2d7be4eb5192429ab13c6d,
+  <Sprite>k__BackingField: {fileID: 21300000, guid: a678ca29e9269c743a86826882dc3ba6,
     type: 3}
   Description: Permanently decrease your cast time by 20%

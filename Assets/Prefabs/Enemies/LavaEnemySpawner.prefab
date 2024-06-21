@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefabs:
   - {fileID: 9195625277227318069, guid: ead73b106f4422e4eaa286b693aa896d, type: 3}
-  _spawnRadius: 12.5
+  _spawnRadius: 10
   _maxSpawn: 7
   _spawnInterval: {x: 3, y: 7}

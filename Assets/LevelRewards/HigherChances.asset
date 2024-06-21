@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RewardType>k__BackingField: 3
   <Name>k__BackingField: Lucky Roller
-  <Sprite>k__BackingField: {fileID: 21300000, guid: f904bc7bfc1b6f74186f2b7764686108,
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 9c129d5f59fc7744c99e107c3680fa18,
     type: 3}
   Description: Increase your chances of higher star abilities

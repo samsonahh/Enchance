@@ -17,12 +17,26 @@ public class SeparateSceneLoadTrigger : MonoBehaviour
     {
         if (other.TryGetComponent(out PlayerController player))
         {
-            DontDestroyOnLoad(gameObject);
+            SwitchScene(0.5f, 0.5f);
+        }
+    }
 
-            if (!fadeCoroutineStarted)
-            {
-                StartCoroutine(SwitchSceneCoroutine(0.5f, 0.5f));
-            }
+    public void SwitchScene(float fadeDuration, float fadeInDelay)
+    {
+        if(transform.parent == null)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(transform.root.gameObject);
+        }
+
+        if (!fadeCoroutineStarted)
+        {
+            fadeCoroutineStarted = true;
+
+            StartCoroutine(SwitchSceneCoroutine(fadeDuration, fadeInDelay));
         }
     }
 
@@ -42,6 +56,18 @@ public class SeparateSceneLoadTrigger : MonoBehaviour
         yield return new WaitForSeconds(fadeInDelay);
         yield return SceneManager.LoadSceneAsync(_sceneToLoad, LoadSceneMode.Additive);
 
+        PlayerController.Instance.transform.position = Vector3.zero;
+        CameraMovement.Instance.InstantlyFixPosition();
+
+        if (transform.parent == null)
+        {
+            transform.position = Vector3.one * 1000f;
+        }
+        else
+        {
+            transform.root.position = Vector3.one * 1000f;
+        }
+
         for (float timer = 0; timer < fadeDuration; timer += Time.unscaledDeltaTime)
         {
             _fadePanelImage.color = Color.Lerp(Color.black, Color.clear, timer / fadeDuration);
@@ -54,7 +80,14 @@ public class SeparateSceneLoadTrigger : MonoBehaviour
 
         PlayerPrefs.SetInt("AtBoss", 1);
 
-        Destroy(gameObject);
+        if (transform.parent == null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(transform.root.gameObject);
+        }
     }
 
     private void UnloadScenes()

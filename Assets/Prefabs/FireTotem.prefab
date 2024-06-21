@@ -381,15 +381,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e891c226ec350c140a156bf46d2e083e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lavaSpawnerPrefab: {fileID: 7490562644820457088, guid: 9f70653deda6f3044bf6ef9d09ed8021,
+  _lavaSpawnerPrefab: {fileID: 5220508287495952422, guid: 9f70653deda6f3044bf6ef9d09ed8021,
     type: 3}
-  _fireKeyPrefab: {fileID: 7400869350129114651, guid: e0b21d3941cc647498be010f547ad754,
+  _fireKeyPrefab: {fileID: 9070787027241393157, guid: e0b21d3941cc647498be010f547ad754,
     type: 3}
   _wallsObject: {fileID: 4628100539476652232}
   _flameObject: {fileID: 2660558613706135520}
   _startButton: {fileID: 3600092753129999994}
   _timerText: {fileID: 9189212241341315043}
-  _duration: 5
+  _duration: 60
 --- !u!135 &3491506164932954648
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1071,8 +1071,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -5}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3344909432074070360
 CanvasRenderer:
@@ -1105,7 +1105,8 @@ MonoBehaviour:
   m_text: E - Start Challenge
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98e375b8ed39b774e9251ed558037311, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -1685160268935903154, guid: 98e375b8ed39b774e9251ed558037311,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

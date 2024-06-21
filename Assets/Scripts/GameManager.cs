@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("PlayerLevel", PlayerController.Instance.CurrentLevel);
         PlayerPrefs.SetInt("PlayerCurrentExperience", PlayerController.Instance.CurrentExp);
         PlayerPrefs.SetInt("PlayerMaxExperience", PlayerController.Instance.ExpToNextLevel);
+        PlayerPrefs.SetInt("PlayerQueuedLevels", PlayerController.Instance.QueuedLevels);
 
         // pos
         PlayerPrefs.SetFloat("PlayerPosX", PlayerController.Instance.transform.position.x);
@@ -145,6 +146,7 @@ public class GameManager : MonoBehaviour
         PlayerController.Instance.CurrentExp = PlayerPrefs.GetInt("PlayerCurrentExperience");
         PlayerController.Instance.ExpToNextLevel = PlayerPrefs.GetInt("PlayerMaxExperience");
         PlayerController.Instance.CurrentHealth = PlayerController.Instance.MaxHealth;
+        PlayerController.Instance.QueuedLevels = PlayerPrefs.GetInt("PlayerQueuedLevels");
 
         // position
         PlayerController.Instance.transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerPosX"), 0, PlayerPrefs.GetFloat("PlayerPosZ"));

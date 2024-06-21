@@ -6,8 +6,8 @@ using TMPro;
 
 public class LavaSpawnerTotem : MonoBehaviour
 {
-    [SerializeField] private GameObject _lavaSpawnerPrefab;
-    [SerializeField] private GameObject _fireKeyPrefab;
+    [SerializeField] private EnemySpawnerCircleArea _lavaSpawnerPrefab;
+    [SerializeField] private KeyCollectable _fireKeyPrefab;
     [SerializeField] private GameObject _wallsObject;
     [SerializeField] private GameObject _flameObject;
 
@@ -19,7 +19,7 @@ public class LavaSpawnerTotem : MonoBehaviour
     private float _timer;
     private bool _started;
     private bool _onTrigger;
-    private GameObject _lavaSpawnerObject;
+    private EnemySpawnerCircleArea _lavaSpawnerObject;
 
     private void Awake()
     {
@@ -57,9 +57,11 @@ public class LavaSpawnerTotem : MonoBehaviour
                 _timer = 0f;
                 _started = false;
 
-                Instantiate(_fireKeyPrefab, transform.position - Vector3.forward, Quaternion.identity);
+                KeyCollectable key = Instantiate(_fireKeyPrefab, transform.position, Quaternion.identity);
 
-                Destroy(_lavaSpawnerObject);
+                key.AnimationDrop(transform.position, transform.position - Vector3.forward);
+
+                _lavaSpawnerObject.Stop();
 
                 SaveObjective();
                 DisableObjective();
@@ -117,7 +119,6 @@ public class LavaSpawnerTotem : MonoBehaviour
         _timer = _duration;
 
         _lavaSpawnerObject = Instantiate(_lavaSpawnerPrefab, transform.position, Quaternion.identity);
-        _lavaSpawnerObject.transform.SetParent(transform);
     }
 
     private void OnTriggerEnter(Collider other)
