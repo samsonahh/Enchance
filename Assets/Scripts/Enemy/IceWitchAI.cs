@@ -284,16 +284,18 @@ public class IceWitchAI : EnemyController
                 EnemyCurrentMoveSpeed = _distanceFromPlayerMovementSpeed;
                 break;
             case State.CastIceShard:
-                _animator.SetFloat("CastSpeedMultiplier", _castDuration);
+                _animator.SetFloat("CastSpeedMultiplier", 1/_castDuration);
                 _animator.Play("Cast");
                 _stateCoroutines.Add(StartCoroutine(CastIceShardCoroutine()));
                 break;
             case State.Teleport:
-                _animator.SetFloat("CastSpeedMultiplier", _teleportDuration/2);
-                _animator.Play("Cast");
+                _animator.SetFloat("CastSpeedMultiplier", 1/(_teleportDuration/2));
+                _animator.Play("Cast2");
                 _stateCoroutines.Add(StartCoroutine(TeleportCoroutine()));
                 break;
             case State.RetreatToSpawn:
+                _animator.SetFloat("CastSpeedMultiplier", 1/_castDuration);
+                _animator.Play("Cast");
                 _stateCoroutines.Add(StartCoroutine(RetreatToSpawnCoroutine()));
                 break;
             default:
