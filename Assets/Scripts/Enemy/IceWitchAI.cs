@@ -261,6 +261,8 @@ public class IceWitchAI : EnemyController
         _moveTimer = 0f;
         _circlePlayerRadius = Random.Range(_circlePlayerRadiusRange.x, _circlePlayerRadiusRange.y);
 
+        _animator.Play("Idle");
+
         switch (state)
         {
             case State.Wander:
@@ -282,12 +284,18 @@ public class IceWitchAI : EnemyController
                 EnemyCurrentMoveSpeed = _distanceFromPlayerMovementSpeed;
                 break;
             case State.CastIceShard:
+                _animator.SetFloat("CastSpeedMultiplier", 1/_castDuration);
+                _animator.Play("Cast");
                 _stateCoroutines.Add(StartCoroutine(CastIceShardCoroutine()));
                 break;
             case State.Teleport:
+                _animator.SetFloat("CastSpeedMultiplier", 1/(_teleportDuration/2));
+                _animator.Play("Cast2");
                 _stateCoroutines.Add(StartCoroutine(TeleportCoroutine()));
                 break;
             case State.RetreatToSpawn:
+                _animator.SetFloat("CastSpeedMultiplier", 1/_castDuration);
+                _animator.Play("Cast");
                 _stateCoroutines.Add(StartCoroutine(RetreatToSpawnCoroutine()));
                 break;
             default:
@@ -321,7 +329,11 @@ public class IceWitchAI : EnemyController
             if (_navMeshAgent.enabled)
             {
                 _navMeshAgent.speed = EnemyCurrentMoveSpeed;
-                _navMeshAgent.SetDestination(randomDest);
+
+                if (IsPointInsideNavMeshSurface(randomDest))
+                {
+                    _navMeshAgent.SetDestination(randomDest);
+                }
             }
             LookAt(randomDest);
 

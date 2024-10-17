@@ -372,7 +372,7 @@ public class EnemyController : MonoBehaviour
         return _spriteRenderer.flipX == dir.x > 0;
     }
 
-    public virtual bool IsPointInsideNavMeshSurface(Vector3 pos)
+    public static bool IsPointInsideNavMeshSurface(Vector3 pos)
     {
         NavMeshHit hit;
 

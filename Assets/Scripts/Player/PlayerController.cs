@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -178,6 +179,15 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePlayerMoving()
     {
+        NavMeshHit hit;
+        if (!EnemyController.IsPointInsideNavMeshSurface(transform.position))
+        {
+            if(NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
+            {
+                transform.position = hit.position;
+            }
+        }
+
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
         float x = Input.GetAxisRaw("Horizontal");

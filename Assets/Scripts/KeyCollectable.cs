@@ -40,6 +40,33 @@ public class KeyCollectable : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void AnimationDrop(Vector3 start, Vector3 end)
+    {
+        StartCoroutine(AnimateDropCoroutine(start, end));
+    }
+
+    IEnumerator AnimateDropCoroutine(Vector3 start, Vector3 end)
+    {
+        float distanceToDestination = Vector3.Distance(end, start);
+        float timeToDestination = 1f;
+        float launchMaxHeight = 1f;
+
+        transform.position = start;
+
+        for (float timer = 0f; timer < timeToDestination; timer += Time.deltaTime)
+        {
+            Vector3 horizontal = Vector3.Lerp(Vector3.zero, new Vector3(end.x - start.x, 0, end.z - start.z), timer / timeToDestination);
+
+            float scaledParameter = (timer / timeToDestination) * distanceToDestination;
+            float vertical = -((4 * launchMaxHeight) / (distanceToDestination * distanceToDestination)) * Mathf.Pow((scaledParameter - distanceToDestination / 2), 2) + launchMaxHeight;
+
+            transform.position = start + horizontal + new Vector3(0, vertical, 0);
+
+            yield return null;
+        }
+        transform.position = end;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")

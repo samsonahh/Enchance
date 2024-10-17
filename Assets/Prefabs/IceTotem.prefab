@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _iwSpawn: {fileID: 0}
-  _iceKeyPrefab: {fileID: 7400869350129114651, guid: f28fdbbebe7d22641a82aa7c27d5e33c,
+  _iceKeyPrefab: {fileID: 9070787027241393157, guid: f28fdbbebe7d22641a82aa7c27d5e33c,
     type: 3}
   _flameObject: {fileID: 2660558613706135520}
 --- !u!135 &3491506164932954648

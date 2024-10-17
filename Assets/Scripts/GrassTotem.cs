@@ -8,7 +8,7 @@ public class GrassTotem : MonoBehaviour
     [SerializeField] private Transform _emSpawn2;
     [SerializeField] private Transform _emSpawn3;
 
-    [SerializeField] private GameObject _grassKeyPrefab;
+    [SerializeField] private KeyCollectable _grassKeyPrefab;
     [SerializeField] private GameObject _flameObject;
 
     private bool _keyDropped = false;
@@ -32,7 +32,9 @@ public class GrassTotem : MonoBehaviour
 
                 if(PlayerPrefs.GetInt("GrassKey") == 0)
                 {
-                    Instantiate(_grassKeyPrefab, transform.position - Vector3.forward, Quaternion.identity);
+                    KeyCollectable key = Instantiate(_grassKeyPrefab, transform.position, Quaternion.identity);
+
+                    key.AnimationDrop(transform.position, transform.position - Vector3.forward);
                 }
             }
         }

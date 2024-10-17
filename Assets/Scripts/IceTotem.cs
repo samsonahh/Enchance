@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IceTotem : MonoBehaviour
 {
     [SerializeField] private Transform _iwSpawn;
 
-    [SerializeField] private GameObject _iceKeyPrefab;
+    [SerializeField] private KeyCollectable _iceKeyPrefab;
     [SerializeField] private GameObject _flameObject;
 
     private bool _keyDropped = false;
@@ -30,7 +31,9 @@ public class IceTotem : MonoBehaviour
 
                 if (PlayerPrefs.GetInt("IceKey") == 0)
                 {
-                    Instantiate(_iceKeyPrefab, transform.position - Vector3.forward, Quaternion.identity);
+                    KeyCollectable key = Instantiate(_iceKeyPrefab, transform.position, Quaternion.identity);
+
+                    key.AnimationDrop(transform.position, transform.position - Vector3.forward);
                 }
             }
         }

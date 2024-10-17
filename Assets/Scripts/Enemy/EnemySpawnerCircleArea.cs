@@ -11,6 +11,8 @@ public class EnemySpawnerCircleArea : MonoBehaviour
     [SerializeField] private int _maxSpawn;
     [SerializeField] private Vector2 _spawnInterval;
 
+    private bool _stopped = false;
+
     private void Start()
     {
         StartCoroutine(SpawnCoroutine());
@@ -28,7 +30,7 @@ public class EnemySpawnerCircleArea : MonoBehaviour
 
     private IEnumerator SpawnCoroutine()
     {
-        while (true)
+        while (!_stopped)
         {
             if(_currentSpawned >= _maxSpawn)
             {
@@ -53,5 +55,17 @@ public class EnemySpawnerCircleArea : MonoBehaviour
 
             yield return new WaitForSeconds(Random.Range(_spawnInterval.x, _spawnInterval.y));
         }
+
+        while(transform.childCount > 0)
+        {
+            yield return null;
+        }
+
+        Destroy(gameObject);
+    }
+
+    public void Stop()
+    {
+        _stopped = true;
     }
 }
